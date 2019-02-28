@@ -1,0 +1,43 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+$mainBackground: #2b323d;
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: $mainBackground;
+  font-family: helvetica, "Microsoft YaHei", arial;
+}
+
+#app {
+  width: 100%;
+  max-width: torem(980px);
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  padding-bottom: torem(130px);
+}
+.sdw-icon-ani{
+
+}
+.newyearIcon{
+  position: fixed;
+  z-index: 9;
+  right: 0px;
+  top:40%;
+  width: torem(170px);
+  height: torem(190px);
+}

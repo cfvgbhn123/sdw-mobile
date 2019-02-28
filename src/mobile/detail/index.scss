@@ -1,0 +1,342 @@
+@import "../reset.scss";
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.detail-top-container {
+  height: torem(610px);
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background: #2b323d;
+}
+
+.banners-container {
+  height: torem(300px);
+  padding: torem(30px) 0;
+
+  overflow-y: hidden;
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  //background: #fff;
+  position: relative;
+}
+
+.banners-container2 {
+  position: relative;
+  //border-bottom: 1px solid #d2d2d2;
+}
+
+.banners-container2:after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #d2d2d2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: scale(1, .5);
+}
+
+$one-px-border-color: #d2d2d2;
+//.banners-container:before {
+//  content: '';
+//  width: 100%;
+//  height: 1px;
+//  background: $one-px-border-color;
+//  position: absolute;
+//  top: 0;
+//  left: 0;
+//  transform: scale(1, .5);
+//}
+//
+//.banners-container:after {
+//  content: '';
+//  width: 100%;
+//  height: 1px;
+//  background: $one-px-border-color;
+//  position: absolute;
+//  bottom: 0;
+//  left: 0;
+//  transform: scale(1, .5);
+//}
+
+.detail-bg-img {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  opacity: .8;
+}
+
+.linear-mask {
+  width: 100%;
+  height: torem(360px);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  background: linear-gradient(180deg, transparent, rgba(33, 39, 47, 0) 5%, rgba(33, 39, 47, 0.33) 20%, rgb(33, 39, 47) 40%, #21272f);
+}
+
+body {
+  background: #fff;
+}
+
+.scroll-items {
+  background: #e1e1e1;
+  display: inline-block;
+  height: torem(300px);
+  width: torem(169px);
+  margin-left: torem(30px);
+}
+
+.scroll-items:last-child {
+  margin-right: torem(30px);
+}
+
+.game-info-container {
+  width: torem(430px);
+  height: torem(260px);
+  position: absolute;
+  bottom: torem(40px);
+  left: 50%;
+  //background: #f4f4f4;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.play-game-btn {
+  width: 100%;
+  height: torem(80px);
+  line-height: torem(81px);
+  color: #fff;
+  font-size: torem(34px);
+  border-radius: torem(40px);
+  text-align: center;
+  background-image: linear-gradient(90deg, #1fc7b9, #40e38d);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+}
+
+.game-icon {
+  width: torem(140px);
+  height: torem(140px);
+  border-radius: 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.game-title {
+
+  height: torem(50px);
+  line-height: torem(50px);
+  font-size: torem(34px);
+  color: #fff;
+  position: absolute;
+  top: 0;
+  left: torem(165px);
+
+  width: torem(350px);
+
+  .game-name {
+    height: torem(50px);
+    display: inline-block;
+    float: left;
+    line-height: torem(50px);
+    max-width: torem(190px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .game-tag {
+    height: torem(30px);
+    display: inline-block;
+    float: left;
+    line-height: torem(30px);
+    border-radius: 3px;
+    margin-left: torem(8px);
+    border: 1px solid #ffb400;
+    font-size: torem(18px);
+    color: #ffb400;
+    background: #000000;
+    padding: 0 torem(15px);
+    margin-top: torem(8px);
+  }
+}
+
+.hot-play-info {
+  position: absolute;
+  left: torem(165px);
+  top: torem(60px);
+  font-size: torem(20px);
+  color: #929dac;
+  width: 100%;
+  height: torem(40px);
+  overflow: hidden;
+}
+
+.star-list {
+  width: torem(130px);
+  height: torem(22px);
+  display: inline-block;
+}
+
+.star0, .star1, .star2 {
+  display: block;
+  width: torem(23px);
+  height: torem(22px);
+  float: left;
+  margin-right: torem(2px);
+
+}
+
+.star0 {
+  background: url("images/star0.png") 0 0 / 100% 100% no-repeat;
+}
+
+.star1 {
+  background: url("images/star1.png") 0 0 / 100% 100% no-repeat;
+}
+
+.star2 {
+  background: url("images/star2.png") 0 0 / 100% 100% no-repeat;
+}
+
+.light-num {
+  color: #ff9000;
+}
+
+.game-info {
+  color: #929dac;
+  height: torem(50px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  line-height: torem(50px);
+  font-size: torem(26px);
+  position: absolute;
+  left: torem(165px);
+  top: torem(95px);
+  width: torem(265px);
+}
+
+.detail-desc {
+
+  text-indent: 2rem;
+  color: #626c78;
+  font-size: topx(24px);
+  line-height: 1.5;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: torem(30px);
+  margin-bottom: torem(30px);
+
+}
+
+.gift-bg-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2222;
+
+  .gift-cover {
+    width: torem(657px);
+    height: torem(568px);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background: url("images/gift-bg-cover.png") 0 0 /100%;
+  }
+
+  .goto-game-btn {
+    width: torem(280px);
+    height: torem(74px);
+    background: url("images/go-to-game.png") 0 0 /100%;
+    position: absolute;
+    left: 50%;
+    bottom: torem(100px);
+    transform: translateX(-50%);
+  }
+
+  .game-code {
+    width: 100%;
+    height: torem(70px);
+    line-height: torem(70px);
+    color: #fff;
+    font-size: topx(24px);
+    text-align: center;
+    position: absolute;
+    bottom: torem(256px);
+    left: 0;
+  }
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 1200%;
+  z-index: 10000;
+  background: #000;
+  /*display: none;*/
+  /*visibility: hidden;*/
+  /*margin: 0;*/
+}
+
+.big-cover {
+  background-size: auto 100% !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  /*background: #00d7ff;*/
+  width: 100%;
+  height: 100%;
+  /*background-image: url(http://app.m3guo.com/h5/2016/h5gameimg/KOU06.png);*/
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-pagination {
+  position: fixed;
+  left: 50%;
+  bottom: 0;
+  z-index: 999999;
+}

@@ -1,0 +1,72 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+$borderRadius: 6px;
+
+.small-game-t {
+  width: torem(115px);
+  display: inline-block;
+  margin-right: torem(28px);
+}
+
+.small-game-t:last-child {
+  margin-right: 0;
+}
+
+.small-game-t:nth-child(5n) {
+  margin-right: 0;
+}
+
+.s-g-t-icon {
+  width: torem(114px);
+  height: torem(114px);
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.s-g-t-name {
+  color: #fff;
+  width: torem(114px);
+  height: torem(48px);
+  line-height: torem(48px);
+  overflow: hidden;
+  font-size: torem(22px);
+  text-align: center;
+  
+  //margin-bottom: torem(16px);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: torem(114px);
+  height: torem(50px);
+  line-height: torem(51px);
+  border-radius: torem(25px);
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px; /*32px*/
+  //letter-spacing: 1px;
+  color: #fff;
+}
+
+//.g-list {
+//  margin-left: 0 !important;
+//}
+
+//.game-btn:before {
+//  content: '';
+//  width: 120%;
+//  height: 120%;
+//  position: absolute;
+//  left: -10%;
+//  top: -10%;
+//}

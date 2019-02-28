@@ -1,0 +1,92 @@
+.left-part{
+  width: 6%;
+  height: 100%;
+  background-color: #212933;
+  position: fixed;
+  left: 0px;
+  top:0;
+  z-index: 9999;
+  .user{
+    width: 100%;
+    height: 140px;
+    text-align: center;
+    padding-top: 32px;
+    cursor: pointer;
+    img {
+      width: 70px;
+      height: 70px;
+      border-radius: 70px;
+      display: block;
+      margin: 0 auto;
+    }
+    p{
+      font-size: 14px;
+      line-height: 2.5em;
+      color: #717983;
+    }
+  }
+  .list-box{
+    height: 600px;
+    display: table;
+    .game-list{
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
+}
+.game-list{
+  width: 112px;
+  background-color:#212933 ;
+  padding:25px 0px 2px;
+  .game-item{
+    position: relative;
+    width: 80px;
+    margin: 0 auto 25px auto;
+    cursor: pointer;
+    .game-img{
+      width: 80px;
+      border-radius: 10px;
+      display: block;
+      height: auto;
+      margin: 0 auto;
+    }
+    .game-name{
+      text-align: center;
+      margin-top: 10px;
+      color: #fff;
+      font-size: 15px;
+    }
+    .screen-f {
+      position: absolute;
+      top: 54.5px;
+      right: -4px;
+      width: 47px;
+      line-height: 30px;
+      text-align: center;
+      font-size: 12px;
+      font-family: Regular;
+      color: #000;
+      background: url('./imgs/screen-f.png') 100% no-repeat;
+    }
+  }
+  .addIcon {
+    background: url('./imgs/ic_tianjia.png')  100% 100%;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px auto;
+    cursor: pointer;
+  }
+}
+
+/*游戏层动画*/
+.game-item:nth-child(1)  {transition-delay: 0.08s;}
+.game-item:nth-child(2)  {transition-delay: 0.16s;}
+.game-item:nth-child(3) {transition-delay: 0.24s;}
+.game-item:nth-child(4) {transition-delay: 0.32s;}
+.game-item:nth-child(5)  {transition-delay: 0.40s;}
+.game-item:nth-child(6) {transition-delay: 0.48s;}
+.game-item,.left-part{
+  transform: translateX(0px);
+  transition: all 0.5s;
+}
+.slide-in-left{transform: translateX(-130px);}

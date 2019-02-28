@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+
+    <script>
+
+        (function () {
+            var goToUri = location.href.split('#')[0];
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, false, SDW_WEB.CHECK_URL);
+            SDW_WEB.getUserInfo(null, checkUrl);
+        })();
+    </script>
+
+    <script src="../../libs/vue.js"></script>
+    <!--<script src="https://www.shandw.com/libs/js/zepto.min.js?v=2"></script>-->
+    <!--<script src="https://www.shandw.com/pc/js/libs/MD5.min.js"></script>-->
+
+</head>
+<body>
+
+<!--
+我的成就助手
+-->
+
+<!--金币下落动画-->
+<canvas id="stage"></canvas>
+
+<div class="gold-flash-ani">
+
+</div>
+
+<div id="app" v-cloak :class="onShandw?'app-shandw' : ''">
+
+
+    <!--绑定手机-->
+    <bind-phone
+            ref='bindPhone'
+            showbind=""
+            :bind-phone-item="bindPhoneItem"
+            v-on:bind-callback="bindPhoneCallback"
+    ></bind-phone>
+
+    <!--任务弹窗-->
+    <task-info ref='taskContainer'
+               :task-item-info="currentTaskItem"
+               showInfo="0"></task-info>
+
+    <!--解锁新成就，引导前往-->
+    <task-get-alert
+            ref="taskgetalert"
+            showInfo=""
+            typeindex="2"
+            v-on:closetap="closetap"
+            :task-item-info='currentTaskItem'
+    >
+        <div class="task-get-btn" @click.stop='hideTaskGetAlert()'>确认</div>
+
+    </task-get-alert>
+
+
+    <!--顶部固定-->
+    <div class="task-top-fixed">
+
+        <div class="task-user-container">
+
+            <img :src="user.avatar" class="task-user-avatar">
+
+            <div class="task-user-left-container">
+                <div class="task-conts task-my-money">{{user.gold}}</div>
+            </div>
+
+            <i class="task-gifts-icons" @click.stop="gotoMyexcPage()"></i>
+        </div>
+
+        <!--闪电玩商城-->
+        <div class="task-shop-banner" @click.stop.self="gotoShopPage()"></div>
+
+        <!--刷新按钮-->
+        <div class="tips-container flash" @click.stop="refreshPage()">
+            小纸条：若成就任务未能即时完成，请猛戳这里
+            <i class="refresh-icon"></i>
+        </div>
+
+    </div>
+
+    <!--任务列表-->
+    <div id="task-scroll" class="scroll-cont">
+        <!--<div class="scrolls">-->
+
+        <div class="task-list-container">
+
+            <task-item
+                    v-if="item.showFlag"
+                    v-for="item in taskList"
+                    v-tap.stop="{methods:clickTaskItem,item:item}"
+                    :task-item="item"
+            >
+
+                <div slot="recharge">
+                    <p class="list-has-recharge" v-if="isBetween(item.id,taskListMap.all.min,taskListMap.all.max)">
+                        累计已充值{{user.chAll || 0}}</p>
+
+                    <!--每日充值-->
+                    <p class="list-has-recharge" v-if="isBetween(item.id,10,13)">
+                        今日已充值{{rcDay||0}}</p>
+
+                    <!--每周充值-->
+                    <p class="list-has-recharge" v-if="isBetween(item.id,14,16)">
+                        本周已充值{{rcWeek||0}}</p>
+
+                    <!--每月充值-->
+                    <p class="list-has-recharge" v-if="isBetween(item.id,17,19)">
+                        本月已充值{{rcMonth||0}}</p>
+                    <!--好友拉新-->
+                    <!--<p class="list-has-recharge" v-if="isBetween(item.id,5,9)">-->
+                    <!--累计拉新{{user.ivAll||0}}</p>-->
+                </div>
+
+                <div
+                        slot="task-btn"
+                        class="task-btn"
+                        :class="item.flag == 1 ? 'task-btn-ok' :( item.flag == 2 ? 'task-btn-finish' : 'task-btn-normal')"
+                        v-tap.stop="{methods:finishTaskCheck,item:item}">
+                    {{item.btnMsg}}
+                </div>
+
+            </task-item>
+
+        </div>
+
+        <!--<div class="bottom-full"></div>-->
+        <!--</div>-->
+    </div>
+
+    <sdw-footer type="task"></sdw-footer>
+
+</div>
+
+
+</body>
+
+
+</html>

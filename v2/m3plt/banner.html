@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>Banner</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .banner-container {
+            width: 660px;
+            height: 198px;
+            /*background: #404040;*/
+            position: relative;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+
+        .banner-item {
+            width: 580px;
+            height: 198px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate3d(0, 0, 0) scale(1);
+            visibility: hidden;
+            /*transition: .32s;*/
+        }
+
+        .current-item {
+            visibility: visible;
+            z-index: 3;
+            transform-origin: 0;
+            transform: translate3d(40px, 0, 0) scale(1);
+        }
+
+        .pre-item {
+            visibility: visible;
+            z-index: 1;
+            transform-origin: 0;
+            transform: translate3d(0, 0, 0) scale(0.8);
+        }
+
+        .next-item {
+            visibility: visible;
+            z-index: 1;
+            transform-origin: 100% 50%;
+            transform: translate3d(80px, 0, 0) scale(0.8);
+        }
+
+        .slider-btn {
+            width: 40px;
+            height: 100%;
+            background: rgba(0, 0, 0, .7);
+            position: absolute;
+            top: 0;
+            cursor: pointer;
+            z-index: 5;
+            opacity: 0;
+            transition: .2s;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            right: 0;
+        }
+
+        .banner-container:hover .slider-btn {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+
+<div class="banner-container">
+
+    <div class="slider-btn left"></div>
+    <div class="slider-btn right"></div>
+
+    <div class="banner-item" style="background:#5dceee">0</div>
+    <div class="banner-item" style="background:#ff565b">1</div>
+    <div class="banner-item" style="background:#ffd13f">2</div>
+    <div class="banner-item" style="background:#c3eeb9">3</div>
+
+</div>
+
+</body>
+
+<script>
+
+    function SliderBanner(option) {
+        this.timer = null;
+        this.sliderDom = [];
+
+        this._init(option);
+    }
+
+    SliderBanner.prototype._init = function (option) {
+
+        var sliderItems = document.querySelectorAll('.banner-item');
+
+        this.container = document.querySelector(option.id);
+
+        for (var i = 0; i < sliderItems.length; i++) {
+            this.sliderDom.push(sliderItems[i]);
+        }
+
+        this.currentIdx = 0;
+        this.perIdx = sliderItems.length - 1;
+        this.nextIdx = 1;
+
+        this.addEvent();
+        this.updateView();
+
+        option.autoPlay && this.autoPlay();
+    };
+
+    SliderBanner.prototype.addEvent = function () {
+
+        var self = this;
+
+        this.perBtn = document.querySelector('.left');
+        this.nextBtn = document.querySelector('.right');
+
+        this.perBtn.onclick = function (e) {
+            e.stopPropagation();
+            self.pre();
+        };
+
+        this.nextBtn.onclick = function (e) {
+            e.stopPropagation();
+            self.next();
+        };
+
+        this.container.onmouseover = function (e) {
+            e.stopPropagation();
+            self.stop();
+        };
+
+        this.container.onmouseout = function (e) {
+            e.stopPropagation();
+            self.autoPlay();
+        };
+
+    };
+
+    SliderBanner.prototype.autoPlay = function () {
+
+        var self = this;
+        this.timer = setInterval(function () {
+            self.next();
+        }, 3000);
+    };
+
+    SliderBanner.prototype.stop = function () {
+        clearInterval(this.timer);
+    };
+
+    SliderBanner.prototype.updateView = function () {
+
+        for (var i = 0; i < this.sliderDom.length; i++) {
+            var item = this.sliderDom[i];
+            item.style.transition = '.32s';
+            if (this.currentIdx === i) {
+                item.className = 'banner-item current-item'
+            } else if (this.perIdx === i) {
+                item.className = 'banner-item pre-item'
+            } else if (this.nextIdx === i) {
+                item.className = 'banner-item next-item'
+            } else {
+
+                item.style.transition = '0s';
+                item.className = 'banner-item'
+            }
+        }
+
+    };
+
+
+    SliderBanner.prototype.next = function () {
+
+        this.perIdx = this.currentIdx;
+        this.currentIdx = this.nextIdx;
+
+        if (this.nextIdx === this.sliderDom.length - 1) {
+            this.nextIdx = 0;
+        } else {
+            this.nextIdx++;
+        }
+
+        this.updateView();
+    };
+
+    SliderBanner.prototype.pre = function () {
+
+        this.nextIdx = this.currentIdx;
+        this.currentIdx = this.perIdx;
+
+        if (this.perIdx === 0) {
+            this.perIdx = this.sliderDom.length - 1;
+        } else {
+            this.perIdx--;
+        }
+
+        this.updateView();
+    };
+
+    var slider = new SliderBanner({
+        id: '.banner-container',
+        autoPlay: true,
+    });
+
+
+</script>
+
+</html>

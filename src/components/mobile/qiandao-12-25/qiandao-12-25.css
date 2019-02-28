@@ -1,0 +1,306 @@
+.qiandao-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 999999999999999;
+  position: fixed;
+  top: 0;
+  left: 0; }
+  .qiandao-container .cont-info {
+    width: 21.71875rem;
+    height: 26.875rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: url("images/bg-12-25.png") 0 0/100% 100% no-repeat; }
+  .qiandao-container .cont-info:after {
+    content: '';
+    width: 17.40625rem;
+    height: 8.71875rem;
+    background: url("images/title-bg-12-25.png") 0 0/100% no-repeat;
+    position: absolute;
+    top: -3.03125rem;
+    left: 50%;
+    transform: translate(-50%, 0); }
+  .qiandao-container .tips-info {
+    text-align: center;
+    color: #fff;
+    height: 1.25rem;
+    line-height: 1.3125rem;
+    margin-top: 6.40625rem;
+    font-size: 0.8125rem;
+    vertical-align: middle; }
+  .qiandao-container .qiandao-list-container {
+    width: 19.0625rem;
+    margin: 0 auto;
+    margin-top: 0.9375rem;
+    font-size: 0; }
+  .qiandao-container .qiandao-list-item {
+    width: 4.53125rem;
+    height: 5.625rem;
+    display: inline-block;
+    margin-right: 0.3125rem;
+    border-radius: 4px;
+    margin-top: 0.3125rem;
+    overflow: hidden;
+    position: relative; }
+  .qiandao-container .qiandao {
+    opacity: .4; }
+    .qiandao-container .qiandao .qiandao-day {
+      background: #22cab5; }
+  .qiandao-container .qiandao-day {
+    width: 100%;
+    height: 1.5625rem;
+    line-height: 1.5625rem;
+    color: #fff;
+    text-align: center;
+    font-size: 0.78125rem;
+    background: #07a277; }
+  .qiandao-container .ylq {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 222;
+    background: url("images/ylq-12-25.png") center/4.3125rem auto no-repeat; }
+  .qiandao-container .qiandao-jl {
+    height: 3.75rem;
+    padding: 0.3125rem;
+    background: #fff;
+    position: relative; }
+    .qiandao-container .qiandao-jl .c-icon {
+      width: 100%;
+      margin-bottom: 0.3125rem;
+      height: 2.09375rem; }
+      .qiandao-container .qiandao-jl .c-icon img {
+        height: 100%;
+        display: block;
+        margin: 0 auto; }
+    .qiandao-container .qiandao-jl .c-icon[data-type='1'] {
+      background: url("images/sdb.png") center/2.09375rem auto no-repeat; }
+    .qiandao-container .qiandao-jl .c-icon[data-type='4'] {
+      background: url("images/hb.png") center/1.75rem auto no-repeat; }
+    .qiandao-container .qiandao-jl .info {
+      color: #ff9000;
+      font-size: 0.8125rem;
+      text-align: center;
+      height: 0.9375rem;
+      line-height: 0.9375rem; }
+  .qiandao-container .qiandao-list-item[data-index='4'], .qiandao-container .qiandao-list-item[data-index='7'] {
+    margin-right: 0; }
+  .qiandao-container .qiandao-list-item[data-index='5'], .qiandao-container .qiandao-list-item[data-index='6'], .qiandao-container .qiandao-list-item[data-index='7'] {
+    width: 6.125rem; }
+  .qiandao-container .close-btn {
+    width: 9.53125rem;
+    height: 2.8125rem;
+    line-height: 2.8125rem;
+    border-radius: 1.40625rem;
+    color: #fff;
+    text-align: center;
+    margin: 1.5625rem auto;
+    background: #07a277;
+    font-size: 1.25rem;
+    position: relative; }
+  .qiandao-container .close-btn:before {
+    content: '';
+    width: 8.375rem;
+    height: 0.5625rem;
+    background: url("images/btn-bg-12-25.png") 100%/100% auto;
+    position: absolute;
+    top: -0.125rem;
+    left: 50%;
+    transform: translate(-50%, 0); }
+  .qiandao-container .res-container {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 369; }
+    .qiandao-container .res-container .res-cont-list {
+      width: 18.4375rem;
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+    .qiandao-container .res-container .jb-container {
+      min-width: 9.15625rem;
+      min-height: 9.15625rem;
+      margin: 0 auto;
+      position: relative; }
+    .qiandao-container .res-container .jb-container:before {
+      width: 9.15625rem;
+      height: 9.15625rem;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      transform-origin: 50%;
+      background: url("images/flash-line.png") center/9.15625rem no-repeat;
+      animation: rotate-flash linear 5s infinite;
+      z-index: -1; }
+    .qiandao-container .res-container .jb-cover {
+      width: 6.9375rem;
+      height: 4.59375rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: url("images/sdb-icon.png") center/6.9375rem no-repeat; }
+    .qiandao-container .res-container .hb-container {
+      min-width: 11.46875rem;
+      min-height: 11.46875rem;
+      margin: 0 auto;
+      position: relative; }
+    .qiandao-container .res-container .hb-container:before {
+      width: 11.46875rem;
+      height: 11.46875rem;
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      transform-origin: 50%;
+      background: url("images/flash2.png") center/11.46875rem no-repeat;
+      animation: rotate-flash linear 5s infinite;
+      z-index: -1; }
+    .qiandao-container .res-container .hb-cover {
+      width: 10.84375rem;
+      height: 10.125rem;
+      position: absolute;
+      top: -0.9375rem;
+      left: 50%;
+      transform-origin: 50%;
+      transform: translate(-50%, 0);
+      background: url("images/hb-icon.png") center/10.84375rem no-repeat; }
+@keyframes rotate-flash {
+  0% {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+    transform: translate(-50%, -50%) rotate(0deg); }
+  100% {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+    transform: translate(-50%, -50%) rotate(360deg); } }
+    .qiandao-container .res-container .egg-icon {
+      width: 5.84375rem;
+      height: 6.875rem;
+      background-size: cover;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+    .qiandao-container .res-container .egg-icon[data-type='1'] {
+      background-image: url("images/egg3.png"); }
+    .qiandao-container .res-container .egg-icon[data-type='2'] {
+      background-image: url("images/egg2.png"); }
+    .qiandao-container .res-container .egg-icon[data-type='3'] {
+      background-image: url("images/egg1.png"); }
+    .qiandao-container .res-container .qdcj {
+      width: 9.78125rem;
+      height: 2.78125rem;
+      background: url(images/qdcg-12-25.png) center/9.78125rem auto no-repeat;
+      margin: 0 auto; }
+    .qiandao-container .res-container .money-data {
+      width: 100%;
+      color: #ef3a2c;
+      font-size: 1.4375rem;
+      height: 1.875rem;
+      line-height: 1.875rem;
+      text-align: center;
+      position: absolute;
+      top: 3.4rem;
+      font-weight: bold;
+      left: 0; }
+      .qiandao-container .res-container .money-data span {
+        font-size: 1.5625rem; }
+    .qiandao-container .res-container .res-message {
+      color: #fff;
+      font-size: 0.9375rem;
+      height: 1.25rem;
+      line-height: 1.25rem;
+      margin-top: 0.625rem;
+      text-align: center; }
+      .qiandao-container .res-container .res-message span {
+        color: #ff9000; }
+  .qiandao-container .money {
+    color: #fff32e;
+    height: 1.25rem;
+    line-height: 1.1875rem;
+    font-size: 1rem;
+    margin-left: 0.3125rem;
+    vertical-align: middle; }
+  .qiandao-container .tixian {
+    background: #07a277;
+    height: 0.9375rem;
+    line-height: 0.9375rem;
+    border-radius: 0.46875rem;
+    font-size: 0.75rem;
+    padding: 0 0.46875rem;
+    text-align: center;
+    color: #fff;
+    margin-left: 0.625rem;
+    vertical-align: middle; }
+  .qiandao-container .download-app-container {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 333; }
+    .qiandao-container .download-app-container .download-app {
+      width: 18.4375rem;
+      padding: 1.5625rem 0;
+      border-radius: 5px;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+    .qiandao-container .download-app-container .close-btn {
+      background: url("images/download-close.png") center/0.625rem auto no-repeat;
+      width: 1.875rem;
+      height: 1.875rem;
+      position: absolute;
+      top: -1.25rem;
+      right: 0.46875rem; }
+    .qiandao-container .download-app-container .title {
+      color: #000;
+      font-size: 1.125rem;
+      text-align: center; }
+    .qiandao-container .download-app-container .app-icon {
+      width: 5rem;
+      height: 5rem;
+      margin: 1.25rem auto 1.5625rem auto;
+      display: block; }
+    .qiandao-container .download-app-container .download-btn {
+      width: 12.03125rem;
+      height: 2.8125rem;
+      line-height: 2.8125rem;
+      text-align: center;
+      border-radius: 1.40625rem;
+      margin: 0 auto;
+      font-size: 1.125rem;
+      color: #fff;
+      background: linear-gradient(90deg, #ff6027, #ff9019); }
+    .qiandao-container .download-app-container .d-icon {
+      margin-right: 0.46875rem;
+      margin-top: -0.15625rem;
+      display: inline-block;
+      background: url("images/download-icon.png") center/1.1875rem auto no-repeat;
+      width: 1.1875rem;
+      height: 1.03125rem;
+      vertical-align: middle; }
+    .qiandao-container .download-app-container .s-tips {
+      text-align: center;
+      font-size: 0.75rem;
+      color: #999;
+      margin: 0.46875rem auto; }
+
+#qiandao-container {
+  display: none; }
+
+/*# sourceMappingURL=qiandao-12-25.css.map */

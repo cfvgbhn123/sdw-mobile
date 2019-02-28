@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='' class='sTitle'>
+    <meta name='description' content='description'/>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <link rel="apple-touch-icon" class='sIcon'/>
+    <link rel='bookmark' class='sIcon'/>
+    <meta name='title' class='sTitle' content=''/>
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #000221;
+            background-image: url("sdw-bg.png");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 23.44rem;
+            margin: 0 auto;
+            font-family: arial, helvetica, "Microsoft YaHei";
+        }
+
+        .ios-desktop-container {
+            max-width: 80%;
+            min-width: 70%;
+            padding: 1rem;
+            border-radius: 4px;
+            background: #fff;
+            position: fixed;
+            bottom: 1.2rem;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+            color: #333;
+            font-size: 16px;
+
+            text-align: center;
+        }
+
+        .add-icon {
+            width: 18px;
+            height: 18px;
+
+        }
+
+        .ios-desktop-container:before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 0.6rem solid transparent;
+            border-right: 0.6rem solid transparent;
+            border-top: 0.7rem solid #fff;
+            position: absolute;
+            bottom: -0.68rem;
+            left: 50%;
+            -webkit-transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+        }
+
+        .game-icon {
+            width: 6rem;
+            height: 6rem;
+            border-radius: 24px;
+            background: #eee;
+            margin: 2.5rem auto;
+            overflow: hidden;
+            margin-top: 5.1rem;
+
+        }
+
+        .game-icon img {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-name {
+            width: 80%;
+            height: 2rem;
+            line-height: 2rem;
+            margin: 0 auto;
+            font-size: 1.2rem;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        document.write('<script src="../../libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+</head>
+<body>
+
+<div class="game-icon">
+    <img alt="" id="shareIcon">
+</div>
+
+
+<div class="ios-desktop-container">
+    点击 <img src="assC.png" class="add-icon"><br>
+    然后选择 “添加到主屏幕”
+</div>
+
+<div class="game-name"></div>
+
+</body>
+
+<script>
+
+    (function () {
+
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+
+
+        var postUri = SDW_WEB.URLS.addParam({
+            channel: SDW_WEB.channel,
+            gid: SDW_WEB.queryParam['gid']
+        }, false, HTTP_STATIC + 'gameinfo');
+
+        SDW_WEB.getAjaxData(postUri, function (data) {
+
+            var gameInfo = data.info;
+            var icon = gameInfo.icon;
+            var name = gameInfo.name;
+
+            var iconNodes = document.querySelectorAll('.sIcon');
+            for (var i = 0; i < iconNodes.length; i++) {
+                iconNodes[i].setAttribute('content', name);
+            }
+
+            var titleNodes = document.querySelectorAll('.sIcon');
+            for (var i = 0; i < titleNodes.length; i++) {
+                titleNodes[i].setAttribute('href', icon);
+            }
+
+            document.querySelector('#shareIcon').src = icon;
+            document.querySelector('.game-name').innerText = name;
+
+            document.title = name;
+
+        });
+
+
+        SDW_WEB.Store.set('ios-app', '1');
+
+        var repUrl = SDW_WEB.URLS.addParam({
+            gid: SDW_WEB.queryParam['gid'],
+            channel: SDW_WEB.queryParam['channel'],
+            mySec: +new Date(),
+            myType: SDW_WEB.queryParam['myType']
+        }, false, SDW_WEB.MOBILE_ROOT + 'gotoApp/ios-add.html');
+
+        window.history.replaceState({game: 'root'}, '', repUrl);
+
+    })();
+
+</script>
+</html>

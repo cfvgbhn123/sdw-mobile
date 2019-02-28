@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>下载口袋APP</title>
+    <script>
+        var width = document.documentElement.clientWidth || document.body.clientWidth;
+        var fontSize = width / 375 * 16;
+
+        if (SDW_WEB.onPC) {
+            fontSize = 16;
+        }
+        document.documentElement.style.fontSize = fontSize + 'px';
+    </script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-family: arial;
+            /*background: #8a0b1e;*/
+            overflow: hidden;
+        }
+
+        .download-container {
+            width: 23.44rem;
+            height: 37.79rem;
+            background: url("download-bg.jpg") center/100% no-repeat;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .download-btn {
+            width: 11.56rem;
+            height: 3.6rem;
+            /*background: #00ae6d;*/
+            position: absolute;
+            left: 50%;
+            bottom: 5.32rem;
+            -o-transform: translate3d(-50%, 0, 0);
+            -ms-transform: translate3d(-50%, 0, 0);
+            -webkit-transform: translate3d(-50%, 0, 0);
+            transform: translate3d(-50%, 0, 0);
+        }
+
+        .alert-container {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .7);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 55;
+            background-image: url("alert.png");
+            background-size: 22.18rem auto;
+            background-repeat: no-repeat;
+            background-position: center 1rem;
+            overflow: hidden;
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+
+
+<div class="download-container">
+
+    <div class="alert-container"></div>
+
+    <div class="download-btn"></div>
+
+</div>
+
+</body>
+
+<script>
+
+    var downloadBtn = document.querySelector('.download-btn');
+    var alertContainer = document.querySelector('.alert-container');
+    var ifm = document.createElement('iframe');
+    var ifmTimer = null;
+    ifm.style.display = 'none';
+    document.body.appendChild(ifm);
+
+    downloadBtn.addEventListener('click', function (e) {
+        ifm.src = 'http://app.m3guo.com/d/';
+
+        if (ifmTimer) {
+            clearTimeout(ifmTimer);
+        }
+
+        ifmTimer = setTimeout(function () {
+            alertContainer.style.display = 'block';
+        }, 2000);
+
+    }, false);
+
+    alertContainer.addEventListener('click', function (e) {
+        alertContainer.style.display = 'none';
+    }, false);
+
+</script>
+</html>

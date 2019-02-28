@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='500万现金红包瓜分中，手慢即将错过'/>
+    <title>500万现金红包瓜分中，手慢即将错过</title>
+
+    <script>
+        document.write('<script src="https://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script src="https://www.shandw.com/libs/vue.js"></script>
+
+    <script>
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+                m: +new Date()
+            }, true, SDW_WEB.CHECK_URL);
+
+            SDW_WEB.getUserInfo(null, checkUrl);
+
+        })()
+    </script>
+
+    <script>
+        (function () {
+            // 微信分享
+            if (SDW_WEB.onWeiXin) {
+                document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"><\/script>');
+            }
+        })()
+    </script>
+
+</head>
+<body>
+
+
+<img src="https://www.shandw.com/m/activity-lottery/images/activity-lottery-icon.jpg"
+     style="position: absolute;top:-100000px;left: -10000000px">
+
+<!--摇奖活动-->
+<div id="app" v-cloak>
+
+    <!--头部的信息-->
+    <div class="total-money-container">
+
+
+        <div class="money-cont">
+            您已经累计获得<span>{{(userInfo.money.toFixed(1))}}</span>元
+        </div>
+
+        <!--领取的按钮-->
+        <div class="get-btn"
+             @click.stop.self="getMoneyBtn()"
+        ></div>
+
+    </div>
+
+
+    <div class="rule-fixed"
+         @click.stop.self="goToRule()"></div>
+
+
+    <!--摇奖盘容器 附带摇杆-->
+    <div class="lottery-container">
+
+        <div class="user-scroll-container">
+            <div class='scroll-cont' id='cbd'></div>
+        </div>
+
+        <!--闪光灯-->
+        <div class="light-animation light1" id="light-animation" data-light="1"></div>
+
+
+        <!--抽奖的格子容器-->
+
+        <div class="cell-box-container"
+             :data-index="$index+1"
+             v-for="(i,$index) in lottery.lottery">
+
+            <div class="cell-cont">{{i}}元</div>
+
+        </div>
+
+        <div id="get-lottery-btn"
+             @click.stop="getLotteryFn()"
+        >
+
+            <!--摇奖的次数-->
+            <div class="has-time">拥有{{userInfo.num}}次机会</div>
+
+        </div>
+
+    </div>
+
+
+    <!--活动说明 还有标签-->
+    <div class="rule-container" id="rule-container">
+
+        <div class="rule-list">
+            1.每人都有一次抽奖机会，百分百中奖<br>
+            2.分享该活动给微信好友或朋友圈，即可增加一次抽奖机会（仅一次）<br>
+            3.完成任意一款游戏对应任务，即可增加一次抽奖机会（仅一次）<br>
+            4.完成任务后若没有增加抽奖次数，重新登录对应游戏即可<br>
+
+        </div>
+
+    </div>
+
+    <div v-for="(item,i) in gameBox" class="board-box">
+        <div class="board-title">
+            <img :src="'images/w-title.png'" :alt="item.intro">
+        </div>
+        <div class="board-content">
+            <p class="intro">{{item.intro}}</p>
+            <div class="game-box col-2" v-for="game in item.gameList">
+                <div class="game-img">
+                    <img :src="game.img":alt="game.name">
+                    <div class="game-name">{{game.name}}</div>
+                </div>
+
+                <div class="task">{{game.task}}</div>
+                <div class="btn" @click="openNewPage(game.playUrl)">开始游戏</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="board-box">
+        <div class="board-title">
+            <img src="images/w-title-3.png" alt="长按二维码扫一扫或微信搜索公众号:闪电玩 赢取更多福利">
+        </div>
+
+        <div class="board-content none-content">
+
+            <p class="intro">
+                长按二维码扫一扫或微信搜索公众号:闪电玩 赢取更多福利
+            </p>
+
+        </div>
+        <div class="focus-code">
+            <img src="images/focus.png" alt="微信搜索闪电玩">
+        </div>
+    </div>
+
+    <!--所有的弹窗-->
+    <div class="mask-container"
+         @click.stop.self="closeMaskContainer()"
+         v-show="showLotteryResult || showTixian || showNotNum || showTip "
+    >
+        <!--达成条件提示框-->
+        <div class="tip-box" v-if="showTip">
+            <img src="images/already.png" alt="" class="already-img">
+            <div class="title">当前抽奖机会*{{userInfo.num}}</div>
+            <div class="tip">分享活动页面至朋友圈,或完成下列任务之一<br>可增加抽奖次数哦！</div>
+            <div class="btn" @click="showTip = false">知道啦</div>
+        </div>
+        <!--提现的流程展示框-->
+        <div class="tixian-container" v-if="showTixian">
+
+            <!--步骤一-->
+            <div class="step-cont step1"></div>
+
+            <div class="sdw-icon"></div>
+
+            <!--需要添加一个手指-->
+
+            <div class="download-app"
+                 @click.stop.self="downloadApp()"
+            ></div>
+
+            <div class="info-txt">已下载APP的玩家可直接打开APP进行领取</div>
+
+
+            <!--步骤2-->
+            <div class="step-cont step2"></div>
+
+            <div class="info-txt2">需使用微信账户登录方可提现</div>
+
+            <div class="info-txt">提现流程：打开闪电玩APP—点击底部菜单栏-"我"—点击"红包提现"</div>
+
+
+            <!--关闭按钮-->
+            <div class="close"
+                 @click.stop.self="closeMaskContainer()"
+            ></div>
+
+        </div>
+
+        <!--获得奖励的提示框-->
+        <div class="lottery-result-container" v-show="showLotteryResult">
+
+            <div class="lot-res-txt">
+                恭喜获得
+            </div>
+
+            <div class="lot-res-txt2">
+                {{showLotteryResultMoney}}<span>元</span>
+            </div>
+
+            <!--<div class="lot-res-tips">
+                分享活动、完成指定任务<br>获得更多抽奖机会哦~
+            </div>-->
+
+            <div class="lot-res-btn"
+                 @click.stop.self="showTiXianContainer()"
+            ></div>
+
+        </div>
+
+
+        <!--次数不足的提示界面-->
+
+        <div class="total-containers" v-show="showNotNum">
+
+            <div class="info-txt3">
+                摇奖次数不足
+            </div>
+
+            <div class="yx-sub"></div>
+
+            <div class="share-f-btn" @click.stop="switchUser()"></div>
+
+            <div class="info-txt3">
+                即可获得摇奖次数
+            </div>
+
+            <!--关闭按钮-->
+            <div class="close"
+                 @click.stop.self="closeMaskContainer()"
+            ></div>
+
+        </div>
+
+    </div>
+
+    <!--不在微信或者APP内的提示-->
+    <div class="mask-container" v-if="showNotWindow == '1' || showNotWindow == '2'">
+
+        <!--不在微信或者APP内的提示-->
+        <div class="total-containers" v-if="showNotWindow == '1'">
+
+            <div class="info-txt3">请使用微信打开该页面参与活动。</div>
+
+            <!--<div class="info-txt3">请使用闪电玩APP参与本活动</div>-->
+
+            <!--<div class="sdw-icon large"></div>-->
+
+            <!--<div class="download-app"-->
+            <!--@click.stop.self="downloadApp()"-->
+            <!--&gt;</div>-->
+
+        </div>
+
+
+        <!--亲使用微信登录-->
+        <div class="total-containers" v-if="showNotWindow == '2'">
+
+            <div class="info-txt3">
+                本活动仅限微信账号用户<br>
+                宝宝可以用微信登录参与哦！
+            </div>
+
+            <div class="yx-sub"></div>
+
+            <div class="unlogo-btn" @click.stop="switchUser()"></div>
+
+        </div>
+
+    </div>
+
+
+    <!--底部的二维码-->
+    <!--<img src="images/bottom-share.png" class="bottom-share">-->
+</div>
+
+</body>
+
+</html>

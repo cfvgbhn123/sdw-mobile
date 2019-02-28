@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>我假装是游戏</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body, html {
+            background: #f0f0f0;
+            font-family: arial;
+            width: 100%;
+            position: relative;
+        }
+
+        p {
+            width: 92%;
+            margin: 10px auto;
+            line-height: 1.2;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 92%;
+            height: 45px;
+            font-size: 15px;
+            line-height: 45px;
+            background: #50c3ff;
+            color: #fff;
+            box-sizing: border-box;
+            padding-left: 2%;
+            margin: 10px auto;
+            border-radius: 4px;
+
+        }
+
+        .info {
+            overflow-x: hidden;
+            display: block;
+            margin: 0 auto;
+            width: 92%;
+            /*box-sizing: border-box;*/
+            /*padding: 0 5%;*/
+            font-size: 12px;
+            color: #ff6f2b;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .red-msg {
+            color: #ff000c;
+        }
+
+        .blue {
+            background: #d1eeff;
+            color: #0b7bad;
+        }
+
+        .yellow {
+            background: #ffe4d6;
+            color: #ff500a;
+            /*border: 5px solid #ffe4d6;*/
+        }
+
+        .green {
+            background: #d9f0db;
+            color: #03543f;
+        }
+    </style>
+</head>
+<body>
+
+<p style="text-align: center">
+    （wz-share.html，假装是游戏页面...）
+</p>
+
+<p>
+    在安卓微端中，微端会在全局注入一个WZAPI对象，该对象包含了：<br><br>
+    1.显示分享界面WZAPI.showSharePage;<br>
+    2.设置分享信息WZAPI.setShareInfo，需要传入一个<span class="red-msg">JSON格式</span>的字符串;<br><br>
+    <span class="red-msg">**CP需要定义方法_wzShareCallback_，用来配合微端的分享回调（只在分享成功的时候进行回调）。<br><br>
+        **页面中需要加入一个消息监听，用于执行定义的回调方法_wzShareCallback_。</span><br>
+
+</p>
+
+
+<pre class="info">
+// 判断是否在安卓的微端
+var on_And_WZ_APP = /and_wangzuo/.test(navigator.userAgent);
+</pre>
+
+<div class="btn" id="showSharePage">1.显示分享界面(click me)</div>
+
+<pre class="info">
+// 调用微端的分享界面
+window.WZAPI.showSharePage();
+</pre>
+
+<div class="btn" id="setShareInfo">2.点击设置分享内容(click me)</div>
+
+<pre class="info">
+// 点击按钮设置(点击后，分享title会变更)
+window.WZAPI.setShareInfo(JSON.stringify({
+    title: '分享的标题'+(+new Date()),
+    desc: '分享的描述文字',
+    icon: 'https://app.m3guo.com/h5/2016/h5gameimg/xsgs02.png',
+    link: location.href
+}));
+</pre>
+
+<pre class="info yellow">
+
+// 全局定义分享的回调函数
+window._wzShareCallback_ = function () {
+    alert('恭喜，分享回调成功');
+}
+
+</pre>
+
+<pre class="info blue">
+
+// 通过消息通知，执行相应的回调函数
+window.addEventListener('message', function (e) {
+
+    var postData = e.data;
+
+    try {
+        postData = JSON.parse(postData);
+        var fromSdw = postData.postSdwData == true;
+        var shareCallback = postData.operate == 'and_wz_callback';
+
+        if (fromSdw && shareCallback) {
+            // 在此处进行分享成功回调。
+            window._wzShareCallback_();
+        }
+
+    } catch (e) {
+
+        console.log(e);
+    }
+
+}, false);
+
+</pre>
+
+
+<p style="text-align: center">
+    闪电玩祝您生活愉快：)
+</p>
+
+</body>
+
+<script>
+
+    (function () {
+
+        // 判断是否在安卓的微端
+        var on_And_WZ_APP = /and_wangzuo/.test(navigator.userAgent);
+
+        var hasWZAPI = typeof window.WZAPI != 'undefined';
+        var showSharePage = document.querySelector('#showSharePage');
+        var setShareInfo = document.querySelector('#setShareInfo');
+
+
+        // 显示分享的页面
+        showSharePage.onclick = function (e) {
+
+            e.stopPropagation();
+
+            if (!on_And_WZ_APP) {
+                alert('您不在安卓微端中...');
+                return;
+            }
+
+            if (hasWZAPI) {
+                window.WZAPI.showSharePage();
+            } else {
+                alert('不存在WZAPI这个对象')
+            }
+
+        };
+
+        // 设置分享的页面
+        setShareInfo.onclick = function (e) {
+
+            e.stopPropagation();
+
+            if (!on_And_WZ_APP) {
+                alert('您不在安卓微端中...');
+                return;
+            }
+
+            if (hasWZAPI) {
+
+                // 全局定义分享的回调函数
+                window._wzShareCallback_ = function () {
+                    alert('恭喜，分享回调成功');
+                };
+
+                // 设置分享的信息
+                window.WZAPI.setShareInfo(JSON.stringify({
+                    title: '分享标题' + (+new Date()),
+                    desc: '分享的内容',
+                    icon: 'https://app.m3guo.com/h5/2016/h5gameimg/xsgs02.png',
+                    link: location.href
+                }));
+
+
+            } else {
+                alert('不存在WZAPI这个对象')
+            }
+
+        };
+
+        // **通过消息通知，告诉王座微端分享回调成功，然后执行相应的回调函数
+        window.addEventListener('message', function (e) {
+            var postData = e.data;
+
+            try {
+                postData = JSON.parse(postData);
+                var fromSdw = postData.postSdwData == true;
+                var shareCallback = postData.operate == 'and_wz_callback';
+
+                if (fromSdw && shareCallback) {
+                    // 在此处进行分享成功回调。
+                    window._wzShareCallback_();
+                }
+
+            } catch (e) {
+
+                console.log(e);
+            }
+
+        }, false);
+
+    })();
+
+    if (localStorage['wz-share']) {
+        alert('[read] ' + localStorage['wz-share']);
+    } else {
+        localStorage['wz-share'] = 'wz-share';
+        alert('[set ok]');
+    }
+
+
+</script>
+</html>

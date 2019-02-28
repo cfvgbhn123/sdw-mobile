@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='QQ巴拉巴拉'/>
+    <title>QQtitle</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+            margin: 30px auto;
+            box-shadow: 0 0 20px -2px #b7b7b7;
+        }
+
+        input {
+            display: block;
+            margin: 10px auto;
+            width: 300px;
+            height: 40px;
+            line-height: 40px;
+        }
+    </style>
+</head>
+<body>
+
+<input type="text" placeholder="星星颗数" id="all">
+<input type="text" placeholder="点亮星星颗数" id="light">
+<input type="button" value="Draw" id="draw">
+
+<canvas id="canvas"></canvas>
+
+</body>
+
+<script>
+
+    var canvas = document.querySelector('#canvas');
+    var context = canvas.getContext('2d');
+
+    var config = {
+        width: 300,
+        height: 300
+    };
+
+    canvas.width = config.width;
+    canvas.height = config.height;
+    canvas.style.width = config.width + 'px';
+    canvas.style.height = config.height + 'px';
+
+    var angle = {
+        maxAngle: 50,
+        minAngle: 15,
+        length: 6,
+        radius: 200,
+        start: 180,
+        light: 2,
+        maxA: 200,
+        compute: function () {
+            var info = {}, point = [];
+            var space = this.maxA / this.length;
+            space = Math.min(space, this.maxAngle);
+            space = Math.max(space, this.minAngle);
+            info.space = space;
+            this.space = space;
+            var disAngle = space * (this.length - 1);
+            var rotate = 90 - disAngle / 2;
+            info.rotate = rotate;
+            point.push(this.start - rotate);
+            for (var i = 1; i < this.length; i++) {
+                point.push(point[i - 1] - space);
+            }
+            info.point = point;
+            this.points = point;
+            console.log(JSON.stringify(info));
+        }
+    };
+
+    angle.compute();
+
+    var painter = {
+
+        context: context,
+
+        draw: function () {
+
+            this.context.clearRect(0, 0, config.width, config.height);
+            this.drawBgCircle();
+            this.drawPoint();
+
+        },
+
+        drawBgCircle: function () {
+
+            this.context.lineWidth = 1;
+            this.context.strokeStyle = '#dbdbdb';
+            this.context.beginPath();
+            this.context.moveTo(0, config.height / 2);
+            this.context.lineTo(config.height, config.height / 2);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.moveTo(config.width / 2, 0);
+            this.context.lineTo(config.width / 2, config.height);
+            this.context.stroke();
+
+            this.context.beginPath();
+            this.context.arc(config.width / 2, config.height / 2, angle.radius / 2, 0, 2 * Math.PI, false);
+
+            this.context.lineWidth = 3;
+            this.context.strokeStyle = '#1ec3ff';
+            this.context.stroke();
+        },
+
+        drawPoint: function () {
+            for (var i = 0; i < angle.points.length; i++) {
+                var p = angle.points[i];
+                var a = p / 180 * Math.PI;
+                var x = angle.radius / 2 * Math.cos(a);
+                var y = angle.radius / 2 * Math.sin(a);
+                this.context.beginPath();
+                this.context.arc(x + config.width / 2, config.height / 2 - y, 13, 0, 2 * Math.PI, false);
+                this.context.fillStyle = i < angle.light ? '#ffbc24' : '#e2e2e2';
+                this.context.fill();
+            }
+
+        }
+    };
+
+    painter.draw();
+
+    var all = document.querySelector('#all');
+    var light = document.querySelector('#light');
+    var draw = document.querySelector('#draw');
+
+    draw.onclick = function (e) {
+
+        var al = parseInt(all.value);
+        var li = parseInt(light.value);
+
+        if (!al) {
+            alert('输入星星颗数');
+            return;
+        }
+
+        if (!li && li != 0) {
+            alert('输入点亮星星颗数');
+            return;
+        }
+
+        if (li > al) {
+            alert('数据错误');
+            return;
+        }
+
+        angle.length = al;
+        angle.light = li;
+        angle.compute();
+        painter.draw();
+
+    }
+
+
+</script>
+
+
+</html>

@@ -1,0 +1,217 @@
+@function torem($px) { //$px为需要转换的字号
+  @return $px / 32px * 1rem; //32px为根字体大小
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: "Microsoft YaHei", arial, helvetica, verdana, tahoma;
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  -webkit-user-select: none;
+  background-color: #2b323d;
+}
+
+#logos {
+  height: torem(290px);
+  width: 100%;
+  position: relative;
+}
+
+#logos img {
+  display: block;
+  height: torem(109px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.pages {
+  width: 89%;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.forms {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.forms {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.forms input {
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+  height: torem(110px);
+  line-height: torem(110px);
+  border: none;
+  font-size: torem(32px);
+  color: #474747;
+  padding-left: torem(40px);
+  border-radius: 0;
+}
+
+input:focus {
+  outline: none;
+}
+
+#loginForm {
+  position: relative;
+}
+
+#loginForm:after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #d0d0d0;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: scale(1, 0.5);
+}
+
+.btns {
+  width: 100%;
+  height: torem(110px);
+  line-height: torem(110px);
+  margin: 0 auto;
+  margin-top: torem(40px);
+  background-image: linear-gradient(90deg, #1fc7b9, #40e38d);
+  color: #fff;
+  font-size: torem(40px);
+  border-radius: 5px;
+  text-align: center;
+  letter-spacing: torem(10px);
+}
+
+.tipsText {
+  color: #7a8595;
+  font-size: torem(28px);
+}
+
+#others {
+  margin-top: torem(25px);
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+#others > div {
+  border: torem(20px) solid transparent;
+  border-top: none;
+}
+
+.middleTips {
+  position: relative;
+  height: 1.2rem;
+  line-height: 1.2rem;
+}
+
+.middleTips:before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: scale(1, 0.5);
+  background: #7a8595;
+}
+
+.otherTips {
+  position: absolute;
+  text-align: center;
+  display: inline-block;
+  top: 0;
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+  z-index: 2;
+  padding: 0 torem(20px);
+  background: #2b323d;
+}
+
+#login-other {
+  margin-top: torem(190px);
+}
+
+.otherlist {
+  display: flex;
+  //justify-content: space-between;
+  align-items: center;
+  height: torem(80px);
+  margin-top: torem(60px);
+}
+
+.login-items {
+  width: 50%;
+  height: torem(80px);
+  line-height: torem(80px);
+  box-sizing: border-box;
+  //background: #fff;
+  border: 1px solid #7a8595;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: torem(60px);
+}
+
+.other-icon {
+  height: torem(44px);
+  margin-right: torem(30px);
+}
+
+#tops-tips {
+  height: 3rem;
+  line-height: 3rem;
+}
+
+#getCode {
+  display: inline-block;
+  position: absolute;
+  bottom: torem(20px);
+  right: torem(20px);
+  border-radius: 5px;
+  text-align: center;
+  height: torem(70px);
+  padding: 0 torem(20px);
+  line-height: torem(70px);
+  font-size: 0.9rem;
+  color: #fff;
+
+}
+
+.codenormal {
+  background: #f99144;
+}
+
+.codetimer {
+  background: #c4c9d2;
+}
+
+#errortips {
+  width: 80%;
+  height: 4rem;
+  line-height: 4rem;
+  background: rgba(0, 0, 0, .6);
+  border-radius: 4px;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  visibility: hidden;
+  transform: translate3d(-50%, -50%, 0);
+  text-align: center;
+  font-size: 0.9rem;
+  color: #fff;
+  transition: .4s;
+  opacity: 0;
+}
+

@@ -1,0 +1,255 @@
+@import "../reset.scss";
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+.task-list-container {
+  width: torem(710px);
+  margin: 0 auto;
+
+  margin-top: torem(106px+150px+8px+15px);
+}
+
+.scroll-cont {
+  overflow: hidden;
+}
+
+.task-top-fixed {
+  width: 100%;
+  height: torem(106px+190px+15px+60px+15px);
+  background: #2b323d;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.task-shop-banner {
+  width: torem(722px);
+  height: torem(190px);
+  margin: 0 auto;
+  transition: .12s;
+  //margin-top: torem(106px);
+  background: url(images/shop-banner.png) 0 0 /100% 100%;
+}
+
+.task-shop-banner:active {
+  //transform: scale(0.97);
+  opacity: .9;
+
+}
+
+.task-user-container {
+  width: torem(710px);
+  height: torem(76px);
+  margin: torem(20px) auto torem(10px) auto;
+  position: relative;
+  box-sizing: border-box;
+
+}
+
+.task-gifts-icons2 {
+  width: torem(40px);
+  height: torem(48px);
+  border: torem(15px) solid transparent;
+  border-bottom: torem(10px) solid transparent;
+  position: absolute;
+  top: 0;
+  right: torem(15px);
+}
+
+.task-user-avatar {
+  display: block;
+  width: torem(70px);
+  height: torem(70px);
+  position: absolute;
+  top: 0;
+  left: torem(15px);
+  border-radius: 50%;
+  overflow: hidden;
+  //border: torem(3px) solid #fff;
+}
+
+.task-user-nick {
+  font-size: torem(30px);
+  color: #fff;
+  height: torem(76px);
+  line-height: torem(76px);
+  position: absolute;
+  top: 0;
+  left: torem(90px);
+}
+
+.task-user-left-container {
+  font-size: 0;
+  position: absolute;
+  top: torem(18px);
+  left: torem(100px);
+  height: torem(40px);
+
+  .task-conts {
+    height: torem(40px);
+    line-height: torem(40px);
+    padding: 0 torem(15px) 0 torem(35px);
+    border-radius: torem(20px);
+    background: #3e495a;
+    display: inline-block;
+    color: #ff9000;
+    font-size: torem(26px);
+    position: relative;
+    top: 0;
+    left: torem(30px);
+  }
+
+  .task-conts:before {
+    content: '';
+    width: torem(40px);
+    height: torem(40px);
+    position: absolute;
+    top: 0;
+    left: torem(-15px);
+
+    background: url('images/gold-icons.png') 0 0 / 100% 100%;
+  }
+
+  .task-my-gifts {
+    margin-right: torem(30px);
+  }
+}
+
+.task-gifts-icons {
+  width: torem(40px);
+  height: torem(48px);
+  background: url(images/gifts-icons2.png) 0 0 /100% 100% no-repeat;
+  border: torem(15px) solid transparent;
+  border-bottom: torem(10px) solid transparent;
+  position: absolute;
+  top: torem(-5px);
+  right: torem(15px);
+}
+
+.bottom-full {
+  width: 100%;
+  height: torem(130px);
+}
+
+#task-scroll {
+  width: 100%;
+  //left: 0;
+  //position: fixed;
+  margin-top: torem(106px);
+}
+
+.tips-container {
+  position: relative;
+  padding-left: torem(30px);
+  width: torem(680px);
+  margin: 0 auto;
+  height: torem(60px);
+  line-height: torem(60px);
+  font-size: torem(24px);
+  color: #9e7a33;
+  background: #fff5ce;
+  margin-top: torem(15px);
+  overflow: hidden;
+  border-radius: 4px;
+
+  .refresh-icon {
+    width: torem(60px);
+    height: torem(60px);
+    display: inline-block;
+    background-image: url("images/refresh.png");
+    background-size: torem(40px) torem(40px);
+    background-repeat: no-repeat;
+    background-position: center;
+    position: absolute;
+    top: 0;
+    right: torem(20px);
+
+  }
+}
+
+.tips-container:active {
+  background: #e4dab7;
+}
+
+.flash {
+  animation: flash linear infinite .4s;
+}
+
+#stage {
+  visibility: hidden;
+}
+
+canvas {
+  display: block;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999999;
+}
+
+.gold-flash-ani {
+  width: torem(352px);
+  height: torem(365px);
+  transition: .3s;
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(0.8);
+  z-index: 9999999999999;
+}
+
+.gold-flash-ani:after {
+  content: '';
+  width: torem(557px);
+  height: torem(557px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(1) rotate(0);
+  background: url("images/flash-ligther.png") 0 0 /100% no-repeat;
+  z-index: -1;
+  animation: scales infinite 2s linear;
+
+}
+
+.gold-flash-ani:before {
+  content: '';
+  width: torem(352px);
+  height: torem(365px);
+  background: url("images/flash-bg-light.png") 0 0 /100% no-repeat;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0) scale(1) rotate(0);
+  //background: url("images/flash-ligther.png") 0 0 /100% no-repeat;
+  z-index: 2;
+
+}
+
+@keyframes scales {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0.7) rotate(0);
+  }
+
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(0.6) rotate(360deg);
+  }
+
+}
+
+.task-get-container {
+  z-index: 99999999999 !important;
+  background: rgba(0, 0, 0, 0) !important;
+}

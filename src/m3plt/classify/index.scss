@@ -1,0 +1,63 @@
+
+.right-container {
+  position: fixed;
+  top: 20px;
+}
+
+.gift-game-list-cls {
+  width: 100%;
+  font-size: 0;
+
+  .cls-g-item {
+    display: inline-block;
+    padding: 0 20px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    background: #2f3948;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .cls-g-item-click {
+    background: linear-gradient(90deg, #22cab5, #3fe28f);
+  }
+}
+
+.get-more-gift {
+  height: 45px;
+  line-height: 45px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  background: #242d3a;
+  color: #485665;
+  margin: 20px auto 30px auto;
+  //transition: .12s;
+  //box-shadow: 0 0 20px rgba(0, 0, 0, .12);
+}
+
+.get-more-gift:hover {
+  color: #778595;
+}
+
+.l-game-cont:nth-child(4n) {
+  margin-right: 0 !important;
+}
+
+.no-res {
+
+  width: 300px;
+  color: #4e5766;
+  font-size: 16px;
+  text-align: center;
+  height: 60px;
+  margin: 150px auto 0 auto;
+  line-height: 60px;
+  padding-top: 130px;
+  background: url("images/no-res.png") center 0/120px 130px no-repeat;
+}

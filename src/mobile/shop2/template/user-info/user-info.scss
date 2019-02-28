@@ -1,0 +1,94 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+.user-info-container {
+
+  width: torem(710px);
+  margin: torem(25px) auto;
+  position: relative;
+  height: torem(92px);
+
+  .avatar-container {
+    width: torem(90px);
+    height: torem(90px);
+    border-radius: 50%;
+    border: 2px solid #fff;
+    background: #dddddd;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: torem(10px);
+  }
+
+  .avatar {
+    width: 100%;
+    display: block;
+  }
+
+  .list-container {
+    position: absolute;
+    left: torem(154px);
+    height: torem(36px);
+    line-height: torem(38px);
+    border-radius: torem(18px);
+    color: #ff9000;
+    font-size: torem(27px);
+    padding-left: torem(40px);
+    background-color: #15191e;
+  }
+
+  .jinbi-container {
+    width: torem(330px);
+    left: torem(154px);
+  }
+
+  .jinbi-container:before {
+    content: '';
+    width: torem(44px);
+    height: torem(44px);
+    background: url("images/shandianbi-icon.png") center/100% no-repeat;
+    position: absolute;
+    top: torem(-4px);
+    left: torem(-15px);
+  }
+
+  .dianjuan-container {
+    width: torem(120px);
+    left: torem(154px);
+    bottom: 0;
+  }
+
+  .dianjuan-container:before {
+    content: '';
+    width: torem(50px);
+    height: torem(42px);
+    background: url("images/dianjuan-icon.png") center/100% no-repeat;
+    position: absolute;
+    top: torem(-2px);
+    left: torem(-15px);
+  }
+
+
+  .hongbao-container {
+    width: torem(130px);
+    left: torem(360px);
+    padding-left: torem(30px);
+    bottom: 0;
+  }
+
+  .hongbao-container:before {
+    content: '';
+    width: torem(36px);
+    height: torem(38px);
+    background: url("images/money-icon.png") center/100% no-repeat;
+    position: absolute;
+    top: 0;
+    left: torem(-15px);
+  }
+
+}

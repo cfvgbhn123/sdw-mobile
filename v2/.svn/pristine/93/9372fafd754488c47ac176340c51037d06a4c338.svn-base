@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>闪电玩</title>
+</head>
+<body>
+
+</body>
+<!--<script src='../libs/js/zepto.min.js'></script>-->
+<!--<script src='MD5.js'></script>-->
+<!--<script src="js/check.js?v=6"></script>-->
+
+<script>
+    document.write('<script src="test/libs/js/m-init.min.js?m=' + (+new Date()) + '"><\/script>');
+</script>
+
+<script>
+
+
+    (function () {
+
+        var url = SDW_WEB.queryParam;
+
+        //    var DATAITEM = url['datatype'] + '';
+        var goUrl = url['goto'];
+
+        if (/(test\/mobile)/ig.test(goUrl)) {
+
+            var port = location.protocol + '//';
+            var APP_ROOT = port + 'www.shandw.com/mobile/';
+            var HTTP_STATIC = port + 'platform.shandw.com/';// 平台首页
+            var HTTP_USER_STATIC = port + 'auth.shandw.com/';  // 账号类
+
+        } else {
+
+            var port = location.protocol + '//';
+            var APP_ROOT = port + 'www.shandw.com/mobile/';
+            var HTTP_STATIC = port + 'platform.shandw.com/';// 平台首页
+            var HTTP_USER_STATIC = port + 'auth.shandw.com/';  // 账号类
+
+        }
+
+        var channel = SDW_WEB.channel;
+
+        if (SDW_WEB.onWeiXin) {
+            // 来自微信的跳转
+            var HTTP_URL = HTTP_USER_STATIC + 'wxauth?channel=' + channel + '&flag=1&appid=wxfd695e777664b347';
+            var aUrl = HTTP_URL + '&code=' + url['code'];
+        } else if (SDW_WEB.onKD) {
+            // 口袋
+            var kdUser = SDW_WEB.Store.get('kd_user') || {};
+
+//            alert(JSON.stringify(kdUser));
+            var aUrl = HTTP_USER_STATIC + 'kdauth?channel=' + channel + '&flag=1&token=' + kdUser.token + '&uid=' + kdUser.uid + '&sec=' + kdUser.secheme;
+
+        } else if (SDW_WEB.onQQ) {
+            var HTTP_URL = HTTP_USER_STATIC + 'qqauth?channel=' + channel + '&flag=1&appid=101359011';
+            var aUrl = HTTP_URL + '&code=' + url['code'] + '&redirect_uri=' + encodeURIComponent(SDW_WEB.CHECK_URL);
+        } else if (SDW_WEB.onWeiBo) {
+            var HTTP_URL = HTTP_USER_STATIC + 'wbauth?channel=' + channel + '&flag=1&appid=530008665';
+            var aUrl = HTTP_URL + '&code=' + url['code'] + '&redirect_uri=' + encodeURIComponent(SDW_WEB.CHECK_URL);
+        } else {
+            var aUrl = '';
+        }
+
+
+        if (localStorage && localStorage.getItem(DATAITEM) && sessionStorage['FIRST_LOAD'] == '1') {
+
+            location.href = goUrl;
+
+        } else {
+
+            if (SDW_WEB.onKD && kdUser.uid == 'undefined') {
+
+                alert('请登入口袋');
+
+            } else if (aUrl) {
+
+                // 平台用户授权
+                SDW_WEB.getAjaxData(aUrl, function (data) {
+
+                    if (data.result == 1) {
+                        sessionStorage['FIRST_LOAD'] = '1';
+
+                        localStorage.setItem(DATAITEM, JSON.stringify(data));
+
+                        // v2版本的用户数据  id => uid
+                        var v2UserData = {
+                            uid: data.id,
+                            otoken: data.token,
+                            nick: data.nick,
+                            sex: data.sex,
+                            avatar: data.avatar,
+                            city: data.city,
+                            fl: data.fl
+                        };
+
+                        SDW_WEB.Store.set(SDW_WEB.localItem, v2UserData, true);
+
+                        setTimeout(function () {
+                            location.href = goUrl;
+                        }, 10);
+
+                    } else {
+
+                        alert('error')
+                    }
+
+                });
+
+            } else {
+
+                alert('授权地址错误');
+            }
+
+        }
+
+    })();
+
+
+</script>
+</html>

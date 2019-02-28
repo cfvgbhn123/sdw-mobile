@@ -1,0 +1,110 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+$mainBackground: #fff;
+
+body {
+  background: $mainBackground;
+  font-family: arial, helvetica, "Microsoft YaHei";
+}
+
+#app {
+  padding-top: torem(30px);
+  width: 100%;
+  position: relative;
+  max-width: 450px;
+  margin: 0 auto;
+  padding-bottom: torem(220px);
+}
+
+#banners .swiper-slide {
+  background-position: center;
+  background-size: cover;
+  width: torem(508px);
+  height: torem(902px);
+  //border-radius: 4px;
+  display: block;
+  box-shadow: none;
+  background-color: #dedede;
+}
+
+#bannercont {
+  //overflow: hidden;
+  width: 100%;
+  height: torem(902px);
+}
+
+#banners {
+  width: 100%;
+  height: torem(902px);
+  overflow: hidden;
+  margin-bottom: torem(35px);
+}
+
+#bannercont .swiper-slide {
+
+  background-position: center;
+  background-size: cover;
+  width: torem(508px);
+  height: torem(902px);
+  //border-radius: 4px;
+  display: block;
+  box-shadow: none;
+  background-color: #dedede;
+
+}
+
+.download-container {
+  height: torem(75px);
+  padding: torem(70px) 0;
+  background: rgba(255, 255, 255, .8);
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 666;
+}
+
+#download {
+  cursor: pointer;
+  width: torem(580px);
+  height: torem(75px);
+  line-height: torem(75px);
+  text-align: center;
+  margin: 0 auto;
+  border-radius: torem(35px);
+}
+
+.image-list-container {
+  width: torem(610px);
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    display: block;
+    height: auto;
+  }
+}
+
+
+#btnImg{
+  width: torem(580px);
+  height: torem(75px);
+  display: block;
+  margin: torem(20px) auto;
+  cursor: pointer;
+}

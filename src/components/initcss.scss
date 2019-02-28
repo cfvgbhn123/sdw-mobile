@@ -1,0 +1,107 @@
+/**
+ * Created by CHEN-BAO-DENG on 2017/3/27.
+ */
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+input {
+  -webkit-appearance: none;
+  box-shadow: none;
+}
+
+body {
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  -webkit-user-select: none;
+  //-webkit-touch-callout: none;
+  font-family: "Microsoft YaHei", arial, helvetica, verdana, tahoma;
+}
+
+.dialogsCont {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: transparent;
+  z-index: 99999999999999999;
+  top: 0;
+  left: 0;
+  visibility: hidden;
+  transition: .34s;
+  opacity: 0;
+}
+
+.dialogs {
+  padding: torem(45px) torem(30px);
+  position: fixed;
+  z-index: 9999;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, .8);
+  backdrop-filter: blur(2px) hue-rotate(180deg);
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: torem(240px);
+}
+
+#icons {
+  width: torem(55px);
+  height: torem(55px);
+  margin: 0 auto;
+  overflow: hidden;
+  //position: absolute;
+  //top: 0;
+  //left: 50%;
+  //transform: translateX(-50%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.icon-ok {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA3CAMAAACfBSJ0AAAAjVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8DizOFAAAALnRSTlMA+zH1+ey65IYoWhlBDSPSEvLesWgkG8x2NjPVxc6KUiwGwUa1raGbXFQIXUh/bvXW0QAAAhtJREFUSMedlumWojAQhcMqy9CKQKMi7t2ttlPv/3hzUacDlunE5A+HJN9JLbeSEs/GZB19jAOHnKApVuuJMBrprHaoP5x6lmqpeSGhHlrMf6Xi8LZtGSWLNBNZukiinX+dO8RK6hz5HRQes8F0dgw7G/zorDhs3FGf8bOlz44cPz1yn2Npt1HYstlhNd/zhQQ2eqVQj9KDrQnDiGjq/ho0d4o9D+Deh/mpLrNjnDgwtYJvrV4XE4B5Jf+3NYw0kdM7TK23P78RQrIxEuEGwYl+sgPnSmE2Srj4P40QV6gn2OY5VBIbczGUcxN5QfQlzMcXUXGNEeqzeoGrsP8d3xnzTu/hDB/k7luf8ZOsrW/kEOJBYDMd9jaipaxHn5yJOBGm9BhN5e+SaN1pJTLAvD/yH8hKfBAlppisuYOAxBevYWJB1IiAKO0JvnzTYdhENBLQtCwMnB64OkxkRLkgot5UQwA1mOiYh/PcoAM5xs+T/nFQYsw/GU8OckzGU+aPgQzr5++uFw4ybKiXuz45eGLYQJ/3euAgMWxYD6Ll9QdQjYkjUSvrnYHA1PWuvF+qv67mfrG5z2zvT8v72v59kO+Ra4S5Xl9e2/aF96/dDt/b2vS9tXvfL5b9hF3/cuTzF4N+6fJUCY2mP2sUqjqvnI4Mk4d+MAmv86uz2vVb/+n3+8/Qu86Frl2/a9Fftwb9teznRznlo+ag6Of/AQxZWI/B9BykAAAAAElFTkSuQmCC);
+}
+
+.icon-error {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA3CAMAAACfBSJ0AAAAhFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8g2+bRAAAAK3RSTlMArwX7G9pbJvm604YOGTXO8vUqRzEV38W1VFIvE+rBdmYJ5qGbindojHh1lX35VgAAAiRJREFUSMeM0ttuozAURuEfTMFgc0qa86mdtqo06/3fb0Q1LYljGtbdlvjAFluxjnuXVCeDOVXJx/6oWdV/W8N1pr3UD1WTGO4zSfOrWpQAmI3Lm9rL103uzhaA7WJSvTo7oDL3us7npQGse42zohrUW+y9i7dBVkWMLTvgPKpAnoFuqbtyC/2npvvsweZ3DFgf9FuHNRDApYWqfvRnK7A3Ry06aL0e5SvoinFOW3ha6XHZGtr0Z3TQHzSnQw/u55QWXjSvF7DfJy2hnEHChxswxWxXGGg0lMC75vcOiSRlJvhc2qQK5uCDJpN0CW6XbknS6zlhmwY3vEhqg+XZwRccGeyClWylGuzNpqyevuDIwp3wFnPUDjbBUvyHI8t00wb2cuAUhVNsIB9KIFccTjDlsFUFz4pDH2d6hkonWCkOT3GmDP7IQqo4nGDy0AmI72EP9P86LZsdBGEgCB/En5po0BTi0XJAzL7/+xmMcSBf+ds9QiZNOzM7k9etmfE88SY6eJ7uR5iAvB/fU3RfJQC+J/kT3RIA+aNeRLeA1Iv0SZiA1Kf8QJiA9AP994cJSP/R71X9gwlYV/Q790vRXsax8C6wX5z7zLs/vfta+fDakA/3YR7FVbCoPNqUf3vlnyNvXfnu7xPsL8+5l0R/8fQl9rNj7pf6WWZSt8v1wXQI3+9dmqY1WD+nYf8MN+snRG/fXWKpRb+WITHs801pZXN+TPT5Dwt6WX9AyUYHAAAAAElFTkSuQmCC);
+}
+
+.icon-loading {
+  transform-origin: 50% 50%;
+  animation: swiper-preloader-spin 1s steps(12, end) infinite
+}
+
+.icon-loading:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D'0%200%20120%20120'%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20xmlns%3Axlink%3D'http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink'%3E%3Cdefs%3E%3Cline%20id%3D'l'%20x1%3D'60'%20x2%3D'60'%20y1%3D'7'%20y2%3D'27'%20stroke%3D'%23fff'%20stroke-width%3D'11'%20stroke-linecap%3D'round'%2F%3E%3C%2Fdefs%3E%3Cg%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(30%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(60%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(90%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(120%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.27'%20transform%3D'rotate(150%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.37'%20transform%3D'rotate(180%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.46'%20transform%3D'rotate(210%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.56'%20transform%3D'rotate(240%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.66'%20transform%3D'rotate(270%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.75'%20transform%3D'rotate(300%2060%2C60)'%2F%3E%3Cuse%20xlink%3Ahref%3D'%23l'%20opacity%3D'.85'%20transform%3D'rotate(330%2060%2C60)'%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+  background-position: 50%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat
+}
+
+@keyframes swiper-preloader-spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.dialogs .msg {
+  font-size: torem(32px);
+  margin-top: torem(32px);
+  line-height: torem(35px);
+  text-align: center;
+  color: #fff;
+}
+
+.app-shandw {
+  padding-bottom: 0 !important;
+}

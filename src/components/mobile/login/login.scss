@@ -1,0 +1,270 @@
+@function torem($px) {
+  @return $px / 32px*1rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.login-container {
+  transition: .32s;
+  width: 100%;
+  height: 100%;
+  background-color: #010329;
+  background-image: url("images/bg-img.png");
+  background-position: 0 0;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999999999;
+  transform: translate(0, 0);
+
+  .sdw-logo-v2 {
+    width: torem(650px);
+    height: torem(240px);
+    position: absolute;
+    top: torem(120px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    background: url("images/logo2x.png") 0 0 /100%;
+  }
+
+}
+
+.ios-mask {
+  background: rgba(0, 0, 0, .7);
+  //background: rgba(255, 255, 0, .6);
+  -webkit-backdrop-filter: saturate(180%) blur(30px);
+}
+
+.and-mask {
+  background-image: url(images/bg@2x.png);
+  background-size: 100%;
+}
+
+.normal-ipt {
+  display: block;
+  width: torem(420px);
+  height: torem(40px);
+  line-height: torem(40px);
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: torem(28px);
+  color: #858b94;
+  position: absolute;
+  left: torem(60px);
+  bottom: torem(18px);
+  -webkit-appearance: none;
+}
+
+.mask-v2 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: transparent;
+}
+
+//.mask-v2:before {
+//  content: '';
+//  width: torem(55px);
+//  height: torem(55px);
+//  background: url("images/close.png") 0 0 /100% 100% no-repeat;
+//  position: absolute;
+//  bottom: torem(80px);
+//  left: 50%;
+//  transform: translateX(-50%);
+//}
+
+input:focus {
+  border: none;
+  outline: none;
+}
+
+#loginForm-v2 {
+  width: torem(510px);
+  position: absolute;
+  top: torem(444px);
+  left: 50%;
+  transform-origin: 0 50%;
+  transform: translate(-50%, 0) scale(1);
+
+  .inpus {
+    height: torem(100px);
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid #858b94;
+    //background: #f74932;
+
+    input {
+      //width: torem(250px);
+      height: torem(40px);
+      line-height: torem(40px);
+      //background: #2fd4a4;
+      color: #fff;
+      background: transparent;
+      position: absolute;
+      bottom: torem(20px);
+      left: torem(50px);
+      border: none;
+      box-shadow: none;
+    }
+  }
+
+  .short {
+    width: torem(250px);
+  }
+
+  .long {
+    width: torem(410px);
+  }
+
+  .icons-v2 {
+    width: torem(32px);
+    height: torem(38px);
+    position: absolute;
+    bottom: torem(20px);
+    left: 0;
+  }
+
+  #getCode-v-2, #getCode-v2 {
+    display: inline-block;
+    padding: 0 0 0 torem(20px);
+    height: torem(40px);
+    line-height: torem(40px);
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: torem(30px);
+    //color: #e4e4e4;
+    border: torem(20px) solid transparent;
+    border-right: none;
+    text-align: right;
+  }
+
+  .codenormal {
+    color: #e4e4e4;
+  }
+
+  .codetimer {
+    color: #f0f0f0;
+  }
+
+  .phone {
+    background: url(images/ic_phone@2x.png) 0 0 /100%;
+  }
+  .code {
+    background: url(images/ic_password@2x.png) 0 0 /100%;
+  }
+
+}
+
+.login-btn-v2, .login-btn-v3 {
+  margin-top: torem(80px);
+  width: 100%;
+  height: torem(80px);
+  line-height: torem(80px);
+  border-radius: torem(40px);
+  background: #0c94d0;
+  font-size: torem(36px);
+  color: #fff;
+  text-align: center;
+  position: relative;
+  background-image: linear-gradient(90deg, #1fc7b9, #40e38d);
+}
+
+.login-btn-v2:before {
+
+  content: '';
+  width: 120%;
+  height: 160%;
+  position: absolute;
+  top: -30%;
+  left: -10%;
+}
+
+.weixin {
+  background: url("images/weixin-icon.png") 0 0 /100% 100%;
+}
+
+.weibo {
+  background: url("images/weibo-icon.png") 0 0 /100% 100%;
+}
+
+.dh {
+  background: url("images/dh-icon.png") 0 0 /100% 100%;
+}
+
+.qq {
+  background: url("images/qq-icon.png") 0 0 /100% 100%;
+}
+
+.other-login-v2 {
+  width: torem(510px);
+  font-size: torem(28px);
+  color: #868b94;
+  text-align: center;
+  height: torem(40px);
+  line-height: torem(40px);
+  position: absolute;
+  bottom: torem(220px);
+  left: 50%;
+  transform: translate(-50%, 0);
+
+}
+
+.login-ani {
+  transition: .32s;
+  transform: scale(1);
+}
+
+.login-ani-enter {
+  transition: .32s;
+  transform: scale(1.2, 1.5);
+}
+
+.login-ani-leave {
+  transition: .4s;
+  opacity: 0;
+}
+
+.other-icon-v2 {
+  width: torem(510px);
+  height: torem(100px);
+  font-size: 0;
+  position: absolute;
+  bottom: torem(70px);
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  .icons-v2 {
+    width: torem(100px);
+    height: torem(100px);
+    display: inline-block;
+    margin: 0 torem(12px);
+  }
+}
+
+.scale21-leave {
+  //transform: scale(1);
+  opacity: 0;
+}
+
+.scale21-leave-active {
+  //transform: scale(1.53, 1.63);
+  opacity: 1;
+}
+
+.scale21-enter-active {
+  transition: transform .36s cubic-bezier(0.5, 1.65, .49, .63), opacity .36s;
+  transform: scale(1, 1);
+  opacity: 1;
+}
+
+.scale21-enter {
+  transform: scale(1.63, 1.23);
+  opacity: 0;
+}

@@ -1,0 +1,933 @@
+@function torem($px) { //$px为需要转换的字号
+  @return $px / 32px * 1rem;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #2b323d;
+  font-family: "Microsoft YaHei", arial, helvetica, verdana, tahoma;
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  //user-select: none;
+}
+
+.tab-list-container {
+  width: torem(710px);
+  height: torem(160px);
+  position: relative;
+  margin: torem(30px) auto;
+  margin-top: torem(50px);
+
+  .tab {
+    width: torem(160px);
+    height: torem(160px);
+    float: left;
+    margin-right: torem(20px);
+    position: relative;
+
+    .tool-tips {
+
+      display: inline-block;
+      height: torem(30px);
+      line-height: torem(30px);
+      border-radius: torem(15px);
+      background: #fff;
+      color: #6b6b6b;
+      font-size: torem(18px);
+      padding: 0 torem(10px);
+      position: absolute;
+      top: torem(-25px);
+      right: 0;
+    }
+
+    .tool-tips:before {
+
+      content: '';
+      width: 0;
+      height: 0;
+      border-width: torem(9px);
+      border-style: solid;
+      border-color: #fff transparent transparent transparent;
+      position: absolute;
+      bottom: torem(-18px);
+      right: torem(20px);
+
+    }
+  }
+
+  .tab[data-type='1'] {
+    background: url("images/tab1.png") center/100% no-repeat;
+  }
+
+  .tab[data-type='2'] {
+    background: url("images/tab2.png") center/100% no-repeat;
+  }
+
+  .tab[data-type='3'] {
+    background: url("images/tab3.png") center/100% no-repeat;
+  }
+
+  .tab[data-type='4'] {
+    background: url("images/tab4.png") center/100% no-repeat;
+    margin-right: 0;
+  }
+
+}
+
+.sp-line {
+  width: 100%;
+  height: torem(20px);
+  background: #21272f;
+
+}
+
+.content-nav-list-pos {
+
+  width: 100%;
+  position: relative;
+  height: torem(100px);
+
+}
+
+.content-nav-list {
+
+  width: 100%;
+  height: torem(100px);
+  line-height: torem(100px);
+  position: absolute;
+  font-size: 0;
+  text-align: center;
+
+  .list-title {
+    color: #6c7583;
+    position: relative;
+    display: inline-block;
+    margin: 0 torem(30px);
+    font-size: torem(28px);
+  }
+
+  .list-title[data-type='select'] {
+    color: #fff;
+  }
+
+  .list-title[data-type='select']:before {
+    content: '';
+    width: 100%;
+    height: torem(8px);
+    border-radius: torem(4px);
+    background: #23c9b6;
+    position: absolute;
+    bottom: torem(16px);
+    left: 0;
+  }
+}
+
+.content-nav-list[data-type='fixed'] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #2b323d;
+  z-index: 222;
+}
+
+.nav-container {
+
+  width: torem(710px);
+  margin: 0 auto;
+  //padding-right: torem(50px);
+}
+
+#shop-root[data-type='normal'] {
+  margin-bottom: torem(130px);
+}
+
+.scrll-n-c {
+  border-radius: torem(8px);
+  background: #fff1d4;
+  position: relative;
+  overflow: hidden;
+
+  .refresh {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: torem(60px);
+    padding: 0 torem(20px);
+    width: torem(60px);
+    background: url("images/refresh.png") center/torem(36px) no-repeat;
+    background-color: #fff1d4;
+    z-index: 90;
+  }
+}
+
+.game-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, .7);
+
+  .index-cont {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+  }
+
+  .index {
+    width: torem(497px);
+    height: torem(303px);
+    margin: torem(50px) auto;
+  }
+
+  .egg {
+    background: url("images/egg-index.png") center/100% no-repeat;
+  }
+
+  .lottery {
+    background: url("images/lottery-index.png") center/100% no-repeat;
+  }
+
+}
+
+.games {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.games-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 600;
+  background: rgba(0, 0, 0, .7);
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+
+  #egg {
+    width: torem(463px);
+
+    .egg-rule {
+      position: absolute;
+      top: 0;
+      right: torem(45px);
+      width: torem(155px);
+      animation: egg-rule-ani linear 0.6s infinite alternate;
+    }
+
+    @keyframes egg-rule-ani {
+
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(0, -10%, 0);
+      }
+
+    }
+
+    .eggs {
+      width: torem(219px);
+      height: torem(284px);
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+      background-position: center;
+      display: inline-block;
+      //margin-bottom: torem(45px);
+      //background-image: url('images/eggs.png');
+      //background-size: torem(1095px) torem(1135px);
+      position: absolute;
+      transition: .32s;
+    }
+
+    .egg-1 {
+      transform: translate3d(0, 0, 0);
+    }
+    .egg-2 {
+      transform: translate3d(torem(288px), 0, 0);
+    }
+    .egg-3 {
+      transform: translate3d(0, torem(284px+45px), 0);
+    }
+    .egg-4 {
+      transform: translate3d(torem(288px), torem(284px+45px), 0);
+    }
+    .egg-5 {
+      transform: translate3d(torem(200px), torem(100px), 0);
+    }
+
+    #egg-list {
+      width: torem(507px);
+      height: torem(810px);
+      transform: translate3d(-50%, -40%, 0);
+    }
+
+    .egg-text {
+      width: 90%;
+      //display: block;
+      text-align: center;
+      background-image: url("images/egg-text.png");
+      background-repeat: no-repeat;
+      background-size: 100% auto;
+      padding-top: torem(60px);
+      font-size: torem(28px);
+      color: #ff9019;
+      position: absolute;
+      bottom: 0;
+      left: 5%;
+    }
+
+    $co-list: 'green', 'blue', 'red', 'yellow';
+    @each $c in $co-list {
+
+      @for $i from 1 through 5 {
+        .eggs-#{$c}-#{$i} {
+          background-image: url('https://www.shandw.com/mobile/shop/images/egg-#{$c}-#{$i}.png');
+          //background-position: torem(-);
+
+        }
+      }
+
+    }
+
+    #egg-cz {
+      width: torem(123px);
+      height: torem(120px);
+      position: absolute;
+      z-index: 5;
+      background-image: url('images/egg-cz.png');
+      background-repeat: no-repeat;
+      background-size: auto 100%;
+      background-position: center;
+      transform-origin: 100% 100%;
+    }
+
+    .egg-cz-0 {
+      top: torem(-110px);
+      left: torem(480px);
+    }
+
+    .egg-cz-1 {
+      transition: .2s;
+      top: torem(-130px);
+      left: torem(90px);
+
+      animation: egg-cz-ani 0.26s 0.24s forwards;
+    }
+
+    .egg-cz-2 {
+      transition: .2s;
+      top: torem(-130px);
+      left: torem(400px);
+      animation: egg-cz-ani 0.26s 0.24s forwards;
+    }
+
+    .egg-cz-3 {
+      transition: .2s;
+      top: torem(200px);
+      left: torem(90px);
+      animation: egg-cz-ani 0.26s 0.24s forwards;
+    }
+
+    .egg-cz-4 {
+      transition: .2s;
+      top: torem(200px);
+      left: torem(400px);
+      animation: egg-cz-ani 0.26s 0.24s forwards;
+    }
+
+    @keyframes egg-cz-ani {
+
+      0% {
+        transform: rotate(30deg);
+      }
+      30% {
+
+        transform: rotate(30deg);
+
+      }
+      100% {
+        transform: rotate(-45deg);
+      }
+
+    }
+
+    .egg-rule-info {
+      //width: torem(610px);
+      //min-height: torem(450px);
+      //background: #ce2c43;
+      //border-radius: torem(8px);
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, .7);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 150;
+    }
+
+    .egg-rule-cont {
+      width: torem(610px);
+      min-height: torem(450px);
+      background: #ce2c43;
+      border-radius: torem(8px);
+      font-size: torem(23px);
+      color: #fff;
+      box-sizing: border-box;
+      padding: torem(90px) torem(110px) torem(60px) torem(110px);
+      line-height: 1.8;
+    }
+
+    .egg-rule-cont:before {
+      content: '';
+      width: torem(320px);
+      height: torem(70px);
+      background-image: url("images/egg-rule-title.png");
+      background-size: cover;
+      position: absolute;
+      top: torem(-27px);
+      left: 50%;
+      transform: translate3d(-50%, 0, 0);
+    }
+
+  }
+
+  #lottery {
+
+  }
+
+  #lottery-list {
+    width: 80%;
+    height: torem(600px);
+    background: #00aeff;
+  }
+
+}
+
+#lottery-container {
+  width: torem(700px);
+  height: torem(755px);
+
+  .lottery-border-normal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    animation: lottery-border-ani 1.8s infinite steps(2, end);
+  }
+
+  .lottery-border-light {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
+    animation: lottery-border-ani 0.5s infinite steps(2, end);
+  }
+
+  @keyframes lottery-border-ani {
+    0% {
+      background-image: url('https://www.shandw.com/mobile/shop/images/lottery-border-1.png');
+    }
+    100% {
+      background-image: url('https://www.shandw.com/mobile/shop/images/lottery-border-2.png');
+    }
+  }
+
+  .nodes {
+    width: torem(98px);
+    height: torem(198px);
+    position: absolute;
+    left: 0;
+    bottom: torem(-198px/2+2px);
+    background-size: cover;
+    transition: .2s;
+  }
+
+  .left-node {
+    background-image: url("https://www.shandw.com/mobile/shop/images/blue-node.png");
+  }
+  .right-node {
+    background-image: url("https://www.shandw.com/mobile/shop/images/red-node.png");
+  }
+
+  .left-node-normal {
+    transform: translate3d(torem(106px), 0, 0);
+  }
+
+  .left-node-light {
+    transform: translate3d(torem(145px), 0, 0);
+  }
+
+  .right-node-normal {
+    transform: translate3d(torem(496px), 0, 0);
+  }
+
+  .right-node-light {
+    transform: translate3d(torem(455px), 0, 0);
+  }
+
+  .lottery-btn-normal {
+    width: torem(290px);
+    height: torem(120px);
+    background-image: url(https://www.shandw.com/mobile/shop/images/lottery-btn-normal.png);
+    background-size: cover;
+    position: absolute;
+    bottom: torem(10px);
+    left: 50%;
+    transform: translate3d(-50%, 50%, 0);
+    z-index: 2;
+  }
+
+  .lottery-btn-click {
+    width: torem(290px);
+    height: torem(110px);
+    background-image: url(https://www.shandw.com/mobile/shop/images/lottery-btn-click.png);
+    background-size: cover;
+    position: absolute;
+    bottom: torem(5px);
+    left: 50%;
+    transform: translate3d(-50%, 50%, 0);
+    z-index: 2;
+  }
+
+  .lottery-btn-light {
+    width: torem(492px);
+    height: torem(324px);
+    background-image: url(https://www.shandw.com/mobile/shop/images/lottery-btn-light.png);
+    background-size: cover;
+    position: absolute;
+    bottom: torem(10px);
+    left: 50%;
+    transform: translate3d(-50%, 50%, 0);
+    z-index: 2;
+  }
+
+  .lottery-btn-bottom {
+    width: torem(318px);
+    height: torem(128px);
+    background-image: url(https://www.shandw.com/mobile/shop/images/lottery-btn-bottom.png);
+    background-size: cover;
+    position: absolute;
+    bottom: torem(-10px);
+    left: 50%;
+    transform: translate3d(-50%, 50%, 0);
+    z-index: -3;
+  }
+
+  .cl-nodes-normal {
+    position: absolute;
+    background-size: cover;
+    animation: cl-nodes-ani 10s linear infinite;
+    z-index: -2;
+  }
+
+  .cl-nodes-light {
+    position: absolute;
+    background-size: cover;
+    animation: cl-nodes-ani 2s linear infinite;
+    z-index: -2;
+  }
+
+  .cl-right {
+    width: torem(92px);
+    height: torem(92px);
+    top: torem(258px);
+    left: torem(360px);
+    background-image: url('https://www.shandw.com/mobile/shop/images/cl-right.png');
+  }
+
+  .cl-left {
+    width: torem(133px);
+    height: torem(133px);
+    top: torem(238px);
+    left: torem(213px);
+    background-image: url('https://www.shandw.com/mobile/shop/images/cl-left.png');
+  }
+
+  .cl-bottom {
+    width: torem(59px);
+    height: torem(59px);
+    top: torem(330px);
+    left: torem(326px);
+    background-image: url('https://www.shandw.com/mobile/shop/images/cl-bottom.png');
+  }
+
+  @keyframes cl-nodes-ani {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  $lottery_width: torem(168px);
+  $lottery_t1: torem(45px);
+  $lottery_t2: torem(220px);
+  $lottery_t3: torem(395px);
+
+  $lottery_l1: torem(87px);
+  $lottery_l2: torem(267px);
+  $lottery_l3: torem(445px);
+
+  //.lottery-items {
+  //  width: $lottery_width;
+  //  height: $lottery_width;
+  //  background: #fffbe6;
+  //  box-sizing: border-box;
+  //  position: absolute;
+  //  border-radius: torem(6px);
+  //  transform-origin: 50%;
+  //  font-size: torem(20px);
+  //  color: #000;
+  //
+  //  img {
+  //    width: torem(100px);
+  //    height: torem(100px);
+  //    display: block;
+  //    margin: torem(20px) auto;
+  //  }
+  //
+  //}
+
+  .lottery-items-select {
+    transition: transform .06s;
+    border: torem(8px) solid #ffe400;
+    transform: scale(0.96);
+  }
+
+  .lottery-items-1 {
+    top: $lottery_t1;
+    left: $lottery_l1;
+  }
+
+  .lottery-items-2 {
+    top: $lottery_t1;
+    left: $lottery_l2;
+  }
+
+  .lottery-items-3 {
+    top: $lottery_t1;
+    left: $lottery_l3;
+  }
+
+  .lottery-items-4 {
+    top: $lottery_t2;
+    left: $lottery_l3;
+  }
+
+  .lottery-items-5 {
+    top: $lottery_t3;
+    left: $lottery_l3;
+  }
+
+  .lottery-items-6 {
+    top: $lottery_t3;
+    left: $lottery_l2;
+  }
+
+  .lottery-items-7 {
+    top: $lottery_t3;
+    left: $lottery_l1;
+  }
+
+  .lottery-items-8 {
+    top: $lottery_t2;
+    left: $lottery_l1;
+  }
+
+  .items-cont {
+    width: $lottery_width;
+    height: $lottery_width;
+    background: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    position: absolute;
+    top: $lottery_t2;
+    left: $lottery_l2;
+    border: torem(18px) solid #ff5a49;
+    border-radius: torem(6px);
+  }
+
+  .lottery-top-text {
+    position: absolute;
+    top: torem(-35px);
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+    width: torem(390px);
+    height: torem(50px);
+    line-height: torem(50px);
+    font-size: torem(21px);
+    color: #feeeb5;
+    text-align: center;
+    z-index: -2;
+  }
+
+  .lottery-top-text:before {
+    content: '';
+    width: torem(410px);
+    height: torem(60px);
+    background: #ff5a49;
+    position: absolute;
+    border-radius: torem(28px) torem(28px) 0 0;
+    top: torem(-10px);
+    left: torem(-10px);
+    z-index: -3;
+  }
+
+  .lottery-top-text:after {
+    content: '';
+    width: torem(390px);
+    height: torem(50px);
+    background: #3c1818;
+    position: absolute;
+    border-radius: torem(20px) torem(20px) 0 0;
+    top: 0;
+    left: 0;
+    z-index: -2;
+  }
+
+  .node-light {
+    width: torem(700px);
+    height: torem(775px);
+    background-repeat: no-repeat;
+    background-size: 100% torem(573px);
+    background-position: bottom;
+    position: absolute;
+    bottom: torem(-97px);
+    left: 0;
+    animation: light-ani-thunder 0.8s .15s linear infinite;
+  }
+
+  @keyframes light-ani-thunder {
+    0% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light1.png);
+    }
+    6.67% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light2.png);
+    }
+    13.3% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light3.png);
+    }
+    20% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light4.png);
+    }
+    26.67% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light5.png);
+    }
+    33.33% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light6.png);
+    }
+    39.99% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light7.png);
+    }
+    46.66% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light8.png);
+    }
+    53.32% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light9.png);
+    }
+    59.98% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light10.png);
+    }
+    66.64% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light11.png);
+    }
+    73.31% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light12.png);
+    }
+    79.97% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light13.png);
+    }
+    86.63% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light14.png);
+    }
+    93.29% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light15.png);
+    }
+    100% {
+      background-image: url(https://www.shandw.com/mobile/shop/images/light16.png);
+    }
+  }
+
+}
+
+.result-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000000000000;
+  background: rgba(0, 0, 0, .7);
+  width: 100%;
+  height: 100%;
+  font-size: 0;
+
+  .egg-result {
+    width: torem(557px);
+    height: torem(557px);
+    //background: #fff;
+
+    .egg-res {
+      position: absolute;
+      top: torem(220px);
+      left: 0;
+      width: 100%;
+    }
+    .egg-res-icon {
+      width: torem(80px);
+      height: torem(80px);
+      display: block;
+      margin: 0 auto;
+    }
+
+    .egg-money {
+      color: #ff9000;
+      font-size: torem(34px);
+      text-align: center;
+      font-weight: bold;
+      margin-top: torem(10px);
+    }
+
+  }
+
+  .lottery-result {
+
+    .lott-close {
+      width: torem(20px);
+      height: torem(20px);
+      background: url("images/lotty-close.png") 0 0 / 100% no-repeat;
+      position: absolute;
+      top: torem(20px);
+      right: torem(20px);
+    }
+
+    width: torem(480px);
+    //height: torem(480px);
+    border-radius: 4px;
+    background-color: #ff5a49;
+
+    .res-text {
+      width: torem(148px);
+      height: torem(41px);
+      background: url("images/result-text.png") 0 0 /100% no-repeat;
+      margin: torem(30px) auto;
+    }
+
+    .res-container {
+      width: torem(250px);
+      height: torem(250px);
+      background: url("images/result-border.png") 0 0 /100% no-repeat;
+      margin: 0 auto;
+      position: relative;
+
+      .res-icon {
+        width: torem(170px);
+        height: torem(170px);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate3d(-50%, -50%, 0);
+      }
+
+    }
+
+    .ok-btn {
+
+      width: torem(200px);
+      height: torem(70px);
+      line-height: torem(70px);
+      text-align: center;
+      background: #ffe400;
+      color: #652400;
+      font-size: torem(34px);
+      margin: torem(20px) auto 0 auto;
+      border-radius: 3px;
+      margin-bottom: torem(40px);
+
+    }
+
+  }
+
+  .flash {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: flash-ani linear 4s infinite;
+  }
+
+  .flash-bg {
+    width: torem(352px);
+    height: torem(365px);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    //animation: flash-ani linear 2s infinite;
+  }
+
+  @keyframes flash-ani {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.lottery-name {
+  width: 100%;
+  line-height: 30px;
+  //font-size: torem(30px);
+  color: #f4362a;
+  font-size: torem(22px);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.lottery-items {
+  width: torem(168px);
+  height: torem(168px);
+  background: #fffbe6;
+  box-sizing: border-box;
+  position: absolute;
+  border-radius: torem(6px);
+  transform-origin: 50%;
+  font-size: torem(20px);
+  color: #000;
+
+  img {
+    width: torem(100px);
+    height: torem(100px);
+    display: block;
+    margin: torem(20px) auto;
+  }
+}
+
+.lottery-center {
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-51%, -53%, 0);
+}
+
+

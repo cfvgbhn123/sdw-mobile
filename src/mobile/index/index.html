@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='' class='sDesc'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <!--<script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>-->
+
+    <script>
+        document.write('<script src="../../libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script>
+
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+
+            }, true, SDW_WEB.CHECK_URL);
+
+
+            SDW_WEB.getUserInfo(null, checkUrl, true);
+
+        })();
+
+    </script>
+    <script src="../../libs/vue.js"></script>
+    <link rel="stylesheet" href="https://www.shandw.com/mobile/scss/swiper.min.css">
+    <script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>
+
+    <script>
+        (function () {
+            if (SDW_WEB.onWeiXin) {
+                document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"><\/script>');
+            }
+        })()
+    </script>
+
+</head>
+
+
+<body style="display: none">
+
+
+<div id="app" v-cloak :class="onShandw?'app-shandw' : ''">
+
+    <!--快速登录-->
+    <fast-login ref="login" show="" v-on:login-ok="loginOkCallback"></fast-login>
+
+    <!--二维码-->
+    <!--<transition name="scale" v-if="showEwmV2">-->
+
+    <section class="b-ewm-cont-v2" @click.self='showEwmV2=0' v-if="showEwmV2">
+
+        <div class="qcode-conatiner">
+            <img src="images/ewn-banner.png" class="ewm-v2-img" v-if="showEwmV2">
+            <div class="q-code-close" @click.self='showEwmV2=0'></div>
+        </div>
+
+    </section>
+
+    <!--</transition>-->
+
+
+    <!--绑定手机 -->
+    <bind-phone
+            ref='bindPhone'
+            showbind=""
+            :bind-phone-item="bindPhoneItem"
+            v-on:bind-callback="bindPhoneCallback"
+    ></bind-phone>
+
+
+    <!--解锁新成就，引导前往-->
+    <task-get-alert
+            ref="taskgetalert"
+            show-info=""
+            typeindex="1"
+            :task-item-info='bindPhoneItem'
+    >
+        <div class="task-get-btn"
+             @click.stop.self="gotoTaskPage()">前往领取
+        </div>
+    </task-get-alert>
+
+
+    <!--任务弹窗-->
+    <task-info ref='taskContainer' :task-item-info="currentTaskItem" showInfo="">
+        <div class="login-btn-v3"
+             @click.stop.self="gotoTaskPage()">前往领取
+        </div>
+    </task-info>
+
+
+    <img id="topBanner">
+
+    <!--顶部-->
+    <section class="top-user-info-container">
+
+        <div class="my-avatar-v2-container">
+            <img :src="user.avatar" class="my-avatar-v2" @click.self.stop='gotoMyHome()'>
+        </div>
+
+
+        <div class="conts my-money">{{user.gold || 0}}</div>
+
+        <div class="btn-list">
+
+            <!--手机绑定-->
+            <div v-if="!user.phone && user.isLogin" class="icons bind-phone-cc">
+
+                <!--<div class="icons bind-phone-cc">-->
+
+                <transition name="scale-top">
+                    <section class="bind-phone-tips" v-if="user.showPhoneTips">
+                        <!--<section class="bind-phone-tips">-->
+                        隐藏成就:<br/>
+                        绑定送<span style="color: #ff5e18">{{transCoins(bindPhoneItem.coin)}}</span>闪电币!
+                    </section>
+                </transition>
+
+                <section class="bind-phone-v2 tada icons" @click.self="showPhoneBindFn()"></section>
+
+            </div>
+
+            <!--礼包-->
+            <section class="gift-btn-v2 icons" id="gift" @click.stop.self='gotoGiftPage()'></section>
+
+            <!--闪电玩显示更多的按钮-->
+            <section class="ewm-btn-v2-btn icons" @click.self.stop='showSdwAPPMoreBtn()' v-if="onShandw"></section>
+
+            <section class="download-app-btn icons" @click.self.stop='downloadSdwApp()'
+                     v-if="!hideDownlaodApp"></section>
+            <!--<section class="ewm-btn-v2-btn icons" @click.self.stop='showSdwAPPMoreBtn()'></section>-->
+
+            <!--显示二维码(只在微信中)-->
+            <section class="ewm-btn-v2 icons" @click.self='gotoSDWWEIXIN()' v-if="showCodes"></section>
+            <!--<section class="ewm-btn-v2 icons" @click.self='gotoSDWWEIXIN()'></section>-->
+
+            <!--下载APP-->
+            <!--<section class="download-app-btn icons" @click.self.stop='downloadSdwApp()'></section>-->
+
+        </div>
+
+
+    </section>
+
+
+    <!--轮播  广告 -->
+    <div class="banner-conatiner" id="banners">
+        <div class="swiper-wrapper" id="bannercont"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+
+    <!--推荐资源位 或者 我最近玩过的-->
+    <div class="recommend-container">
+
+        <!--赛事只出现在微信和app-->
+        <div class="recommend-list saishi" @click.stop="checkSaishi()" v-if="showSaishi"></div>
+
+        <div class="recommend-list" v-for="item in recommendList" @click="checkGameSate('play',item.id)">
+            <img :data-src="item.icon" data-loaded="0" class="recommend-cover">
+            <div class="recommend-time">{{transDate(item.time) || item.name}}</div>
+        </div>
+
+        <!--更多的游戏-->
+        <div class="recommend-more" v-if="user.isLogin" @click.stop.self="goMorePage()"></div>
+
+    </div>
+
+
+    <div class="top-split-line"></div>
+
+    <!--两个类型分类-->
+    <section class="game-sort-v2-cont" v-if="showTopNav">
+        <section class="nav-btn"
+                 :class="isShowHotGame?'nav-btn-select':''"
+                 @click.self.stop='changeGameListState(1)'>必玩爆款
+        </section>
+        <section class="nav-btn"
+                 :class="isShowHotGame?'':'nav-btn-select'"
+                 @click.self.stop='changeGameListState(0)'>最新上架
+        </section>
+    </section>
+
+    <!--热门游戏列表-->
+    <div class="game-list-container" v-show="isShowHotGame">
+        <game-item class="g-list" :game-item="item"
+                   show-more="'1"
+                   v-for="item in hotGameList"
+                   v-on:tap-game="checkGameSate"></game-item>
+    </div>
+
+    <!--最新上架列表-->
+    <div class="game-list-container" v-show="!isShowHotGame">
+        <game-item class="g-list" :game-item="item"
+                   show-more="'1"
+                   v-for="item in newGameList"
+                   v-on:tap-game="checkGameSate"></game-item>
+    </div>
+
+    <!--加载更多的提示-->
+    <loading-view v-show="pageHasLoading"></loading-view>
+
+    <!--闪电玩-->
+    <p class="sdw-copy-right" v-if="!onAPPs">
+        杭州电魂网络科技股份有限公司版权所有<br/>
+        增值电信业务经营许可证：浙B2-20090296<br/>
+        网络文化经营许可证：浙网文【2012】0804-079号
+    </p>
+
+    <!--底部导航栏-->
+    <sdw-footer index=0 background="true" v-on:show-login="__showLoginPage"></sdw-footer>
+
+
+    <!--<transition name="scale32">-->
+    <!--<div class="ios-desktop-container" v-if="onSafari" @click.self="onSafari=0">-->
+    <!--点击 <img src="images/assC.png" class="add-icon"><br>-->
+    <!--然后选择 “添加到主屏幕”-->
+    <!--</div>-->
+    <!--</transition>-->
+
+</div>
+
+
+</body>
+
+
+</html>

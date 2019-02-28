@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <!--<meta content="width=device-width,initial-scale=1.0" name="viewport">-->
+
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+    <script>
+        document.write('<script src="../../libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel
+
+            }, false, SDW_WEB.CHECK_URL);
+
+            // 获取用的信息
+            SDW_WEB.getUserInfo(null, checkUrl);
+
+        })();
+
+    </script>
+
+    <script src="../../libs/vue.js"></script>
+
+</head>
+
+<body>
+
+
+<div id="app" v-cloak>
+
+    <!--两个类型分类-->
+    <section class="rank-sort-container">
+
+        <section class="nav-btn"
+                 :class="rankNavType==3?'nav-btn-select':''"
+                 @click.self.stop='changeRankListState(3)'>活动
+        </section>
+
+        <section class="nav-btn"
+                 :class="rankNavType==2?'nav-btn-select':''"
+                 @click.self.stop='changeRankListState(2)'>公告
+        </section>
+
+        <section class="nav-btn"
+                 :class="rankNavType==1?'nav-btn-select':''"
+                 @click.self.stop='changeRankListState(1)'>攻略
+        </section>
+
+    </section>
+
+
+    <div class="rank-list-container">
+
+        <!------------------------------------------------------------------------------------------------------------->
+        <!--攻略-->
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="hot-rank-lists" v-show="rankNavType==1">
+
+            <div class="news-list-item-container"
+                 @click.stop="openNewPage(i.link)"
+                 v-for="i in hotRankList">
+                <img :src="i.icon" class="n-img">
+                <div class="n-title">{{i.ct}}</div>
+                <div class="n-date">{{transDateObj(i.time)}}</div>
+            </div>
+
+        </div>
+
+
+        <!------------------------------------------------------------------------------------------------------------->
+        <!--公告-->
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="hot-rank-lists" v-show="rankNavType==2">
+
+
+            <div class="news-list-item-container gong-gao-container"
+                 @click.stop="openNewPage(i.link)"
+                 v-for="i in activeRankList">
+                <div class="n-title gong-gao-title">{{i.ct}}</div>
+                <div class="gong-gao-date">{{transDateObj(i.time)}}</div>
+            </div>
+
+        </div>
+
+
+        <!------------------------------------------------------------------------------------------------------------->
+        <!--活动-->
+        <!------------------------------------------------------------------------------------------------------------->
+        <div class="hot-rank-lists" v-show="rankNavType==3">
+
+            <div class="news-list-item-container"
+                 @click.stop="openNewPage(i.link)"
+                 v-for="i in richRankList">
+                <img :src="i.icon" class="n-img">
+                <div class="n-title">{{i.ct}}</div>
+                <div class="n-date">{{transDateObj(i.time)}}</div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--加载更多的提示-->
+    <loading-view v-show="pageHasLoading"></loading-view>
+
+    <!--底部导航栏-->
+    <!--<sdw-footer index=1 background="true"></sdw-footer>-->
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+
+.right-container {
+  position: fixed;
+  top: 20px;
+}
+
+.gift-game-list-cls {
+  width: 100%;
+  font-size: 0;
+
+  .cls-g-item {
+    display: inline-block;
+    padding: 0 20px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+    background: #2f3948;
+    margin-right: 10px;
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+
+  .cls-g-item-click {
+    background: linear-gradient(90deg, #22cab5, #3fe28f);
+  }
+}
+
+.get-more-gift {
+  height: 45px;
+  line-height: 45px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  background: #242d3a;
+  color: #485665;
+  margin: 20px auto 30px auto;
+}
+
+.sdw-flash {
+  width: 270px;
+  height: 220px;
+  margin: 0 auto;
+  display: block;
+  margin-top: 15px;
+}
+
+.get-more-gift:hover {
+  color: #778595;
+}
+
+.l-game-cont:nth-child(4n) {
+  margin-right: 0 !important;
+}

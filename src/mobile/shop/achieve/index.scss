@@ -1,0 +1,214 @@
+@function torem($px) { //$px为需要转换的字号
+  @return $px / 32px * 1rem;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.page {
+  width: 94%;
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+body {
+  background: #2b323d;
+  font-family: "Microsoft YaHei", arial, helvetica, verdana, tahoma;
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  user-select: none;
+}
+
+.user-container {
+  height: torem(76px);
+  margin: torem(20px) auto;
+  position: relative;
+  box-sizing: border-box;
+
+  .user-avatar {
+    display: block;
+    width: torem(70px);
+    height: torem(70px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: torem(3px) solid #fff;
+  }
+  .user-nick {
+    font-size: torem(30px);
+    color: #fff;
+    height: torem(76px);
+    line-height: torem(76px);
+    position: absolute;
+    top: 0;
+    left: torem(90px);
+  }
+
+  .user-right-container {
+    font-size: 0;
+    position: absolute;
+    top: torem(18px);
+    right: 0;
+    height: torem(40px);
+
+    .conts {
+      height: torem(40px);
+      line-height: torem(40px);
+      padding: 0 torem(15px) 0 torem(35px);
+      border-radius: torem(20px);
+      background: #3e495a;
+      display: inline-block;
+      color: #ff9000;
+      font-size: torem(26px);
+      position: relative;
+    }
+
+    .conts:before {
+      content: '';
+      width: torem(40px);
+      height: torem(40px);
+      position: absolute;
+      top: 0;
+      left: torem(-15px);
+      background-size: 100%;
+      background-image: url('../images/gold-icons.png');
+    }
+    .my-gifts {
+      margin-right: torem(30px);
+    }
+  }
+}
+
+.shop-banner {
+  width: torem(722px);
+  height: torem(190px);
+  display: block;
+  margin: 0 auto;
+}
+
+.list-container {
+  width: torem(712px);
+  margin: torem(20px) auto 0 auto;
+  background: #fff;
+  border-radius: torem(8px);
+
+  .lists {
+    height: torem(140px);
+    position: relative;
+    width: 100%;
+
+    .list-title {
+      position: absolute;
+      height: torem(40px);
+      line-height: torem(40px);
+      font-size: torem(30px);
+      color: #000;
+      width: torem(500px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      top: torem(25px);
+      left: torem(30px);
+
+    }
+
+    .list-cont {
+      color: #ff9000;
+      font-size: torem(26px);
+      height: torem(40px);
+      line-height: torem(40px);
+      position: absolute;
+      bottom: torem(35px);
+      left: torem(30px);
+      vertical-align: middle;
+
+      .jl-text {
+        font-size: torem(30px);
+        line-height: torem(48px);
+        height: torem(40px);
+        color: #ff9000;
+        margin-top: torem(-8px);
+        position: relative;
+        display: inline-block;
+      }
+
+      .jl-coin {
+        font-size: torem(40px);
+        line-height: torem(48px);
+        height: torem(40px);
+        color: #ff9000;
+        font-weight: bold;
+        padding-left: torem(50px);
+        margin-left: torem(10px);
+        position: relative;
+        display: inline-block;
+        margin-top: torem(5px);
+      }
+
+      .jl-coin:before {
+        content: '';
+        width: torem(40px);
+        height: torem(40px);
+        background-size: 100%;
+        background-image: url('../images/gold-icons.png');
+        position: absolute;
+        top: torem(5px);
+        left: 0;
+      }
+    }
+
+    .btn {
+      position: absolute;
+      width: torem(140px);
+      height: torem(56px);
+      line-height: torem(56px);
+      font-size: torem(30px);
+      text-align: center;
+      border-radius: torem(28px);
+      letter-spacing: 2px;
+      right: torem(30px);
+      top: torem(42px);
+    }
+
+    .btn-normal {
+      color: #fff;
+      background-image: -webkit-linear-gradient(0deg, #ff6126, #ff8f19);
+      background-image: linear-gradient(90deg, #ff6126, #ff8f19);
+    }
+
+    .btn-finish {
+      color: #a1a9b5;
+      border: 1px solid #a1a9b5;
+      //background-image: -webkit-linear-gradient(0deg, #ff6126, #ff8f19);
+      //background-image: linear-gradient(90deg, #ff6126, #ff8f19);
+    }
+  }
+
+  .lists:before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #cfcfcf;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scale(1, 0.5);
+  }
+
+  .lists:last-child:before {
+    background: transparent;
+  }
+}
+
+
+
+
+
+

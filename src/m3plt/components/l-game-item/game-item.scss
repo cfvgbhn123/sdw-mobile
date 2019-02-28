@@ -1,0 +1,171 @@
+
+.hot-game-list {
+  width: 660px;
+  font-size: 0;
+  margin-top: 5px;
+}
+
+.l-game-cont {
+  display: inline-block;
+  width: 150px;
+  margin-right: 20px;
+}
+
+.l-g-cover {
+  width: 150px;
+  height: 105px;
+  background: #d1d1d1;
+  position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.32);
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .start-game-cover {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: .32s;
+    background: url("images/start-game.png") 0 0/100% 100% no-repeat;
+  }
+
+  .q-code-border {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: url("images/q-code-border.png") 0 0/100% 100% no-repeat;
+  }
+
+  .q-code-flash {
+    width: 104px;
+    height: 41px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    background: url("images/code-flash-linear.png") 0 0/100% 100% no-repeat;
+    animation: q-code-flash linear 3s infinite;
+  }
+
+  .q-code-cont {
+    width: 75px;
+    height: 75px;
+    border: 6px solid #fff;
+    background: #fff;
+    position: absolute;
+    z-index: 2;
+    top: 9px;
+    left: 8px;
+  }
+
+  @keyframes q-code-flash {
+    0% {
+      transform: translate3d(0, 105px, 0);
+    }
+
+    100% {
+      transform: translate3d(0, -41px, 0);
+    }
+  }
+
+}
+
+.l-g-cover:hover .start-game-cover {
+  opacity: 1;
+}
+
+.l-game-cont:last-child {
+  margin-right: 0;
+}
+
+.l-g-info {
+  margin-top: 15px;
+  width: 150px;
+  height: 40px;
+  position: relative;
+
+  .l-g-i-title {
+    width: 125px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 15px;
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .q-code {
+    width: 25px;
+    height: 40px;
+    background: url("images/q-code.png") right center/18px 18px no-repeat;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+  }
+
+  .q-code:hover {
+    background: url("images/q-code-hover.png") right center/18px 18px no-repeat;
+  }
+
+  //.q-code:hover .l-g-cover .q-code-border {
+  //  visibility: visible;
+  //}
+
+  .l-g-star {
+    height: 20px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    .s-n {
+      margin-left: 2px;
+      height: 20px;
+      color: #fe8731;
+      font-size: 15px;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    .l-n {
+      height: 20px;
+      color: #fe8731;
+      font-size: 13px;
+      font-weight: bold;
+      font-style: italic;
+    }
+  }
+
+  .star0, .star1, .star2 {
+    display: inline-block;
+    width: 10px;
+    height: 17px;
+    float: left;
+    margin-right: 3px;
+  }
+
+  .star0 {
+    background: url("images/star-0.png") center /10px 10px no-repeat;
+  }
+
+  .star1 {
+    background: url("images/star-1.png") center / 10px 10px no-repeat;
+  }
+
+  .star2 {
+    background: url("images/star-2.png") center /10px 10px no-repeat;
+  }
+
+}

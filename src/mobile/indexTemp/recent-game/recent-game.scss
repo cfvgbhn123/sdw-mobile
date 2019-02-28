@@ -1,0 +1,61 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+.recommend-container {
+  height: torem(72px);
+  padding: torem(24px) 0;
+  font-size: 0;
+  text-align: center;
+}
+
+.recommend-list2 {
+  text-align: center;
+  font-size: torem(22px);
+  line-height: torem(72px);
+  overflow: hidden;
+  position: relative;
+  width: torem(72px);
+  height: torem(72px);
+  background: transparent;
+  border-radius: 8px;
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 torem(2px);
+}
+
+.recommend-list {
+  overflow: hidden;
+  position: relative;
+
+  width: torem(72px);
+  height: torem(72px);
+  background: #ddd;
+  border-radius: 8px;
+
+  vertical-align: top;
+
+  display: inline-block;
+  margin: 0 torem(15px);
+
+  .recommend-cover {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border-radius: 8px;
+  }
+
+}
+
+.recommend-more {
+  width: torem(40px);
+  height: 100%;
+  display: inline-block;
+  background-image: url("imgs/ico_more.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: torem(15px) torem(29px);
+}

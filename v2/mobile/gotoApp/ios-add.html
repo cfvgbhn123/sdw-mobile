@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>闪电玩</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            max-width: 640px;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+            /*background: url("start-bg.jpg") 0 0 /100% no-repeat;*/
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    document.write('<script src="../../libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+</script>
+
+<script>
+
+    (function () {
+
+        document.addEventListener('touchmove', function (e) {
+            e.preventDefault();
+        }, false);
+
+
+        var links = SDW_WEB.URLS.addParam({
+            gid: SDW_WEB.queryParam['gid'],
+            channel: SDW_WEB.queryParam['channel'],
+            mySec: +new Date(),
+            sdw_from: 'sdw_desktop'
+        }, false, SDW_WEB.MOBILE_ROOT + 'game/');
+
+        var queryParam = {
+            state: 'playGame',
+            link: links,
+            isFullScreen: false,
+            showMoreBtn: true
+        };
+
+        if (SDW_WEB.Store.get('ios-app') != '1') {
+
+            if (SDW_WEB.queryParam['myType'] === 'sdw') {
+                setTimeout(function () {
+                    location.href = 'shandianwan://splash/openwith#' + JSON.stringify(queryParam);
+                }, 100);
+            } else {
+                setTimeout(function () {
+//                    alert('KouDaiMeng3Guo://splash/openwith#' + JSON.stringify(queryParam));
+
+                    location.href = 'KouDaiMeng3Guo://splash/openwith#' + JSON.stringify(queryParam);
+                }, 100);
+            }
+
+
+        }
+    })();
+
+
+</script>
+
+</body>
+</html>

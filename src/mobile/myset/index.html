@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+        SDW_WEB.checkUserInfo();
+    </script>
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+</head>
+<body>
+
+<!--
+我的更多
+-->
+<div id="app">
+    <div v-if="showType=='normal'">
+        <div class="list-container">
+            <div class="list-item address" @click="showMyAddress()">我的收货地址</div>
+            <div class="list-item clear" @click="clearAppCache()">清理存储空间</div>
+            <div class="list-item appstore" @click="goapp()" v-if="showgoapp">五星好评</div>
+            <div class="list-item cancel" @click="unloadUser()">退出登录</div>
+        </div>
+        <!--闪电玩版本信息-->
+        <div class="sdw-v-info">闪电玩</div>
+    </div>
+
+    <div v-if="showType=='address'">
+        <!--信息列表-->
+        <div class="list-container">
+            <div class="add-list">
+                <div class="left">收货人</div>
+                <input type="text"
+                       class="right"
+                       v-model="contact" class="right" placeholder="请填写收货人">
+            </div>
+
+            <div class="add-list">
+                <div class="left">联系电话</div>
+                <input type="text"
+                       class="right"
+                       v-model="phone" placeholder="请填写手机号">
+            </div>
+
+
+            <div class="add-list">
+                <div class="left">所在地</div>
+                <div class="right"
+                     @click="showAddress()">{{myAddressText}}
+                </div>
+            </div>
+
+            <div class="add-list large-list">
+                <div class="left">详细地址</div>
+                <textarea type="text"
+                          class="right large"
+                          v-model="address"
+                          placeholder="请填写详细的地址"></textarea>
+            </div>
+
+        </div>
+
+        <div class="update-btn"
+             @click="updateAddressInfo()">保 存
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+
+
+</html>

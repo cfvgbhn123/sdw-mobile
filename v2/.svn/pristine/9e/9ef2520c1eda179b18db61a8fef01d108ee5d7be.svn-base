@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>分享设置</title>
+
+    <script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+
+    <script>
+        document.write('<script src="../../libs/js/m-init.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+
+    <script>
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel
+
+            }, true, SDW_WEB.CHECK_URL);
+
+            // 获取用的信息
+            SDW_WEB.getUserInfo(null, checkUrl);
+
+        })();
+    </script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<iframe src="shareTest.html" frameborder="0"></iframe>
+
+</body>
+
+<script>
+
+    // 接收子页面的消息传递
+    window.onmessage = function (e) {
+        try {
+
+            var postData = JSON.parse(e.data);
+
+            // ello小游戏消息传递
+            if (postData.postElloData) {
+
+                _myFuchuang.fchiddenFn(0);
+                _myFuchuang.tabNav(window.moreGame, window.moreGame.$index);
+                SDW_WEB.onIOS && $('#my-game-container').addClass('my-game-container-ani');
+
+            } else if (postData.postSdwData) {
+
+                if (postData.operate == 'createNativeBridgeCallback') {
+
+                    var option = JSON.parse(postData.optionStr);
+
+                    option.success = option.success && eval("(" + option.success + ")");
+                    option.fail = option.fail && eval("(" + option.fail + ")");
+                    option.cancel = option.cancel && eval("(" + option.cancel + ")");
+                    option.complete = option.complete && eval("(" + option.complete + ")");
+
+                    var callback = (postData.functionName == 'quickPayment') ? top.NativeBridge.createSDKCallback(option) : top.NativeBridge.createCallback(option);
+
+                    top.NativeBridge.callbacks[postData.callbackId] = callback;
+
+                    var jsonString = JSON.stringify({
+                        callbackId: postData.callbackId,
+                        args: postData.args
+                    });
+
+                    var uri = postData.functionName == 'quickPayment' ? 'payment://' : 'sdw://';
+                    uri += postData.functionName + '#' + jsonString;
+
+                    var iFrame = document.createElement("IFRAME");
+                    iFrame.src = uri;
+                    document.documentElement.appendChild(iFrame);
+                    iFrame.parentNode.removeChild(iFrame);
+                    iFrame = null;
+
+                } else if (postData.operate == 'callquickPayment_Android') {
+
+                    var option = JSON.parse(postData.optionStr);
+                    option.complete = option.complete && eval("(" + option.complete + ")");
+
+                    var callback = top.NativeBridge.createSDKCallback(option);
+
+                    CDLAndroid.quickPayment(JSON.stringify(option));
+                    top.onDHSDKResult = callback;
+
+                } else if (postData.operate == 'setSDWShareInfo') {
+
+                    var postShareData = postData.shareInfo;
+
+                    // 跨域页面通过父级的sdw接口进行设置分享
+                    // 需要保存本页面的回调函数
+                    SDW_WEB.sdw.onSetShareOperate({
+                        title: postShareData.title,
+                        desc: postShareData.desc,
+                        imgUrl: postShareData.imgUrl,
+                        link: postShareData.link,
+                        notSave: true,
+                        success: function () {
+                            // 执行本页面的回调
+                            window.sdwShareState.successCallback();
+
+                            // 通知子页面，成功
+                            e.source.postMessage(JSON.stringify({
+                                postSdwData: true,
+                                oprate: 'shareCallback_success'
+                            }), '*');
+                        },
+                        cancel: function () {
+                            // 执行本页面的回调
+                            window.sdwShareState.cancelCallback();
+
+                            // 通知子页面，成功
+                            e.source.postMessage(JSON.stringify({
+                                postSdwData: true,
+                                oprate: 'shareCallback_cancel'
+                            }), '*');
+                        }
+                    })
+
+
+                } else if (postData.operate == 'checkVisitorMode') {
+
+                    // 检查是否是游客模式
+                    if (visitorMode.isVisitor) {
+
+                        dialog.show('error', '充值请先登录', 1);
+                        _myFuchuang && _myFuchuang.fchiddenFn(0);
+
+                    } else {
+
+                        var ifm = document.querySelector('#my-game-container');
+
+                        // alert(ifm + '===> post choosePayCheckState_ok');
+                        ifm.contentWindow.postMessage(JSON.stringify({
+                            postSdwData: true,
+                            oprate: 'choosePayCheckState_ok'
+                        }), '*');
+                    }
+
+                }
+
+            } else if (postData.wxappId && postData.wxpaySign) {
+
+                // window.prompt('post',JSON.stringify(postData));
+
+                WeixinJSBridge.invoke(
+                    'getBrandWCPayRequest', {
+                        "appId": postData.wxappId,//公众号名称，由商户传入
+                        "timeStamp": postData.wxtimeStamp, //时间戳，自1970年以来的秒数
+                        "nonceStr": postData.wxnonceStr, //随机串
+                        "package": postData.wxpackage,
+                        "signType": postData.wxsignType, //微信签名方式
+                        "paySign": postData.wxpaySign //微信签名
+                    },
+                    function (res) {
+                        if (res.err_msg == "get_brand_wcpay_request:ok") {
+                            //  alert("OK");
+                        }
+                    }
+                );
+
+            } else if (postData.operate == 'requestOpenAPP_wxPay') {
+
+                // 微信采用跳转地址
+                if (postData.resultInfo) {
+                    location.href = postData.resultInfo;
+                }
+
+            } else if (postData.operate == 'requestOpenAPP_alipayPay') {
+
+                // 支付宝采用
+                if (postData.resultInfo) {
+                    document.querySelector('#alipay_form').innerHTML = postData.resultInfo;
+                    document.querySelector('#alipaysubmit').submit();
+                }
+
+            } else if (postData.operate == 'requestShowQrcode') {
+                // 展示微信二维码
+                showPayModelMask(postData.codeUrl);
+
+            } else if (postData.operate == 'requestHideQrcode') {
+                // 关闭微信二维码;
+                hidePayModelMask();
+            }
+
+        } catch (e) {
+
+        }
+    };
+
+
+    SDW_WEB.sdw.onSetShareOperate({
+        title: '我是父级页面的标题',
+        link: location.href,
+        desc: '我是父级面的分享内容',
+        success: function () {
+            console.log('parent message : success');
+        }
+    });
+</script>
+</html>

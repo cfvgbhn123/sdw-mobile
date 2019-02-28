@@ -1,0 +1,44 @@
+@import 'px2rem.scss';
+// $designWidth: 750;
+body {
+  position: relative;
+  width: px2rem(750);
+  margin: 0 auto;
+  background: #000000;
+}
+.container {
+  width: px2rem(750);
+  height: px2rem(1274);
+  background: #252d48;
+  // background-size: cover;
+  .carousel {
+    width: px2rem(750);
+    padding-top: px2rem(60);
+    ul{
+      position: relative;
+      li{
+        position: absolute;
+        width: px2rem(388);
+        height: px2rem(670);
+        top:0;
+        left: 0;
+        // background: url(../img/1.png);
+        // background-size: cover;
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+  .footer {
+    width: px2rem(750);
+    height: px2rem(455);
+    position: absolute;
+    bottom: 0;
+    // float: right;
+    // margin-right: 0;
+    background: url(../img/dibu.png);
+    background-size: cover;
+  }
+
+}

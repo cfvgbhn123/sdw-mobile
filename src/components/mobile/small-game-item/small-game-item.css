@@ -1,0 +1,46 @@
+* {
+  padding: 0;
+  margin: 0; }
+
+.small-game-t {
+  width: 3.59375rem;
+  display: inline-block;
+  margin-right: 0.875rem; }
+
+.small-game-t:last-child {
+  margin-right: 0; }
+
+.small-game-t:nth-child(5n) {
+  margin-right: 0; }
+
+.s-g-t-icon {
+  width: 3.5625rem;
+  height: 3.5625rem;
+  border-radius: 12px;
+  display: inline-block; }
+
+.s-g-t-name {
+  color: #fff;
+  width: 3.5625rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  overflow: hidden;
+  font-size: 0.6875rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: 3.5625rem;
+  height: 1.5625rem;
+  line-height: 1.59375rem;
+  border-radius: 0.78125rem;
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px;
+  /*32px*/
+  color: #fff; }
+
+/*# sourceMappingURL=small-game-item.css.map */

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>Title</title>
+</head>
+<body>
+
+<script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+<script src="https://www.shandw.com/mobile/js/sha1.min.js"></script>
+<script src="https://www.shandw.com/v2/test/libs/js/m-init.min.js?m=0000"></script>
+
+<script>
+
+    (function () {
+
+        var goToUri = location.href.split('#')[0];
+
+        var checkUrl = SDW_WEB.URLS.addParam({
+
+            datatype: window.DATAITEM,
+            goto: goToUri,
+            channel: SDW_WEB.channel
+
+        }, true, SDW_WEB.CHECK_URL);
+
+        SDW_WEB.getUserInfo(null, checkUrl, true);
+
+    })();
+
+    if (SDW_WEB.USER_INFO.uid) {
+
+        var postUri = SDW_WEB.URLS.addParam({
+            channel: SDW_WEB.channel,
+            uid: SDW_WEB.USER_INFO.uid,
+            token: SDW_WEB.USER_INFO.token,
+            sec: SDW_WEB.USER_INFO.secheme
+        }, false, 'https://auth.shandw.com/wcjsapi');
+
+        SDW_WEB.getAjaxData(postUri, function (data) {
+
+            alert(JSON.stringify(data));
+
+            if (data.result == 1) {
+
+                configWX(data.JsApiTicket);
+            } else {
+
+//                setShareInfo(data);
+            }
+
+        });
+    } else {
+        alert('用户信息获取失败')
+    }
+
+
+    function configWX(jstick) {
+
+        console.log('config');
+
+        var ticket = jstick;
+        var noncestr = 'dhsajkfhjkafhjk';
+        var timestamp = +new Date() / 1000 >> 0;  // 单位：秒
+        var url = location.href.split('#')[0];
+        var str = 'jsapi_ticket=' + ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url;
+        var signature = hex_sha1(str);
+
+        console.log('----------------------------------------');
+        console.log(ticket);
+        console.log(noncestr);
+        console.log(timestamp);
+        console.log(url);
+        console.log(str);
+        console.log(signature);
+        console.log('----------------------------------------');
+
+//        alert(url);
+
+        wx.config({
+//            debug: true,
+            appId: 'wxfd695e777664b347',
+            timestamp: timestamp,
+            nonceStr: noncestr,
+            signature: signature,
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
+
+
+        wx.ready(function () {
+
+            var shreInfo = {
+                title: '哇哈哈哈，测试',        // 分享标题
+                desc: '我的描述文字，描述文字', // 分享描述
+                link: location.href + '&_sender_id=12345667',          // 分享链接
+                imgUrl: 'http://app.m3guo.com/h5/2016/h5gameimg/AI04.png',                  // 分享图标
+                success: function () {
+                    // 用户确认分享后执行的回调函数
+                    alert('用户确认分享后执行的回调函数');
+                },
+                cancel: function () {
+                    // 用户取消分享后执行的回调函数
+                    alert('用户取消分享后执行的回调函数');
+                }
+            };
+
+
+//            wx['onMenuShare' + shareInfo.target[i]]({
+//                title: shareInfo.title,
+//                desc: shareInfo.desc,
+//                link: shareInfo.link,
+//                imgUrl: shareInfo.imgUrl,
+//                success: function () {
+//                    sdwShareState.successCallback();
+//                },
+//                fail: function () {
+//                    sdwShareState.failCallback();
+//                }
+//            });
+
+            // pengyou
+            wx.onMenuShareAppMessage(shreInfo);
+
+            // pengyouquan
+            wx.onMenuShareTimeline(shreInfo);
+        });
+    }
+
+</script>
+
+</body>
+</html>

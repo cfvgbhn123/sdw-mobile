@@ -1,0 +1,17 @@
+$bgColor: #ffc122;
+
+.test {
+  background: $bgColor;
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.desc {
+  margin: 10px auto;
+  color: #ff4927;
+  line-height: 1.5;
+}
+

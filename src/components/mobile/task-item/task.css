@@ -1,0 +1,110 @@
+.list-has-recharge {
+  font-size: 0.625rem;
+  color: #999; }
+
+.task-item {
+  width: 100%;
+  padding: 0.625rem 0.9375rem;
+  position: relative;
+  background: #fff;
+  box-sizing: border-box; }
+
+.task-item:before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #d2d2d2;
+  transform: scale(1, 0.5);
+  position: absolute;
+  bottom: 0;
+  left: 0; }
+
+.task-item:active {
+  background: #f2f2f2; }
+
+.task-item:last-child:before {
+  background: transparent; }
+
+.task-item:first-child {
+  border-radius: 5px 5px 0 0; }
+
+.task-item:last-child {
+  border-radius: 0 0 5px 5px; }
+
+.task-normal {
+  height: 4.0625rem; }
+
+.task-title {
+  height: 1.5625rem;
+  line-height: 1.5625rem;
+  font-size: 0.9375rem;
+  color: #1e1e1e;
+  overflow: hidden; }
+
+.task-btn {
+  position: absolute;
+  width: 4.375rem;
+  height: 1.75rem;
+  line-height: 1.78125rem;
+  font-size: 0.875rem;
+  text-align: center;
+  border-radius: 0.875rem;
+  right: 0.9375rem;
+  top: 50%;
+  transform: translateY(-50%); }
+
+.task-btn:before {
+  content: '';
+  width: 120%;
+  height: 180%;
+  position: absolute;
+  top: -40%;
+  left: -10%; }
+
+.task-btn-ok {
+  color: #fff;
+  background-image: -webkit-linear-gradient(0deg, #ff6126, #ff8f19);
+  background-image: linear-gradient(90deg, #ff6126, #ff8f19); }
+
+.task-btn-normal {
+  color: #ff6126;
+  border: 1px solid #ff6126; }
+
+.task-btn-finish {
+  color: #a1a9b5;
+  border: 1px solid #a1a9b5; }
+
+.task-gold-container {
+  color: #ff9000;
+  font-size: 0;
+  height: 1.25rem;
+  line-height: 1.25rem; }
+  .task-gold-container .task-text {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    height: 1.25rem;
+    color: #ff9000;
+    margin-top: -0.25rem;
+    position: relative;
+    display: inline-block; }
+  .task-gold-container .task-gold {
+    font-size: 1.125rem;
+    line-height: 1.25rem;
+    height: 1.25rem;
+    color: #ff9000;
+    font-weight: bold;
+    padding-left: 1.5625rem;
+    margin-left: 0.3125rem;
+    position: relative;
+    display: inline-block;
+    margin-top: 0.15625rem; }
+  .task-gold-container .task-gold:before {
+    content: '';
+    width: 1.25rem;
+    height: 1.25rem;
+    background: url(images/gold-icons.png) 0 0/100% 100%;
+    position: absolute;
+    top: 0;
+    left: 0; }
+
+/*# sourceMappingURL=task.css.map */

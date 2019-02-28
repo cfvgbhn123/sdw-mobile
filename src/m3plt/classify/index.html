@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+    <script src="https://www.shandw.com/libs/vue.js"></script>
+    <script src="https://www.shandw.com/pc/js/libs/q.min.js"></script>
+    <script>
+        document.write('<script src="https://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, true, SDW_WEB.CHECK_URL);
+
+            SDW_WEB.getUserInfo(null, checkUrl, true);
+
+        })();
+
+    </script>
+</head>
+<body>
+
+<div id="app" v-cloak class="container">
+
+    <alert-game :url="currentGameUrl" v-on:hide-alert-game="hideMask"></alert-game>
+
+    <!--左边的内容-->
+    <div class="left-container">
+
+        <!--面包导航栏-->
+        <div class="nav-list-container">
+
+            <div class="back-btn" onclick="history.back()">返回</div>
+
+            <a class="nav-list-item nav-list-arr" :href="APP_ROOT_HOME">首页</a>
+            <a class="nav-list-item" href="javascript:void(0);">搜索</a>
+
+        </div>
+
+        <div class="title-container linear-title" style="margin-top: 30px">
+
+            <div class="title cls-title">
+                <div class="cls-tab cls-tab-select" style="padding: 0 10px">
+                    游戏
+                </div>
+            </div>
+
+            <div v-if="!searchGameListData.length && firstSearchFlg" class="no-res">
+                没有找到您要搜索的游戏
+            </div>
+
+            <template v-if="searchGameListData.length && firstSearchFlg">
+                <div class="hot-game-list">
+                    <!--搜索到的游戏-->
+                    <l-game-item
+                            :game-item="item"
+                            i-type="star"
+                            v-for="item in searchGameListData"
+                    ></l-game-item>
+
+                </div>
+
+                <div class="get-more-gift"
+                     v-if="showMoreBtn"
+                     @click.stop="loadMoreSearchGame()"
+                >点击加载更多游戏
+                </div>
+            </template>
+
+        </div>
+
+    </div>
+
+    <!--右边的内容-->
+    <div class="right-container"
+         :style="{right:rightFixed+'px'}">
+
+        <search-input
+                v-on:search-btn-fn="searchBtnFn"
+        ></search-input>
+
+        <div class="title-container linear-title" style="margin-top: 9px">
+            <div class="title">类型筛选</div>
+        </div>
+
+        <!--游戏礼包的分类-->
+        <div class="gift-game-list-cls" style="margin-top: 10px">
+
+            <div class="cls-g-item"
+                 @click.stop="changeSearch(i,'searchTypes')"
+                 :class="i.isClick ? 'cls-g-item-click' : ''"
+                 v-for="i in searchTypes">{{i.name}}
+            </div>
+
+        </div>
+
+
+        <div class="title-container linear-title" style="margin-top: 20px">
+            <div class="title">条件筛选</div>
+        </div>
+
+        <div class="gift-game-list-cls" style="margin-top: 10px">
+            <div class="cls-g-item"
+                 @click.stop="changeSearch(i,'searchTips')"
+                 :class="i.isClick ? 'cls-g-item-click' : ''"
+                 v-for="i in searchTips">{{i.name}}
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+</body>
+
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script src="https://www.shandw.com/libs/vue.js"></script>
+
+    <script>
+        (function () {
+            var goToUri = location.href.split('#')[0];
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, false, SDW_WEB.CHECK_URL);
+            SDW_WEB.getUserInfo(null, checkUrl);
+        })()
+    </script>
+</head>
+<body>
+
+<!--
+
+我的资料
+
+-->
+<div id="app" v-cloak class="my-data">
+
+    <div class="avatar-container line">
+
+    </div>
+
+    <div class="data-list line">
+        <div class="left-title float">昵称</div>
+        <div class="right-container float">CBDTTF</div>
+    </div>
+
+
+    <div class="data-list line">
+        <div class="left-title float">性别</div>
+        <div class="right-container float">CBDTTF</div>
+    </div>
+
+    <div class="data-list line">
+        <div class="left-title float">生日</div>
+        <div class="right-container float more-select">1111-11-11</div>
+        <input type="date">
+    </div>
+
+    <div class="data-list line">
+        <div class="left-title float">星座</div>
+        <div class="right-container float more-select">没有</div>
+    </div>
+
+    <div class="data-list line">
+        <div class="left-title float">所在地</div>
+        <div class="right-container float more-select">浙江杭州市</div>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>

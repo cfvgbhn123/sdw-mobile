@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>授权信息</title>
+    <script src="../../libs/js/m-init.min.js?v=2"></script>
+    <script src="https://www.shandw.com/libs/js/zepto.min.js?v=2"></script>
+    <script>
+
+        (function (APP) {
+
+            var DATA_ITEM = APP.localItem;                // 闪电玩数据存储参数
+            var goUrl = APP.queryParam['goto'];          // 授权成功后的跳转
+            var CHECK_URL = location.href.split('?')[0];
+            var authUrl = '', aUrl = '', authUrlParam = {}, APP_TYPE = '';
+            var authAPP = {
+                qq: '101359011',
+                wx: 'wxfd695e777664b347',
+                wb: '530008665'
+            };
+
+            // 有用户数据，进行跳转
+            if (APP.Store.get(DATA_ITEM, true) && APP.Store.get('FIRST_LOGIN') != '1') {
+                location.href = goUrl;
+                return;
+            }
+
+            //----------------------------------------------------------------------------------------------------------
+            //----------------------进行APP授权--------------------------------------------------------------------------
+            //----------------------------------------------------------------------------------------------------------
+
+            if (APP.onKD) {
+
+                // 口袋授权信息；
+                APP_TYPE = 'kd';
+                var userObj = APP.Store.get('KD_USER');
+
+                authUrlParam.token = userObj.token;
+                authUrlParam.uid = userObj.uid;
+                authUrlParam.sec = userObj.sec;
+
+            } else if (APP.onWeiXin || APP.onQQ || APP.onWeiBo) {
+
+                // 主流APP授权回调信息；
+                if (APP.onWeiXin) APP_TYPE = 'wx';
+                if (APP.onQQ) APP_TYPE = 'qq';
+                if (APP.onWeiBo) APP_TYPE = 'wb';
+
+                authUrlParam.code = APP.queryParam['code'];
+                authUrlParam.appid = authAPP[APP_TYPE];
+                authUrlParam.redirect_uri = encodeURIComponent(CHECK_URL);
+
+                authUrl = HTTP_USER_STATIC + APP_TYPE + 'auth';
+            }
+
+            authUrlParam.channel = APP.channel;
+            authUrlParam.flag = 1;
+
+            // 拼接授权的地址
+            aUrl = APP.URLS.addParam(authUrlParam, false, authUrl);
+
+            if (APP.onKD && userObj.uid === 'undefined') {
+
+                alert('请登入口袋');
+
+            } else if (aUrl && APP_TYPE) {
+
+                aUrl += '&imei=' + APP.guid + '&os=' + APP.os + '&tg=0&w=' + APP.width + '&h=' + APP.height;
+
+                $.ajax({
+                    type: 'GET',
+                    url: aUrl,
+                    dataType: 'jsonp',
+                    jsonp: 'cb',
+                    timeout: 30 * 60 * 1000,
+                    jsonpCallback: 'callFn' + (+new Date()) + (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1),
+                    success: function (data, xhr) {
+                        if (data.result == 1) {
+
+                            APP.Store.set('FIRST_LOGIN', '1');
+                            APP.Store.set(APP.localItem, data, true);
+                            // 授权成功后，跳转的地址
+                            location.href = goUrl;
+                        }
+                    },
+                    error: function (xhr, type) {
+                    }
+                });
+
+            } else {
+                console.log('请在APP内使用！');
+//                    location.href = 'https://www.shandw.com/mobile/';
+            }
+
+
+        })(SDW_WEB);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

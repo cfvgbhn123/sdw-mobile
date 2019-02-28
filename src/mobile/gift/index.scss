@@ -1,0 +1,140 @@
+@import "../reset.scss";
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.gift-list-container {
+
+  width: torem(710px);
+  border-radius: 6px;
+  background: #fff;
+  margin: 0 auto;
+
+  margin-top: topx(20px);
+  margin-bottom: topx(20px);
+}
+
+.game-head-container {
+  width: 100%;
+  height: torem(160px);
+  position: relative;
+  //border-bottom: 1px solid #ddd;
+  .game-btn-fill {
+    //border: 1px solid #ff8f19;
+    color: #fff;
+    background-image: linear-gradient(90deg, #ff6126, #ff8f19);
+  }
+}
+
+.game-head-container:before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #d0d0d0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: scale(1, 0.5);
+}
+
+.game-cover-icon {
+  width: torem(120px);
+  height: torem(120px);
+  border-radius: 12px;
+  position: absolute;
+  top: torem(20px);
+  left: torem(30px);
+}
+
+.game-title {
+  width: torem(310px);
+  height: torem(60px);
+  line-height: torem(60px);
+  font-size: torem(32px);
+  color: #000000;
+  overflow: hidden;
+  position: absolute;
+  top: torem(25px);
+  left: torem(175px);
+}
+
+.game-desc {
+  overflow: hidden;
+  width: torem(310px);
+  height: torem(60px);
+  line-height: torem(60px);
+  font-size: torem(26px);
+  color: #989898;
+  position: absolute;
+  bottom: torem(25px);
+  left: torem(175px);
+}
+
+.gift-item {
+  background: none;
+}
+
+
+.gift-list-container > .gift-item:last-child:before {
+  background: transparent !important;
+}
+
+.gift-bg-container {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, .7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2222;
+
+  .gift-cover {
+    width: torem(657px);
+    height: torem(568px);
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    background: url("images/gift-bg-cover.png") 0 0 /100%;
+  }
+
+  .goto-game-btn {
+    width: torem(280px);
+    height: torem(74px);
+    background: url("images/go-to-game.png") 0 0 /100%;
+    position: absolute;
+    left: 50%;
+    bottom: torem(100px);
+    transform: translateX(-50%);
+  }
+
+  .game-code {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background: transparent;
+    -webkit-user-select: text !important;
+    width: 100%;
+    height: torem(70px);
+    line-height: torem(70px);
+    color: #fff;
+    font-size: topx(24px);
+    text-align: center;
+    position: absolute;
+    bottom: torem(256px);
+    left: 0;
+  }
+}
+
+//#app{
+//  padding-bottom: 10px;
+//}

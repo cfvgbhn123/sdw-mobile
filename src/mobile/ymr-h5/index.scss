@@ -1,0 +1,709 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  -webkit-user-select: none;
+  font-family: helvetica, "Microsoft YaHei", arial;
+}
+
+.loading-container {
+  background-color: #252d48;
+  z-index: 200;
+}
+
+.loading-info {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.loading-text {
+  text-align: center;
+  font-size: torem(32px);
+  color: #fff;
+}
+
+.loading-ani {
+  width: torem(280px);
+  height: torem(70px);
+  margin: torem(40px) auto;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-image: url("images/loading1.png");
+  animation: loadings steps(1) infinite .4s;
+}
+
+@keyframes loadings {
+
+  0% {
+    background-image: url("images/loading1.png");
+  }
+  33.33% {
+    background-image: url("images/loading2.png");
+  }
+
+  66.66% {
+    background-image: url("images/loading1.png");
+  }
+
+  100% {
+    background-image: url("images/loading2.png");
+  }
+
+}
+
+.app-stage {
+  width: torem(750px);
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.page, .page2 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.page[data-index='0'] {
+  background-color: #252d48;
+
+  .title-list {
+    width: torem(512px);
+    height: torem(356px);
+    background: url("images/page-0-title.png") center/100% no-repeat;
+    position: absolute;
+    z-index: 9999;
+    top: torem(70px);
+    left: torem(120px);
+  }
+}
+
+.page[data-index='1'] {
+  background-color: #60a215;
+
+  .icon {
+    width: torem(200px);
+    height: torem(200px);
+    background: url("images/appicon.png") center/100% auto no-repeat;
+    position: absolute;
+    top: torem(80px);
+    left: torem(275px);
+  }
+
+  .title-list {
+
+    width: torem(510px);
+    height: torem(304px);
+    background: url("images/page-1-title.png") center/100% no-repeat;
+    position: absolute;
+    top: torem(330px);
+
+    left: torem(120px);
+  }
+}
+
+.page[data-index='2'] {
+  background-color: #60a215;
+
+  .title-list {
+    width: torem(510px);
+    height: torem(374px);
+
+    background: url("images/page-2-title.png") center/100% no-repeat;
+    position: absolute;
+    top: torem(140px);
+    left: torem(120px);
+  }
+}
+
+.page[data-index='3'] {
+  background-color: #60a215;
+
+  .title-list {
+    width: torem(510px);
+    height: torem(435px);
+    background: url("images/page-3-title.png") center/100% no-repeat;
+    position: absolute;
+    top: torem(140px);
+    left: torem(120px);
+  }
+
+  .box {
+    width: torem(310px);
+    height: torem(260px);
+    background: url("images/box.png") center/100% auto no-repeat;
+    position: absolute;
+    z-index: 3;
+    left: torem(220px);
+    bottom: torem(200px);
+  }
+
+  .tap {
+    width: torem(99px);
+    height: torem(104px);
+    z-index: 3;
+    position: absolute;
+    right: torem(255px);
+    bottom: torem(205px);
+    transform: translateX(10px);
+    background: url("images/tap-icon.png") center /100% auto no-repeat;
+    animation: tap-trans linear infinite .6s;
+  }
+
+  @keyframes tap-trans {
+    0% {
+      transform: translateX(10px);
+    }
+    100% {
+      transform: translateX(0px);
+    }
+  }
+
+  .tips {
+    color: #0c5913;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    font-size: torem(30px);
+    height: torem(40px);
+    line-height: torem(40px);
+    left: 0;
+    animation-duration: 3s !important;
+    bottom: torem(150px);
+  }
+
+}
+
+//下载页面
+.page[data-index='4'] {
+  background-color: #252d48;
+
+  .app-icon {
+    width: torem(200px);
+    height: torem(200px);
+    position: absolute;
+    top: torem(-260px);
+    left: torem(275px);
+    transform: translate(-50%, 0);
+
+    background: url("images/appicon2.png") center/100% no-repeat;
+  }
+
+  .title-list {
+    width: torem(562px);
+    height: torem(141px);
+    background: url("images/page-4-title.png") center /100% no-repeat;
+    position: absolute;
+    top: torem(330px);
+    left: torem(94px);
+  }
+
+}
+
+// 最后的页面
+.page[data-index='5'] {
+
+  //background: url("images/last-bg.png") center bottom/100% auto no-repeat;
+  background-color: #252d48;
+
+  .last-bg-code {
+    width: 100%;
+    height: auto;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+}
+
+//背景滚动
+
+.loop-bg-ani {
+
+  opacity: 1;
+  background-image: url("images/loop-bg.jpg.png");
+  background-size: 100% auto;
+  animation: loop-bg 30s linear infinite;
+}
+
+@keyframes loop-bg {
+
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 torem(-1873px);
+  }
+
+}
+
+.cloud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  //transform-origin: right center;
+}
+
+.cloud[data-index='1-1'], .cloud[data-index='4-1'] {
+  width: torem(162px);
+  height: torem(77px);
+  transform: translate(torem(760px), torem(380px));
+  background-image: url("images/cloud-1.png");
+}
+
+//
+//.cloud[data-ani='1'] {
+//  animation: cloud1 25s linear infinite;
+//}
+//
+//@keyframes cloud1 {
+//  0% {
+//    transform: translate(torem(760px), torem(380px));
+//  }
+//  100% {
+//    transform: translate(torem(-180px), torem(380px));
+//  }
+//}
+
+.cloud[data-index='1-2'], .cloud[data-index='4-2'] {
+  width: torem(198px);
+  height: torem(95px);
+  transform: translate(torem(800px), torem(110px));
+  background-image: url("images/cloud-2.png");
+
+}
+
+//
+//.cloud[data-ani='2'] {
+//  animation: cloud2 20s linear infinite;
+//}
+//
+//@keyframes cloud2 {
+//  0% {
+//    transform: translate(torem(800px), torem(110px));
+//  }
+//  100% {
+//    transform: translate(torem(-200px), torem(110px));
+//  }
+//}
+
+.cloud[data-index='1-3'], .cloud[data-index='4-3'] {
+  width: torem(170px);
+  height: torem(75px);
+  transform: translate(torem(750px), torem(260px));
+  background-image: url("images/cloud-3.png");
+}
+
+//
+//.cloud[data-ani='3'] {
+//  animation: cloud3 16s linear infinite;
+//}
+//
+//@keyframes cloud3 {
+//  0% {
+//    transform: translate(torem(750px), torem(260px));
+//  }
+//  100% {
+//    transform: translate(torem(-170px), torem(260px));f
+//  }
+//}
+
+.grass-container {
+  width: 100%;
+  height: torem(707px);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: url("images/grass.png") center / 100% auto no-repeat;
+}
+
+.go {
+  width: torem(260px);
+  height: torem(230px);
+  background: url("images/go_10.png") center/100% auto no-repeat;
+  position: absolute;
+  bottom: torem(100px);
+  left: torem(245px);
+  animation: go-ani steps(1) infinite 2s;
+}
+
+//.go:hover {
+//  transform: scale(0.9);
+//}
+
+.go-arr {
+  width: 100%;
+  height: torem(40px);
+  position: absolute;
+  bottom: torem(40px);
+  left: 0;
+  background-size: auto 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+
+}
+
+.go-arr[data-type='main'] {
+  background-image: url("images/go-arr.png");
+}
+
+.go-arr[data-type='normal'] {
+  background-image: url("images/page-arr.png");
+}
+
+.go-arr[data-type='info'] {
+  height: torem(80px);
+  background: url("images/go-arr-info.png") center/torem(93px) no-repeat;
+
+}
+
+@keyframes go-ani {
+  0% {
+    background-image: url("images/go_1.png");
+  }
+  5% {
+    background-image: url("images/go_2.png");
+  }
+  10% {
+    background-image: url("images/go_3.png");
+  }
+  15% {
+    background-image: url("images/go_4.png");
+  }
+  20% {
+    background-image: url("images/go_5.png");
+  }
+  25% {
+    background-image: url("images/go_6.png");
+  }
+  30% {
+    background-image: url("images/go_7.png");
+  }
+  35% {
+    background-image: url("images/go_8.png");
+  }
+  40% {
+    background-image: url("images/go_9.png");
+  }
+  45% {
+    background-image: url("images/go_10.png");
+  }
+  100% {
+    background-image: url("images/go_10.png");
+  }
+}
+
+//野蛮人的动画
+.player {
+  width: torem(360px);
+  height: torem(360px);
+  background: url("images/yemanren_runB_0_001.png") center/100% no-repeat;
+  position: absolute;
+  bottom: torem(400px); // 初始的位置
+  z-index: 55;
+  left: torem(195px);
+
+  //-webkit-animation-play-state: running;
+  //animation-play-state: running;
+}
+
+.player[data-play='run'] {
+  animation: player-ani steps(1) infinite .8s;
+}
+
+@keyframes player-ani {
+
+  0% {
+    background-image: url("images/yemanren_runB_0_001.png");
+  }
+  12.5% {
+    background-image: url("images/yemanren_runB_0_002.png");
+  }
+  25% {
+    background-image: url("images/yemanren_runB_0_003.png");
+  }
+  37.5% {
+    background-image: url("images/yemanren_runB_0_004.png");
+  }
+  50% {
+    background-image: url("images/yemanren_runB_0_005.png");
+  }
+  62.5% {
+    background-image: url("images/yemanren_runB_0_006.png");
+  }
+  75% {
+    background-image: url("images/yemanren_runB_0_007.png");
+  }
+  87.5% {
+    background-image: url("images/yemanren_runB_0_009.png");
+  }
+  100% {
+    background-image: url("images/yemanren_runB_0_010.png");
+  }
+}
+
+.paused-ani {
+  //animation: none !important;
+  -webkit-animation-play-state: paused;
+  animation-play-state: paused;
+}
+
+#mask {
+
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: .6s;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 9999999;
+}
+
+//.cloud-container {
+//  position: absolute;
+//  z-index: 3;
+//}
+
+.download-container {
+  width: torem(510px);
+  margin: 0 auto;
+  margin-top: torem(578px);
+
+  .down-top-info {
+    height: torem(120px);
+    position: relative;
+    margin-bottom: torem(35px);
+  }
+
+  .icon-egg {
+    width: torem(120px);
+    height: torem(120px);
+    position: absolute;
+    background: url("images/icon-egg.png") center/100% no-repeat;
+  }
+
+  .icon-egg-info {
+    width: torem(366px);
+    height: torem(96px);
+    position: absolute;
+    right: 0;
+    top: torem(12px);
+    background: url("images/egg-info.png") center/100% no-repeat;
+  }
+
+  .download-btn {
+    width: torem(510px);
+    height: torem(96px);
+    margin-bottom: torem(35px);
+  }
+
+  .download-btn[data-type='help'] {
+    background: url("images/download-helper.png") center /100% no-repeat;
+  }
+
+  .download-btn[data-type='game'] {
+    background: url("images/download-game.png") center /100% no-repeat;
+  }
+
+}
+
+.gift-player-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+
+  background: rgba(0, 0, 0, .8);
+  z-index: 5;
+
+  .bx-ani {
+    width: torem(306px);
+    height: torem(338px);
+    position: absolute;
+    bottom: torem(450px);
+    left: torem(222px);
+
+    background: url("images/bx1.png") center/torem(306px) auto no-repeat;
+  }
+
+  .box-ani-list {
+
+    animation: bx-ani-player steps(1) 1s forwards;
+  }
+
+  @keyframes bx-ani-player {
+
+    0% {
+      background-image: url("images/bx1.png");
+    }
+    25% {
+      background-image: url("images/bx2.png");
+    }
+    50% {
+      background-image: url("images/bx3.png");
+    }
+    75% {
+      background-image: url("images/bx4.png");
+    }
+    100% {
+      background-image: url("images/bx5.png");
+    }
+
+  }
+
+  //礼物
+  .gift-cont {
+
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    left: 0;
+    transform: translateY(-50%);
+
+    .gift-top-text {
+      width: torem(418px);
+      height: torem(216px);
+      background: url("images/mmk-t.png") center/100% no-repeat;
+      margin: 0 auto;
+      //margin-top: torem(230px);
+    }
+
+    .mmk-icon {
+      width: torem(160px);
+      height: torem(160px);
+      background: url("images/mmk-icon.png") center/100% no-repeat;
+      margin: 0 auto;
+      position: relative;
+      margin-top: torem(100px);
+    }
+
+    .mmk-icon:before {
+      content: '';
+      width: torem(411px);
+      height: torem(411px);
+      background: url("images/flash.png") center/100% no-repeat;
+      position: absolute;
+      z-index: -1;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(0deg);
+      animation: flash-rotate linear 6s infinite;
+    }
+
+    .mmk-text {
+
+      width: torem(344px);
+      height: torem(56px);
+      background: url("images/mmk-text.png") center/100% no-repeat;
+      margin: 0 auto;
+      margin-top: torem(70px);
+
+    }
+
+    @keyframes flash-rotate {
+      0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+      }
+
+    }
+
+  }
+}
+
+//.carousel {
+//  width: torem(750px);
+//  padding-top: torem(40px);
+//
+//  ul {
+//    position: relative;
+//    list-style: none;
+//    li {
+//      position: absolute;
+//      width: torem(388px);
+//      height: torem(670px);
+//      top: 0;
+//      left: 0;
+//      // background: url(../img/1.png);
+//      // background-size: cover;
+//      img {
+//        width: 100%;
+//      }
+//    }
+//  }
+//}
+
+.my-banner-container {
+  width: torem(376px);
+  height: torem(670px);
+  /*background: #ff5248;*/
+
+  margin: torem(50px) auto;
+  position: relative;
+}
+
+.banner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: .32s;
+}
+
+.banner[data-index='1'] {
+  z-index: 2;
+  transform: translate(-35%, 0) scale(0.8);
+  opacity: .7;
+}
+
+.banner[data-index='2'] {
+  transform: translate(-20%, 0) scale(0.9);
+  z-index: 3;
+  opacity: .9;
+}
+
+.banner[data-index='3'] {
+  transform: translate(0, 0) scale(1);
+  z-index: 4;
+  opacity: 1;
+}
+
+.banner[data-index='4'] {
+  transform: translate(20%, 0) scale(.9);
+  z-index: 3;
+  opacity: .9;
+}
+
+.banner[data-index='5'] {
+  z-index: 2;
+  transform: translate(35%, 0) scale(.8);
+  opacity: .7;
+}

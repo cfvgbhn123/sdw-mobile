@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>微端分享测试</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body, html {
+            font-family: arial;
+            overflow-x: hidden;
+        }
+
+        iframe {
+            width: 100%;
+            display: block;
+        }
+
+        p {
+            width: 92%;
+            margin: 10px auto;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+
+        #inputText {
+            position: fixed;
+            top: -9999999px;
+            left: -9999999px;
+        }
+    </style>
+</head>
+<body>
+
+<p style="text-align: center">
+    （wz-iframe.html，父级页面）
+</p>
+
+<p>
+    在安卓微端中，游戏是以iframe的形式嵌套在页面中，所以该页面是用来充当父级页面，确保游戏页面能正确调用微端的相应JS接口。
+</p>
+
+<p style="text-align: center;line-height: 0.6;font-size: 12px">
+    v v v<br>
+    v v v<br>
+    v v v<br>
+</p>
+
+<!--<iframe src="wz-share.html" frameborder="0" id="game"></iframe>-->
+<iframe src="http://192.168.110.149:2017/wz-share.html" frameborder="0" id="game"></iframe>
+
+
+<!--<span id="tbid">这里是点击链接后复制的内容</span>-->
+<input type="text" id="inputText" value="ceshihhh"/>
+<input type="button" id="btn" value="复制"/>
+
+
+</body>
+
+<script src="clipboard.min.js"></script>
+
+<script>
+
+
+    // 王座微端回调，此方法需要注入在游戏页面中
+    (function () {
+
+        var ifm = document.querySelector('#game');
+
+        window.and_WZ_SHARE_CALLBACK = function () {
+            if (ifm) {
+                ifm.contentWindow.postMessage(JSON.stringify({
+                    postSdwData: true,
+                    operate: 'and_wz_callback'
+                }), '*');
+            }
+        };
+
+//        ifm.onload = function () {
+////            alert(ifm.contentWindow.document.body.offsetHeight);
+//            ifm.style.height = ifm.contentWindow.document.body.offsetHeight + 'px';
+//        }
+
+    })();
+
+    //    var btn = document.getElementById('btn');
+    //    btn.onclick = function () {
+    //        alert('ok');
+    //
+    //        var inputText = document.getElementById('inputText');
+    ////        var currentFocus = document.activeElement;
+    //        inputText.focus();
+    //        inputText.setSelectionRange(0, inputText.value.length);
+    //        document.execCommand('copy', true);
+    ////        currentFocus.focus();
+    //    };
+    //
+    //    btn.onclick();
+
+
+    prompt('礼包码已复制成功，请前往游戏内兑换', 'dhsjkdhsjkahdjshdj')
+</script>
+</html>

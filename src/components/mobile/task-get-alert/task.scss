@@ -1,0 +1,153 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+.task-get-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  background: rgba(0, 0, 0, .7);
+
+  .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+}
+
+.task-get-info, .task-get-info2 {
+  width: torem(620px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%) scale(1, 1);
+  padding: torem(45px) 0;
+  background: #ebf0f4;
+  border-radius: 4px;
+
+  .conts-i {
+    margin-left: torem(10px);
+    padding-left: torem(50px);
+    position: relative;
+    display: inline-block;
+    font-weight: bolder;
+    color: #ff9000;
+    //color: #ff9000;
+    //font-size: torem2(40px);
+  }
+
+  .conts-i:before {
+    content: '';
+    width: torem(40px);
+    height: torem(52px);
+    position: absolute;
+    top: torem(-3px);
+    left: 0;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-image: url('images/gold-icons.png');
+  }
+
+}
+
+.task-get-info:before {
+  content: '';
+  width: torem(666px);
+  height: torem(375px);
+  background: url("images/get-gold-bg.png") 0 0 /100% no-repeat;
+  position: absolute;
+  top: torem(-345px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.task-get-info2:before {
+  content: '';
+  width: torem(640px);
+  height: torem(160px);
+  background: url("images/get-header-bg.png") 0 0 /100% no-repeat;
+  position: absolute;
+  top: torem(-130px);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.task-get-btn {
+  width: torem(306px);
+  height: torem(90px);
+  line-height: torem(91px);
+  border-radius: torem(345px);
+  margin: 0 auto;
+  font-size: torem(38px);
+  color: #fff;
+  text-align: center;
+  background-image: linear-gradient(90deg, #ff6027, #ff8f19);
+}
+
+.task-get-btn:active {
+  -webkit-tap-highlight-color: (0, 0, 0, .8)
+}
+
+.task-infos-container {
+  text-align: center;
+  width: torem(563px);
+  padding: torem(60px) 0;
+  border-radius: 4px;
+  background: #fff;
+  margin: 0 auto;
+  margin-bottom: torem(45px);
+  color: #333;
+
+  .task-name {
+
+    margin: torem(10px) 0;
+    font-size: topx(38px);
+  }
+
+  .task-gift {
+    font-size: torem(32px);
+  }
+}
+
+//.scale-enter-active {
+//  transition: transform .26s cubic-bezier(0.5, 1.95, .49, .63), opacity .2s;
+//  transform: translate3d(-50%, -49%, 0) scale(1);
+//  opacity: 1;
+//}
+//
+//.scale-enter {
+//  transition: transform .26s cubic-bezier(0.5, 1.95, .49, .63), opacity .2s;
+//  transform: translate3d(-50%, -49%, 0) scale(1);
+//  opacity: 1;
+//}
+//
+//.scale2-leave {
+//  transform: translate3d(-50%, -40%, 0) scale(1);
+//}
+//
+//.scale2-leave-active {
+//  transform: translate3d(-50%, -40%, 0) scale(1.53, 1.63);
+//  //opacity: 0;
+//}
+
+.scale2-enter-active {
+  transition: transform .38s cubic-bezier(0.5, 1.68, .49, .63), opacity .4s;
+  transform: translate(-50%, -40%) scale(1, 1);
+  opacity: 1;
+}
+
+.scale2-enter {
+  transform: translate(-50%, -40%) scale(.26, .53);
+  opacity: 0;
+}

@@ -1,0 +1,164 @@
+[v-cloak] {
+  display: none; }
+
+* {
+  padding: 0;
+  margin: 0; }
+
+.page {
+  width: 94%;
+  margin: 0 auto;
+  max-width: 500px; }
+
+body {
+  background: #2b323d;
+  font-family: "Microsoft YaHei", arial, helvetica, verdana, tahoma;
+  font-size: 16px;
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  user-select: none; }
+
+.user-container {
+  height: 2.375rem;
+  margin: 0.625rem auto;
+  position: relative;
+  box-sizing: border-box; }
+  .user-container .user-avatar {
+    display: block;
+    width: 2.1875rem;
+    height: 2.1875rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 0.09375rem solid #fff; }
+  .user-container .user-nick {
+    font-size: 0.9375rem;
+    color: #fff;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    position: absolute;
+    top: 0;
+    left: 2.8125rem; }
+  .user-container .user-right-container {
+    font-size: 0;
+    position: absolute;
+    top: 0.5625rem;
+    right: 0;
+    height: 1.25rem; }
+    .user-container .user-right-container .conts {
+      height: 1.25rem;
+      line-height: 1.25rem;
+      padding: 0 0.46875rem 0 1.09375rem;
+      border-radius: 0.625rem;
+      background: #3e495a;
+      display: inline-block;
+      color: #ff9000;
+      font-size: 0.8125rem;
+      position: relative; }
+    .user-container .user-right-container .conts:before {
+      content: '';
+      width: 1.25rem;
+      height: 1.25rem;
+      position: absolute;
+      top: 0;
+      left: -0.46875rem;
+      background-size: 100%;
+      background-image: url("../images/gold-icons.png"); }
+    .user-container .user-right-container .my-gifts {
+      margin-right: 0.9375rem; }
+
+.shop-banner {
+  width: 22.5625rem;
+  height: 5.9375rem;
+  display: block;
+  margin: 0 auto; }
+
+.list-container {
+  width: 22.25rem;
+  margin: 0.625rem auto 0 auto;
+  background: #fff;
+  border-radius: 0.25rem; }
+  .list-container .lists {
+    height: 4.375rem;
+    position: relative;
+    width: 100%; }
+    .list-container .lists .list-title {
+      position: absolute;
+      height: 1.25rem;
+      line-height: 1.25rem;
+      font-size: 0.9375rem;
+      color: #000;
+      width: 15.625rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      top: 0.78125rem;
+      left: 0.9375rem; }
+    .list-container .lists .list-cont {
+      color: #ff9000;
+      font-size: 0.8125rem;
+      height: 1.25rem;
+      line-height: 1.25rem;
+      position: absolute;
+      bottom: 1.09375rem;
+      left: 0.9375rem;
+      vertical-align: middle; }
+      .list-container .lists .list-cont .jl-text {
+        font-size: 0.9375rem;
+        line-height: 1.5rem;
+        height: 1.25rem;
+        color: #ff9000;
+        margin-top: -0.25rem;
+        position: relative;
+        display: inline-block; }
+      .list-container .lists .list-cont .jl-coin {
+        font-size: 1.25rem;
+        line-height: 1.5rem;
+        height: 1.25rem;
+        color: #ff9000;
+        font-weight: bold;
+        padding-left: 1.5625rem;
+        margin-left: 0.3125rem;
+        position: relative;
+        display: inline-block;
+        margin-top: 0.15625rem; }
+      .list-container .lists .list-cont .jl-coin:before {
+        content: '';
+        width: 1.25rem;
+        height: 1.25rem;
+        background-size: 100%;
+        background-image: url("../images/gold-icons.png");
+        position: absolute;
+        top: 0.15625rem;
+        left: 0; }
+    .list-container .lists .btn {
+      position: absolute;
+      width: 4.375rem;
+      height: 1.75rem;
+      line-height: 1.75rem;
+      font-size: 0.9375rem;
+      text-align: center;
+      border-radius: 0.875rem;
+      letter-spacing: 2px;
+      right: 0.9375rem;
+      top: 1.3125rem; }
+    .list-container .lists .btn-normal {
+      color: #fff;
+      background-image: -webkit-linear-gradient(0deg, #ff6126, #ff8f19);
+      background-image: linear-gradient(90deg, #ff6126, #ff8f19); }
+    .list-container .lists .btn-finish {
+      color: #a1a9b5;
+      border: 1px solid #a1a9b5; }
+  .list-container .lists:before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: #cfcfcf;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: scale(1, 0.5); }
+  .list-container .lists:last-child:before {
+    background: transparent; }
+
+/*# sourceMappingURL=index.css.map */

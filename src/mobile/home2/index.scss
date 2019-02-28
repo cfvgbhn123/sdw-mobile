@@ -1,0 +1,485 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+$mainBackground: #2b323d;
+
+body {
+  background: $mainBackground;
+  font-family: arial, helvetica, "Microsoft YaHei";
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#app {
+  width: torem(750px);
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  padding-bottom: torem(130px);
+}
+
+.my-info-container {
+
+  height: torem(132px);
+  width: torem(710px);
+  margin: torem(40px) auto;
+  position: relative;
+
+  .avatar {
+
+    border-radius: 50%;
+    width: torem(120px);
+    height: torem(120px);
+    border: torem(4px) solid #fff;
+    position: relative;
+
+    background: url("images/phdavatar.png") center/100% no-repeat;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+
+  }
+
+  .avatar:before {
+    content: '';
+    width: torem(40px);
+    height: torem(40px);
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: url("images/edit.png") center/torem(40px) no-repeat;
+
+  }
+
+  .my-nick {
+    height: torem(30px);
+    position: absolute;
+    top: torem(25px);
+    color: #fff;
+    left: torem(162px);
+
+    div {
+      float: left;
+    }
+
+  }
+
+  .nick-text {
+    line-height: torem(30px);
+    font-size: torem(30px);
+    padding-right: torem(40px);
+    max-width: torem(220px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .gold-container {
+    height: torem(36px);
+    line-height: torem(36px);
+    border-radius: torem(18px);
+    font-size: torem(30px);
+    color: #ff9000;
+
+    padding: 0 torem(50px);
+    background: #1e232b;
+    position: absolute;
+    bottom: torem(25px);
+    left: torem(162px);
+  }
+
+  .gold-container:before {
+    content: '';
+    width: torem(40px);
+    height: torem(40px);
+    position: absolute;
+    top: torem(-2px);
+    left: torem(-2px);
+    background: url("images/gold.png") center/100% no-repeat;
+  }
+
+  .get-gold {
+    width: torem(30px);
+    height: torem(30px);
+    position: absolute;
+    top: torem(3px);
+
+    right: torem(6px);
+    background: url("images/add.png") center/torem(30px) torem(30px) no-repeat;
+  }
+
+  .my-uid {
+    margin-left: torem(10px);
+    font-size: torem(20px);
+  }
+
+  .sex1 {
+    background: url("images/sex1.png") right center/torem(30px) no-repeat;
+  }
+
+  .sex2 {
+    background: url("images/sex2.png") right center/torem(30px) no-repeat;
+  }
+}
+
+.module-container {
+  width: torem(710px);
+  height: torem(40px);
+  line-height: torem(41px);
+  color: #fff;
+  font-size: torem(28px);
+  margin: torem(30px) auto;
+  position: relative;
+  text-indent: torem(40px);
+  background: url("images/border.png") torem(5px) center/auto torem(28px) no-repeat;
+
+  .more {
+    height: torem(40px);
+    width: torem(40px);
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: url("images/more.png") center/torem(32px) no-repeat;
+  }
+}
+
+.slice-up {
+  margin-top: torem(10px);
+}
+
+.my-game-lists {
+  width: 100%;
+  height: torem(250px);
+  overflow-x: scroll;
+  overflow-y: hidden;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  white-space: nowrap;
+  padding-bottom: torem(20px);
+  font-size: 0;
+}
+
+.nav-container {
+  height: torem(160px);
+  width: torem(710px);
+  margin: 0 auto;
+
+  .nav-item {
+    border-radius: 5px;
+    height: torem(160px);
+    float: left;
+    margin-right: torem(17px);
+    position: relative;
+    .icon {
+      width: 100%;
+      height: torem(80px);
+      margin: torem(15px) auto torem(10px) auto;
+      position: relative;
+    }
+  }
+
+  .nav-item:last-child {
+    margin-right: 0 !important;
+  }
+
+  .phone {
+    background: linear-gradient(45deg, #7b3aff, #2e9cff);
+
+    .icon {
+      background: url("images/phone.png") center /torem(64px) torem(46px) no-repeat;
+    }
+  }
+
+  .message {
+    background: linear-gradient(45deg, #00a9cd, #1ae093);
+
+    .icon {
+      background: url("images/message.png") center /torem(66px) torem(51px) no-repeat;
+    }
+  }
+
+  .gift {
+    background: linear-gradient(45deg, #ff566a, #ff7a45);
+    .icon {
+      background: url("images/gift.png") center /torem(52px) torem(50px) no-repeat;
+    }
+  }
+
+  .app {
+    background: linear-gradient(45deg, #ff5f40, #ff9829);
+    .icon {
+      background: url("images/app.png") center /torem(56px) torem(49px) no-repeat;
+    }
+  }
+
+  .nav-item[data-count='3'] {
+    width: torem(225px);
+  }
+
+  .nav-item[data-count='2'] {
+    width: torem(346px);
+  }
+
+  .title {
+
+    color: #fff;
+
+    font-size: torem(30px);
+    height: torem(30px);
+    line-height: torem(30px);
+    text-align: center;
+  }
+}
+
+.my-like-container {
+  width: torem(630px);
+  //height: torem();
+  border-radius: 5px;
+  margin: 0 auto;
+  background: #fff;
+  padding: torem(50px) torem(40px) torem(20px) torem(40px);
+  position: relative;
+
+  .game-list-item {
+    width: torem(160px);
+  }
+
+  .game-cover {
+    position: relative;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+  }
+
+  .game-list-item[data-index='1'] {
+    position: absolute;
+    top: torem(30px);
+    left: torem(275px);
+    .game-cover {
+      width: torem(160px);
+      height: torem(160px);
+    }
+
+    .game-cover:before {
+      content: '';
+      width: torem(146px);
+      height: torem(62px);
+      position: absolute;
+      bottom: torem(-30px);
+      left: torem(7px);
+      background: url("images/link1.png") center/torem(146px) no-repeat;
+    }
+  }
+
+  .game-list-item[data-index='2'] {
+    .game-cover {
+      width: torem(140px);
+      height: torem(140px);
+      margin: 0 auto;
+    }
+
+    .game-cover:before {
+      content: '';
+      width: torem(130px);
+      height: torem(62px);
+      position: absolute;
+      bottom: torem(-30px);
+      left: torem(5px);
+      background: url("images/link2.png") center/torem(130px) no-repeat;
+    }
+  }
+
+  .game-list-item[data-index='4'] {
+    display: inline-block;
+    margin-right: torem(50px);
+    .game-cover {
+      width: torem(140px);
+      height: torem(140px);
+      margin: 0 auto;
+    }
+  }
+
+  .game-list-item[data-index='4']:first-child {
+    margin-left: torem(40px);
+  }
+
+  .game-list-item[data-index='4']:last-child {
+    margin-right: torem(40px);
+  }
+
+  .game-list-item[data-index='3'] {
+    position: absolute;
+    top: torem(50px);
+    right: torem(40px);
+    .game-cover {
+      width: torem(140px);
+      height: torem(140px);
+      margin: 0 auto;
+    }
+
+    .game-cover:before {
+      content: '';
+      width: torem(130px);
+      height: torem(62px);
+      position: absolute;
+      bottom: torem(-30px);
+      left: torem(5px);
+      background: url("images/like3.png") center/torem(130px) no-repeat;
+    }
+  }
+
+  .ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .game-title {
+    margin-top: torem(30px);
+    width: 120%;
+    margin-left: -10%;
+    height: torem(40px);
+    line-height: torem(40px);
+    font-size: torem(31px);
+    //font-weight: bold;
+    color: #000;
+    text-align: center;
+  }
+
+  .game-info {
+    width: 100%;
+    height: torem(40px);
+    line-height: torem(40px);
+    font-size: torem(24px);
+    color: #989898;
+  }
+
+  .game-btn {
+    text-align: center;
+    position: relative;
+    margin: torem(10px) auto;
+    width: torem(137px);
+    height: torem(60px);
+    line-height: torem(60px);
+    border-radius: torem(30px);
+    background: linear-gradient(to right, #22cab5, #3fe28f);
+    font-size: 16px; /*32px*/
+    letter-spacing: 2px;
+    color: #fff;
+  }
+}
+
+.no-padding {
+  width: torem(710px);
+  padding: 0;
+  padding-top: torem(40px);
+  padding-bottom: torem(10px);
+}
+
+.game-list-cont {
+  width: 100%;
+  //height: torem(250px);
+  overflow-x: scroll;
+  //overflow-y: hidden;
+  overflow-scrolling: touch;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  white-space: nowrap;
+  padding-bottom: torem(20px);
+  font-size: 0;
+}
+
+.my-like-container-nothing {
+
+  width: torem(710px);
+  height: torem(210px);
+  padding-top: torem(20px);
+  background: #fff;
+  border-radius: 5px;
+  margin: 0 auto;
+
+  margin-bottom: torem(30px);
+
+  .title {
+    font-size: torem(32px);
+    color: #000;
+    text-align: center;
+    //margin-top: torem(20px);
+    height: torem(70px);
+    line-height: torem(70px);
+  }
+
+  .go-game-btn {
+    height: torem(104px);
+    margin-top: torem(-10px);
+    background: url("images/go-game.png") center/auto 100% no-repeat;
+  }
+}
+
+.my-data {
+
+  width: torem(710px) !important;
+  margin: torem(20px) auto !important;
+  background: #fff;
+  border-radius: 5px;
+
+  .line {
+    border-bottom: 0.5px solid #dedede;
+  }
+
+  .avatar-container {
+    height: torem(245px);
+
+  }
+
+  .data-list {
+    height: torem(100px);
+    line-height: torem(100px);
+  }
+
+  .left-title {
+    width: torem(180px);
+    margin-left: torem(30px);
+
+  }
+
+  .float {
+    float: left;
+    font-size: torem(32px);
+  }
+
+  .right-container {
+    width: torem(470px);
+  }
+
+  .more-select {
+    background-image: url("images/more2.png");
+    background-position: right center;
+    background-size: torem(14px) auto;
+    background-repeat: no-repeat;
+  }
+}
+

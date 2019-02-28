@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <script>
+        document.write('<script src="https://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="https://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+        (function () {
+            var goToUri = location.href.split('#')[0];
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, true, SDW_WEB.CHECK_URL);
+            SDW_WEB.getUserInfo(null, checkUrl, true);
+        })();
+    </script>
+    <script src="../../libs/vue.js"></script>
+
+</head>
+<body>
+
+<!--
+我的更多游戏
+-->
+<div id="app" v-cloak>
+    <template v-if="myGameList.length">
+        <game-card :item="item"
+                   v-for="item in myGameList"
+                   class="long-card"></game-card>
+    </template>
+
+    <div v-if="initFlg && myGameList.length==0" class="no-play">
+        <img src="images/sorry.png" class="sorry">
+        <p class="sorry-tips">您还没有玩过游戏哦！</p>
+    </div>
+</div>
+
+</body>
+
+
+</html>

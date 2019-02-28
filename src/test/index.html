@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .comps {
+            margin: 20px auto;
+        }
+
+        body {
+            background: #052e40;
+            font-family: arial, helvetica, "Microsoft YaHei";
+        }
+
+        .g-list {
+            /*display: inline-block;*/
+            /*align-content:space-around;*/
+            /*flex-grow:1;*/
+            margin: 10px 0;
+        }
+
+        .game-list-container {
+            text-align: center;
+            font-size: 0;
+            width: 100%;
+            display: flex;
+            align-content: space-around;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+    </style>
+    <script src="../libs/vue.js"></script>
+    <script>
+        (function (doc) {
+
+            var WIDTH = doc.documentElement.clientWidth;
+            var fontSize = WIDTH / 375 * 16;
+            fontSize = Math.min(fontSize, 19);
+            doc.documentElement.style.fontSize = fontSize + 'px';
+
+        })(document);
+    </script>
+</head>
+<body>
+
+
+<div id="app" v-cloak>
+
+    <!--<img src="images/kd-ewm.png" alt="">-->
+
+    <!--<div>{{msg}}</div>-->
+    <!--<compa class="comps" mes-father="我是来自父组件的消息"></compa>-->
+    <!--<compb class="comps" v-for="i in 5" :mes-father="i"></compb>-->
+
+    <login></login>
+
+
+    <!--<div class="game-list-container">-->
+        <!--<game-item class="g-list" :game-item="item" v-for="item in gameList"-->
+                   <!--v-on:tap-game="sayHello" show-more="1"></game-item>-->
+    <!--</div>-->
+
+    <sdw-footer index=0></sdw-footer>
+
+</div>
+
+
+</body>
+
+<script>
+//    console.log('我被压缩啦')
+</script>
+
+</html>

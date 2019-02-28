@@ -1,0 +1,181 @@
+@import "../reset.scss";
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+body {
+  background: #232b36 !important;
+}
+
+.big-banner-container {
+  width: 100%;
+  height: torem(360px);
+  background: #232b36;
+  position: relative;
+}
+
+.thematic-desc {
+  width: torem(690px);
+  margin: 0 auto;
+  color: #fff;
+  margin-top: torem(20px);
+  font-size: torem(28px);
+  line-height: 1.5;
+}
+
+.linear-mask {
+  width: 100%;
+  height: torem(99px);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-image: url(images/line-bg.png);
+  background-size: torem(11px) torem(99px);
+  background-repeat: repeat-x;
+}
+
+.thematic-list-container {
+  width: torem(690px);
+  margin: 0 auto;
+  padding: torem(30px) 0;
+  position: relative;
+}
+
+.thematic-list-container:before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #414a58;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: scale(1, 0.5);
+}
+
+
+.thematic-b-img {
+  width: torem(690px);
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.game-list-item {
+  width: torem(690px);
+  height: torem(90px);
+  position: relative;
+  margin: torem(30px) auto;
+}
+
+.thematic-b-icon {
+  width: torem(90px);
+  height: torem(90px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 12px;
+}
+
+.t-game-name {
+  height: torem(50px);
+  line-height: torem(50px);
+  position: absolute;
+  top: 0;
+  left: torem(110px);
+  color: #fff;
+  font-size: torem(30px);
+}
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: torem(114px);
+  height: torem(50px);
+  line-height: torem(51px);
+  border-radius: torem(25px);
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px; /*32px*/
+  //letter-spacing: 1px;
+  color: #fff;
+}
+
+.g-l-right {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate3d(0, -50%, 0);
+}
+
+.t-game-info {
+  color: #fff;
+  font-size: torem(28px);
+  line-height: 1.5;
+}
+
+.big-banner-img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.star-list {
+  height: torem(22px);
+  display: block;
+  position: absolute;
+  bottom: torem(10px);
+  left: torem(110px);
+}
+
+.star0, .star1, .star2 {
+  display: block;
+  width: torem(23px);
+  height: torem(22px);
+  float: left;
+  margin-right: torem(4px);
+
+}
+
+.star0 {
+  background: url("images/star0.png") 0 0 / 100% 100% no-repeat;
+}
+
+.star1 {
+  background: url("images/star1.png") 0 0 / 100% 100% no-repeat;
+}
+
+.star2 {
+  background: url("images/star2.png") 0 0 / 100% 100% no-repeat;
+}
+
+.thematic-idx-list-container {
+  width: torem(730px);
+  margin: torem(10px) auto;
+  position: relative;
+  font-size: 0;
+
+  .list-item {
+    width: torem(345px);
+    height: torem(170px);
+    display: inline-block;
+    border-radius: 12px;
+    overflow: hidden;
+    float: left;
+    margin: torem(10px);
+  }
+
+  .list-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}

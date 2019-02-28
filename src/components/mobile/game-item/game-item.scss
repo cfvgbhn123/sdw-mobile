@@ -1,0 +1,191 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+//img {
+//  transition: .32s;
+//}
+
+//img[data-loaded="0"] {
+//  opacity: 0;
+//}
+//
+//img[data-loaded="1"] {
+//  opacity: 1;
+//}
+
+$borderRadius: 6px;
+
+.game-list-item {
+  position: relative;
+  width: torem(345px);
+  //height: torem(420px);
+  max-width: 345px;
+  //max-height: 420px;
+  border-radius: $borderRadius;
+  //background: #fff;
+}
+
+.game-list-cover {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: $borderRadius $borderRadius 0 0;
+}
+
+.game-more-info {
+  //min-height: torem(60px);
+  background: #fff;
+  padding: torem(15px) 0;
+  border-radius: 0 0 $borderRadius $borderRadius;
+}
+
+.game-cover-info {
+  border-radius: $borderRadius $borderRadius 0 0;
+  overflow: hidden;
+  width: 100%;
+  height: torem(240px);
+  position: relative;
+  background: url('imgs/default-game-icon.png') center / torem(79px) torem(56px) no-repeat;
+  background-color: #fff;
+}
+
+.game-title {
+  text-shadow: 0 1px 1px #636363;
+  width: 100%;
+  height: torem(74px);
+  line-height: torem(74px);
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%,
+          rgba(0, 0, 0, 0.06) 30%, rgba(0, 0, 0, .6) 100%);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 16px; /*32px*/
+}
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: torem(137px);
+  height: torem(60px);
+  line-height: torem(60px);
+  border-radius: torem(30px);
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px; /*32px*/
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.game-btn:before {
+  content: '';
+  width: 120%;
+  height: 120%;
+  position: absolute;
+  left: -10%;
+  top: -10%;
+}
+
+.larger {
+  margin-top: torem(10px);
+  margin-bottom: torem(10px);
+}
+
+
+
+.game-info {
+  height: torem(22px);
+  line-height: torem(22px);
+  font-size: 11px; /*22px*/
+  color: #989898;
+  //margin-top: torem(15px);
+}
+
+.light-num {
+  color: #ff9000;
+}
+
+.game-desc {
+  width: 95%;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 12px; /*24px*/
+  color: #989898;
+  height: torem(50px);
+  margin: 0 auto;
+  margin-top: torem(5px);
+  line-height: torem(50px);
+}
+
+.star-list {
+  width: torem(130px);
+  height: torem(22px);
+  display: inline-block;
+}
+
+.star0, .star1, .star2 {
+  display: block;
+  width: torem(23px);
+  height: torem(22px);
+  float: left;
+  margin-right: torem(2px);
+
+}
+
+.star0 {
+  background: url("imgs/star0.png") 0 0 / 100% 100% no-repeat;
+}
+
+.star1 {
+  background: url("imgs/star1.png") 0 0 / 100% 100% no-repeat;
+}
+
+.star2 {
+  background: url("imgs/star2.png") 0 0 / 100% 100% no-repeat;
+}
+
+.game-play-time {
+  text-align: left;
+  text-indent: torem(20px);
+  width: torem(179px);
+  height: torem(51px);
+  background: url("imgs/tagstime.png") 0 0 / 100% 100% no-repeat;
+  color: #fff;
+  position: absolute;
+  top: torem(16px);
+  left: torem(-14px);
+  font-size: torem(24px);
+  line-height: torem(40px);
+}
+
+.tag-list {
+  width: 100%;
+  height: torem(65px);
+  position: absolute;
+  top: torem(-5px);
+  left: 0;
+
+  .tags {
+    width: torem(58px);
+    height: torem(65px);
+    float: left;
+    margin-left: torem(10px);
+  }
+
+  .new {
+    background: url("imgs/newtag.png") 0 0 / 100% no-repeat;
+  }
+
+  .gift {
+    background: url("imgs/gifttag.png") 0 0 / 100% no-repeat;
+  }
+}

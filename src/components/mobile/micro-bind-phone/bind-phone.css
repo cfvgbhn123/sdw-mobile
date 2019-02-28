@@ -1,0 +1,144 @@
+.bind-phone-info-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 999999999; }
+  .bind-phone-info-container .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .bind-phone-info-container .desc {
+    width: 15.84375rem;
+    margin: 1.25rem auto;
+    line-height: 1.5;
+    color: #626c78;
+    font-size: 0.78125rem;
+    height: auto;
+    position: relative; }
+    .bind-phone-info-container .desc input {
+      border-radius: 3px;
+      border: 1px solid #e1e1e1;
+      position: relative;
+      left: 0;
+      top: 0;
+      display: block;
+      width: 100%;
+      height: 2.8125rem;
+      background: #f0f0f0;
+      margin: 0.78125rem 0;
+      box-sizing: border-box;
+      text-indent: 0.625rem; }
+    .bind-phone-info-container .desc .get-code {
+      border-radius: 3px;
+      width: 35%;
+      height: 2.8125rem;
+      line-height: 2.8125rem;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      text-align: center;
+      background: #cdd3dc;
+      color: #fff;
+      box-sizing: border-box; }
+    .bind-phone-info-container .desc .normal-code {
+      background: #79859a; }
+    .bind-phone-info-container .desc input[data-module='80%'] {
+      width: 60%; }
+  .bind-phone-info-container .login-btn-v3 {
+    width: 6.0625rem;
+    height: 2.1875rem;
+    line-height: 2.1875rem;
+    border-radius: 1.09375rem;
+    margin: 1.5625rem auto;
+    background: #0c94d0;
+    font-size: 1.125rem;
+    color: #fff;
+    text-align: center;
+    background-image: linear-gradient(90deg, #1fc7b9, #40e38d); }
+
+.bind-phone-infos {
+  width: 19.375rem;
+  position: absolute;
+  padding-top: 6.28125rem;
+  background-color: #fff;
+  border-radius: 4px;
+  left: 50%;
+  transform: translate3d(-50%, 5.625rem, 0);
+  background-image: url("images/task-info-bg.png");
+  background-repeat: no-repeat;
+  background-size: 100% 6.28125rem; }
+  .bind-phone-infos .bind-phone-name {
+    color: #fff;
+    font-size: 1.125rem;
+    text-align: center;
+    position: absolute;
+    top: 1.40625rem;
+    left: 0;
+    width: 100%; }
+  .bind-phone-infos .bind-phone-gift {
+    vertical-align: middle;
+    display: inline-block;
+    height: 1.625rem;
+    line-height: 1.625rem;
+    border-radius: 0.8125rem;
+    background: #5f34ca;
+    padding: 0 0.625rem;
+    position: absolute;
+    top: 3.4375rem;
+    left: 50%;
+    color: #ff9000;
+    font-size: 0.8125rem;
+    transform: translate3d(-50%, 0, 0); }
+
+.bind-phone-infos:before {
+  content: '';
+  width: 1.21875rem;
+  height: 9.65625rem;
+  background: url(images/task-line.png) no-repeat 0 0/auto 100%;
+  position: absolute;
+  top: 0.9375rem;
+  left: 50%;
+  transform: translate3d(-50%, -100%, 0); }
+
+.fade2-enter-active {
+  transition: opacity .28s, transform .23s;
+  transform: translate3d(-50%, 5.625rem, 0);
+  opacity: 1; }
+
+.fade2-enter {
+  opacity: 0;
+  transform: translate3d(-50%, -8.65625rem, 0); }
+
+.fade2-leave {
+  transform: translate3d(-50%, 5.625rem, 0);
+  opacity: 1; }
+
+.fade2-leave-active {
+  opacity: 1;
+  transform: translate3d(-50%, -8.65625rem, 0); }
+
+.conts-i {
+  margin-left: 0.3125rem;
+  padding-left: 1.5625rem;
+  position: relative;
+  display: inline-block;
+  font-weight: bolder; }
+
+.conts-i:before {
+  content: '';
+  width: 1.25rem;
+  height: 1.625rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  background-image: url("images/gold-icons.png"); }
+
+/*# sourceMappingURL=bind-phone.css.map */

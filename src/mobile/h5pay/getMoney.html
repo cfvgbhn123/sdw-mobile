@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title></title>
+    <script>
+        // document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="http://www.shandw.com/m/game/js/initGame.min.js?m=1541991651390"></script>
+
+    <!--<script src="pay.js"></script>-->
+    <script>
+        // 获取用户的基本信息
+        SDW_WEB.checkUserInfo();
+        if (SDW_WEB.onQQ) {
+            document.write('<script src="https://open.mobile.qq.com/sdk/qqapi.js?_bid=152"><\/script>');
+        }
+    </script>
+</head>
+<body>
+
+
+<div id="app" v-cloak style="display: none;padding-bottom:2rem">
+
+    <!--头部-->
+    <div class="h5pay-header">
+        <div class="top-text">{{topText}}</div>
+
+        <!--在充值界面展示-->
+        <div class="user-info" v-show="currentPage ==='itemList' || currentPage ==='history'">
+            <div class="user-id">ID：{{wxUserInfo.pay_uid}}</div>
+            <div class="user-id" data-type="area">大区-ID：{{wxUserInfo.pay_areaId}}</div>
+            <div class="user-money" v-if="wxUserInfo.redPkt"><span>红包：￥{{wxUserInfo.redPkt}}</span> <span class="tixian"  @click="currentPage = 'getMoney' ;" >提现 &gt;</span></div>
+        </div>
+
+
+        <!--用户token输入框-->
+        <div class="top-input-container">
+            <img src="images/sd-logo.png" alt="" class="icon-sd">
+            <input type="text" v-model="userPayToken" placeholder="输入游戏闪电码，即可提现
+" class="top-input">
+            <div @click="requestGameItemList" class="search-btn"></div>
+        </div>
+
+    </div>
+
+    <!--充值首页-->
+    <div class="index-page page"
+         v-show="currentPage ==='index'">
+
+        <div class="tip-title">兑换使用说明 </div>
+
+        <div class="index-info-cont2">
+
+            <img :src="preLoadImg" alt="">
+            <!--<div class="tag"></div>-->
+        </div>
+
+        <!--引导步骤-->
+        <div class="index-info-cont">
+
+            <div class="step-cont">
+                <div class="step-info">
+                    <div class="step-num">1</div>
+                    输入游戏闪电码，进入该游戏礼包兑换页。
+                </div>
+                <div class="step-info">
+                    <div class="step-num">2</div>
+                    选择礼包并完成兑换，进入游戏即可获得 。
+                </div>
+                <div class="step-info">
+                    <div class="step-num">3</div>
+                    如何获取闪电码：<a href="http://dhurl.cn/EfiQJj" class="link-btn">点击查看</a>
+                </div>
+            </div>
+
+            <!--底部的遮罩样式-->
+            <div class="bottom-mask" data-type="mask1"></div>
+            <div class="bottom-mask" data-type="mask2"></div>
+            <div class="bottom-mask" data-type="mask3"></div>
+        </div>
+
+
+        <!--首页底部的信息-->
+        <div class="server-text">
+            24小时客服热线：0571-56690669<br>
+            如果页面出现异常，请 <span @click="refreshPage()" style="text-decoration: underline">刷新页面</span>
+        </div>
+
+    </div>
+
+
+    <!--提现页面-->
+    <div class="getMoney-container" v-show="currentPage ==='getMoney'" ><!---->
+        <!--头部-->
+        <div class="h5pay-header getMoney">
+            <div class="my-packet ">
+                <div class="f-36 myPkt">
+                    <div class="backBtn" @click="currentPage =  'index'"></div>
+                    我的红包</div>
+                <span class="f-64" >￥</span><span   class="f-108">{{wxUserInfo.redPkt}}</span>
+            </div>
+
+            <div class="rule">
+                <div class="title">提现规则：</div>
+                <p>1.红包2元起提</p>
+                <p>2.红包提现每日上限10元</p>
+                <p>3.提现后，红包将直接发放在【闪电玩】公众号内</p>
+                <p>4.24小时未领取红包将会被退回呦！</p>
+            </div>
+        </div>
+        <div class="get-btn" @click="getMoney">确认提现</div>
+        <div class="game-recommend">
+            <div class="title"><i></i>热门游戏推荐</div>
+            <div class="game-container">
+                <div class="item" v-for="item in recommendList" @click="openGame(item.gameid)">
+                    <img :src="item.gameImg" :alt="item.name">
+                    <div class="name">{{item.name}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--支付宝-->
+<div id="alipay_form" style="display: none"></div>
+
+<!--微信支付二维码-->
+<div class="pay-model-mask" id="payModelMask" style="display: none;">
+    <div id="PayModelBox" class="pay-model-box">
+        <section id="PayboxCode" class="payboxCode" style="display: block;">
+            <div class="pay-model-bd">
+                <div class="pay-model-wayer">支付<a href="javascript:void(0);" class="closepaybtn">✕</a></div>
+                <div id="payWayerTit" class="pay-wayer-tit">长按二维码识别</div>
+                <div class="codecon" id="CodeContent"><img
+                        src="">
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+</body>
+</html>

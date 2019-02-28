@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <title>Title</title>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background: #6fbbff;
+            color: #fff;
+        }
+
+        div {
+            word-wrap: break-word
+        }
+
+        .scroll-container {
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            background: #fff;
+            position: relative;
+        }
+
+        .pull-message {
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+            color: #4d4d4d;
+            font-size: 12px;
+            text-align: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translateY(-100%);
+        }
+
+        .pull-scroll {
+            /*overflow: hidden;*/
+            /*height: 400px;*/
+            width: 100%;
+            color: #333;
+            opacity: 1;
+            /*background: #4cadff;*/
+            /*transform: translate3d(0, 20px, 0);*/
+        }
+
+        .banner {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div id="info">我是文字</div>
+
+<div class="scroll-container">
+
+    <div class="pull-scroll">
+        <div class="pull-message">下拉刷新</div>
+        <img src="http://app.m3guo.com/h5/2016/h5gameimg/KOU03.png" class="banner">
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+        <div>我是文字</div>
+    </div>
+</div>
+
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+<div>我是文字</div>
+
+</body>
+
+<script>
+
+    alert(document.documentElement.clientHeight || document.body.clientHeight);
+
+    /**
+     * 封装成插件形式
+     *
+     * @param option
+     * @constructor
+     *
+     * var scroll = new PullScroll({
+     *      el:'#scroll'
+     *      ...
+     * });
+     *
+     */
+    function PullScroll(option) {
+
+        this.id = option.el;
+        this.scrollElement = document.querySelector(option.el);
+//        startY: 0,
+//            offsetY: 0,
+//            slideUp: false,
+//            offsetTop: 0
+        this.startY = 0;
+        this.offsetY = 0;
+        this.slideUp = false;
+
+        this.__init__(option);
+
+    }
+
+    PullScroll.prototype.__init__ = function (option) {
+
+        this.scrollElement.addEventListener('touchstart', this.__touchDown__, false);
+        this.scrollElement.addEventListener('touchmove', touchMove, false);
+        document.addEventListener('touchend', touchUp, false);
+    };
+
+    PullScroll.prototype.__touchDown__ = function (e) {
+
+        this.offsetTop = document.documentElement.scrollTop || document.body.scrollTop;
+        this.startY = getPosition(document.body, e).y;
+//        infoDom.innerText = JSON.stringify(pagScrollInfo);
+
+        startTouchPoint = getPosition(el, e);
+        this.startTouch = true;
+        this.scrollElement.style.webkitTransition = 'none';
+        this.scrollElement.style.transition = 'none';
+        this.startTime = +new Date();
+
+    };
+
+    PullScroll.prototype.__getPosition__ = function (dom, e) {
+
+        if (dom === undefined) return null;
+
+        var c = dom.getBoundingClientRect(), p = {};
+
+        switch (e.type) {
+            case 'mousedown':
+            case 'mousemove':
+            case 'mouseup':
+            case 'click':
+                p.x = e.clientX - c.left;
+                p.y = e.clientY - c.top;
+                break;
+            case 'touchend':
+            case 'touchmove':
+                p.x = e.changedTouches[0].clientX - c.left;
+                p.y = e.changedTouches[0].clientY - c.top;
+                break;
+            case 'touchstart':
+                p.x = e.touches[0].clientX - c.left;
+                p.y = e.touches[0].clientY - c.top;
+                break;
+            default :
+                break;
+        }
+
+        return p;
+    };
+
+    var infoDom = document.querySelector('#info');
+    var pullMessage = document.querySelector('.pull-message');
+    var scrollContainer = document.querySelector('.scroll-container');
+
+    // 获取位置信息
+    var getPosition = function (obj, e) {
+//        e.preventDefault();
+        if (obj === undefined) return;
+
+        var c = obj.getBoundingClientRect(), p = {};
+
+        switch (e.type) {
+            case 'mousedown':
+            case 'mousemove':
+            case 'mouseup':
+            case 'click':
+                p.x = e.clientX - c.left;
+                p.y = e.clientY - c.top;
+                break;
+            case 'touchend':
+            case 'touchmove':
+                p.x = e.changedTouches[0].clientX - c.left;
+                p.y = e.changedTouches[0].clientY - c.top;
+                break;
+            case 'touchstart':
+                p.x = e.touches[0].clientX - c.left;
+                p.y = e.touches[0].clientY - c.top;
+                break;
+            default :
+                break;
+        }
+
+        return p;
+    };
+
+    function callback() {
+
+        pullMessage.innerText = '更新中...';
+        el.style.transition = '.3s';
+        el.style.webkitTransform = 'translate3d(0,40px,0)';
+        el.style.transform = 'translate3d(0,40px,0)';
+
+        setTimeout(function () {
+            refresh();
+        }, 1200);
+    }
+
+    var scrollTimer = false;
+    var el = document.querySelector('.pull-scroll');
+    var startTouchPoint = {x: 0, y: 0};
+
+    function touchDown(e) {
+
+//        if (el.startTouch) return;
+
+        pagScrollInfo.offsetTop = document.documentElement.scrollTop || document.body.scrollTop;
+        pagScrollInfo.startY = getPosition(document.body, e).y;
+        infoDom.innerText = JSON.stringify(pagScrollInfo);
+
+        startTouchPoint = getPosition(el, e);
+        el.startTouch = true;
+        el.style.transition = 'none';
+        el.startTime = +new Date();
+
+    }
+
+    function touchMove(e) {
+
+        var currentPoint = getPosition(document.body, e);
+        currentPoint.y -= scrollContainer.offsetTop;
+        delY = currentPoint.y - startTouchPoint.y;
+
+        pagScrollInfo.currentY = getPosition(document.body, e).y;
+
+        infoDom.innerText = JSON.stringify(pagScrollInfo);
+
+        if (pagScrollInfo.currentY < pagScrollInfo.startY) {
+            // 页面向上滑动
+
+        } else if (pagScrollInfo.offsetTop <= 0 && el.startTouch) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            scrollTimer = true;
+            requestAnimationFrame(scrollMove);
+            function scrollMove() {
+                delY = Math.ceil(delY * 0.45);
+                pullMessage.innerText = delY >= 60 ? '松手更新' : '继续拉下';
+                el.style.webkitTransform = 'translate3d(0,' + delY + 'px,0)';
+                el.style.transform = 'translate3d(0,' + delY + 'px,0)';
+                scrollTimer = false;
+            }
+
+        }
+
+
+    }
+
+    function touchUp(e) {
+
+        // 需要注意回退动画的时候，再次下拉叠加bug。回退动画的时候需要锁住再次下拉！
+
+        infoDom.innerText = JSON.stringify(pagScrollInfo);
+
+        if (pagScrollInfo.currentY < pagScrollInfo.startY) {
+            // 页面向上滑动
+
+        } else if (pagScrollInfo.offsetTop <= 0 && el.startTouch) {
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (delY >= 60) {
+                callback && callback();
+                callback || refresh();
+            } else {
+                refresh();
+            }
+
+        }
+
+    }
+
+    function refresh() {
+        el.style.transition = '.3s';
+        el.style.webkitTransform = 'translate3d(0,0,0)';
+        el.style.transform = 'translate3d(0,0,0)';
+        el.startTouch = false;
+        infoDom.innerText = '恭喜，更新成功！！';
+    }
+
+    var pagScrollInfo = {
+        startY: 0,
+        offsetY: 0,
+        slideUp: false,
+        offsetTop: 0
+    };
+
+    el.addEventListener('touchstart', touchDown, false);
+    el.addEventListener('touchmove', touchMove, false);
+    document.addEventListener('touchend', touchUp, false);
+
+
+</script>
+</html>

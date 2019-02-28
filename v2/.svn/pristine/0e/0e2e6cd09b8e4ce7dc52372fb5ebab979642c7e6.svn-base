@@ -1,0 +1,541 @@
+/**
+ * Created by CHEN-BAO-DENG on 2017/3/20.
+ *
+ * 游戏部分功能初始化
+ *
+ * 1.游客模式的检查
+ * 2.闪电玩分享对象
+ *
+ */
+
+Shandw_USER = {};
+
+function checkVisitor() {
+
+    // location.protocol != 'http:'
+
+    // APP环境下不进行游客模式
+    if (APP.onWeiBo || APP.onQQ || APP.onWeiXin || APP.onKD || APP.onShandw) {
+
+        visitorMode.isVisitor = false;
+
+        if (APP.onShandw) return;
+
+        checkUserData(null, CHECK_URL + '?datatype=' + DATAITEM + '&goto=' + encodeURIComponent(location.href.split('#')[0]) + '&channel=' + channel, true);
+
+    }
+
+    else if (localStorage && localStorage[DATAITEM]) {
+
+        visitorMode.isVisitor = false;
+        USER_DATA = JSON.parse(localStorage[DATAITEM]);
+        // console.log('USER_DATA', USER_DATA);
+
+    } else {
+
+        visitorMode.isVisitor = true;
+    }
+
+}
+
+var HTTP_AUTH = HTTP_USER_STATIC + 'authgame';
+
+var url = getUrlObj();
+
+// 游客模式对象
+var visitorMode = {
+    isVisitor: true,
+    visitorToken: '',
+    /**
+     * 游客模式授权游戏
+     */
+    authGame: function (callback) {
+        var gid = C_url['gid'], self = this;
+
+        if (!gid) {
+            alert('缺少游戏id');
+            return;
+        }
+
+        var sec = +new Date();
+        var token = faultylabs.MD5('' + channel + gid + APP.guid + sec + '0ef7a6ba9d8d288fbeca1cdebf13c03e');
+
+        this.getData(HTTP_USER_STATIC + 'vstgame', function (data) {
+
+            setShareInfo(data);
+
+            visitorMode.isVisitor && (document.querySelector('#visitorIcon').src = data.sIcon);
+
+            self.visitorToken = data.vstToken;
+
+            checkGameUrl(data);
+
+            callback && callback(data.sIcon);
+
+        }, function (data) {
+
+        }, {
+            channel: channel,
+            token: token,
+            gid: gid,
+//                    imei: APP.guid,
+            sec: sec,
+            loginType: 0 // 目前全部为0
+        })
+    },
+    getData: function (url, successFn, errorFn, data) {
+
+        data = data || {};
+
+        data.imei || (data.imei = APP.guid);
+        data.os || (data.os = APP.os);
+        data.w || (data.w = APP.width);
+        data.h || (data.h = APP.height);
+
+        var start = +new Date();
+        $.ajax({
+            type: 'GET',
+            url: url,
+            data: data,
+            dataType: 'jsonp',
+            jsonp: 'cb',
+            timeout: 3 * 60 * 1000,
+            jsonpCallback: 'callFn' + (+new Date()),
+            success: function (data) {
+
+                // 开始的时间
+                data.callStartTimes = start;
+
+                if (data.result == 1) {
+                    successFn(data, 1);
+
+                } else if (data.result == -3) {
+                    alert(data.msg)
+
+                } else {
+                    errorFn(data);
+                }
+
+            },
+            error: function (xhr, type) {
+                errorFn({msg: 'xhr请求失败'});
+            }
+
+        });
+    }
+
+};
+
+checkVisitor();
+
+// 闪电玩分享
+var sdwShareState = {
+    jsApiTicket: '',
+    hasWXConfig: false,
+    queueWXCallback: null,
+    successCallback: null,
+    failCallback: null,
+    initWXConfig: function () {
+
+        if (!this.jsApiTicket) return;
+
+        var self = this;
+        var ticket = this.jsApiTicket;
+        var noncestr = GUID();
+        var timestamp = +new Date() / 1000 >> 0;
+        var url = location.href.split('#')[0];
+        var str = 'jsapi_ticket=' + ticket + '&noncestr=' + noncestr + '&timestamp=' + timestamp + '&url=' + url;
+        var signature = hex_sha1(str);
+
+        // 微信JS配置
+        wx.config({
+            debug: false,
+            appId: 'wxfd695e777664b347',
+            timestamp: timestamp,
+            nonceStr: noncestr,
+            signature: signature,
+            jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone']
+        });
+
+        wx.ready(function () {
+            self.hasWXConfig = true;
+            self.queueWXCallback && self.configWXShare(self.queueWXCallback);
+        });
+
+    },
+
+    /**
+     * 根据传入的信息，生成分享回调的函数
+     *
+     * @param shareInfo {Object}
+     * @param type {String}
+     */
+    checkCallbackFn: function (shareInfo, type) {
+        if (typeof shareInfo[type] == 'function') {
+            this[type + 'Callback'] = function () {
+
+                if (window.parent === window) {
+                    shareInfo[type]();
+                } else {
+                    // 向游戏页面发送消息，执行分享回调的函数
+                    window.postMessage(JSON.stringify({
+                        postSdwData: true,
+                        oprate: 'shareCallback_' + type
+                    }), '*');
+                }
+            }
+        } else {
+            this[type + 'Callback'] = function () {
+            }
+        }
+    },
+
+    /**
+     * 配置微信的分享信息
+     * @param shareInfo {Object}
+     */
+    configWXShare: function (shareInfo) {
+
+        if (!this.jsApiTicket) return;
+
+        if (this.hasWXConfig) {
+
+            // 根据分享来确认执行的
+            this.checkCallbackFn(shareInfo, 'success');
+            this.checkCallbackFn(shareInfo, 'fail');
+
+            // 设置各个分享的内容
+            for (var i = 0; i < shareInfo.target.length; i++) {
+                wx['onMenuShare' + shareInfo.target[i]]({
+                    title: shareInfo.title || document.title,
+                    desc: shareInfo.desc || '',
+                    link: shareInfo.link || location.href.split('#')[0],
+                    imgUrl: shareInfo.imgUrl,
+                    success: this.successCallback,
+                    fail: this.failCallback
+                });
+            }
+
+        } else {
+            this.queueWXCallback = shareInfo;
+            this.initWXConfig();
+        }
+    }
+};
+
+
+// 配置分享微信
+function configWX(data) {
+
+    var sec = +new Date();
+    var request = 'https://auth.shandw.com/wcjsapi?channel=' + channel +
+        '&uid=' + USER_DATA.id +
+        '&token=' + faultylabs.MD5(channel + USER_DATA.id + sec + USER_DATA.token) +
+        '&sec=' + sec;
+
+    var oUrl = location.href.split('#')[0];
+    var shareLinks = /https/.test(oUrl) ? oUrl : oUrl.replace(/http/, 'https');
+
+    // 设置分享的内容
+    var shareInfo = {
+        target: ['AppMessage', 'Timeline', 'QQ', 'Weibo', 'QZone'],
+        title: data.sTit,
+        desc: data.sDes,
+        link: shareLinks,
+        imgUrl: data.sIcon,
+        success: function () {
+            // 分享成功，设置分享的时间
+
+            if (location.protocol == 'https:')
+                localStorage['_SDW_SHARE_TIME_'] = '' + PAGE_TIME;
+            else {
+
+                // 打开HPPTS的设置分享时间页面
+                var has = document.querySelector('#setShareIFM');
+                if (has) return;
+
+                var sStr = "https://www.shandw.com/mobile/auth/setShare.html?mydate=" + PAGE_TIME;
+                $('body').append('<iframe frameborder="0"  id="setShareIFM" src=' + sStr + '></iframe>')
+            }
+
+        },
+        cancel: function () {
+
+        }
+    };
+
+    // 获取jsTick
+    getData(request, function (data) {
+
+        sdwShareState.jsApiTicket = data.JsApiTicket;
+        sdwShareState.configWXShare(shareInfo);
+
+    }, function () {
+
+        // 获取失败，采用微信默认方法适配
+        setShareInfo(data);
+
+    });
+}
+
+// 设置游戏分享信息
+function setShareInfo(data) {
+    document.title = data.name;
+    $('.sIcon').attr('href', data.sIcon);
+    $('.sTitle').attr('content', data.name);
+    $('#setShareImg').attr('src', data.sIcon);
+}
+
+// 接收子页面的消息传递
+window.onmessage = function (e) {
+    try {
+
+        var postData = JSON.parse(e.data);
+
+        // ello小游戏消息传递
+        if (postData.postElloData) {
+
+            // 进行页面跳转
+            if (postData.url) {
+                location.href = postData.url;
+            }
+
+        } else if (postData.postSdwData) {
+
+            if (postData.operate == 'createNativeBridgeCallback') {
+
+                var option = JSON.parse(postData.optionStr);
+
+                option.success = option.success && eval("(" + option.success + ")");
+                option.fail = option.fail && eval("(" + option.fail + ")");
+                option.cancel = option.cancel && eval("(" + option.cancel + ")");
+                option.complete = option.complete && eval("(" + option.complete + ")");
+
+                var callback = (postData.functionName == 'quickPayment') ? top.NativeBridge.createSDKCallback(option) : top.NativeBridge.createCallback(option);
+
+                top.NativeBridge.callbacks[postData.callbackId] = callback;
+
+                var jsonString = JSON.stringify({
+                    callbackId: postData.callbackId,
+                    args: postData.args
+                });
+
+                var uri = postData.functionName == 'quickPayment' ? 'payment://' : 'sdw://';
+                uri += postData.functionName + '#' + jsonString;
+
+                var iFrame = document.createElement("IFRAME");
+                iFrame.src = uri;
+                document.documentElement.appendChild(iFrame);
+                iFrame.parentNode.removeChild(iFrame);
+                iFrame = null;
+
+            } else if (postData.operate == 'callquickPayment_Android') {
+
+                var option = JSON.parse(postData.optionStr);
+                option.complete = option.complete && eval("(" + option.complete + ")");
+
+                var callback = top.NativeBridge.createSDKCallback(option);
+
+                CDLAndroid.quickPayment(JSON.stringify(option));
+                top.onDHSDKResult = callback;
+            } else if (postData.operate == 'setSDWShareInfo') {
+                // 设置分享
+                if (postData.source == 'weixin') {
+                    sdwShareState.configWXShare(postData.shareInfo)
+                }
+
+            }
+
+        } else if (postData.wxappId && postData.wxpaySign) {
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": postData.wxappId,//公众号名称，由商户传入
+                    "timeStamp": postData.wxtimeStamp, //时间戳，自1970年以来的秒数
+                    "nonceStr": postData.wxnonceStr, //随机串
+                    "package": postData.wxpackage,
+                    "signType": postData.wxsignType, //微信签名方式
+                    "paySign": postData.wxpaySign //微信签名
+                },
+                function (res) {
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        //  alert("OK");
+                    }
+                }
+            );
+
+        } else if (postData.operate == 'requestOpenAPP_wxPay') {
+
+            // 微信采用跳转地址
+            if (postData.resultInfo) {
+                location.href = postData.resultInfo;
+            }
+
+        } else if (postData.operate == 'requestOpenAPP_alipayPay') {
+
+            // 支付宝采用
+            if (postData.resultInfo) {
+                document.querySelector('#alipay_form').innerHTML = postData.resultInfo;
+                document.querySelector('#alipaysubmit').submit();
+            }
+
+        } else if (postData.operate == 'requestShowQrcode') {
+            // 展示微信二维码
+            showPayModelMask(postData.codeUrl);
+
+        } else if (postData.operate == 'requestHideQrcode') {
+            // 关闭微信二维码;
+            hidePayModelMask();
+        }
+
+    } catch (e) {
+
+    }
+};
+
+window.visitorMode = visitorMode;
+window.sdwShareState = sdwShareState;
+
+// 授权游戏
+function authGame() {
+
+    var gid = url['gid'], link;
+    var testFlag = url['sdw_test'] == 'true';
+
+    if (gid) {
+
+        if (APP.onShandw) {
+
+            // 来自闪电玩
+            link = HTTP_AUTH + '?gid=' + gid + '&uid=' + Shandw_USER.uid + '&token=' + Shandw_USER.token + '&sec=' + Shandw_USER.secheme + '&channel=' + Shandw_USER.channel;
+
+        } else if (url['s_from'] == 'm3g') {
+
+
+            // 来自梦三客户端的扫描
+            link = HTTP_AUTH + '?gid=' + gid + '&uid=' + url['uid'] + '&token=' + url['token'] + '&sec=' + url['sec'] + '&channel=' + url['channel'];
+
+        } else {
+            // 其他情况
+            var sec = +new Date();
+            link = HTTP_AUTH + '?gid=' + gid + '&uid=' + USER_DATA.id + '&token=' + faultylabs.MD5(channel + USER_DATA.id + sec + USER_DATA.token) + '&sec=' + sec + '&channel=' + channel;
+        }
+
+        // 进行游戏授权
+        getData(link, function (data) {
+
+            // 设置服务器的时间
+            window.PAGE_TIME = data.ct || data.time * 1000;
+
+            setShareInfo(data);
+            // APP.onWeixin && configWX(data);
+            configWX(data);
+
+            // 通知闪电玩APP，开始玩游戏【游戏授权成功】
+            if (APP.onShandw) {
+                sdw.notifyToAPP({
+                    type: 'playGame',
+                    id: gid,
+                    icon: data.icon,
+                    name: data.name,
+                    time: +new Date()
+                });
+            }
+
+            checkGameUrl(data);
+
+        }, function (data) {
+
+            alert(data.msg);
+
+        }, {
+            request: 1,
+            callback: function () {
+
+                sdw.openLogin({
+                    success: function () {
+                        // 用JS获取用户信息
+                        sdw.getUserInfo({
+                            success: function (res) {
+                                //   alert(JSON.stringify(res));
+                                Shandw_USER = res;
+                                authGame();
+                            },
+                            fail: function (res) {
+                                alert(res.msg);
+                            }
+                        });
+                    },
+                    cancel: function () {
+                        sdw.closeWindow();
+                    }
+                });
+            }
+        })
+
+    } else {
+        // 缺少游戏参数
+        alert('缺少游戏参数');
+    }
+}
+
+/**
+ * 检测游戏地址
+ * @param data
+ */
+function checkGameUrl(data) {
+
+
+    // 获取游戏的地址
+    if (data.param) {
+
+        var gameUrl, url_https = /https:\/\//.test(data.url), local_https = (location.protocol == 'https:');
+
+        if (url['sdw_test'] == 'true') {
+
+            gameUrl = data.testUrl || data.url;
+
+        } else {
+            gameUrl = data.url;
+        }
+
+        if (gameUrl.indexOf('?') == -1) {
+            gameUrl += '?' + data.param;
+        } else {
+            gameUrl += '&' + data.param;
+        }
+
+        gameUrl += '&cburl=' + encodeURIComponent(location.href);
+        gameUrl += '&reurl=' + encodeURIComponent(location.href);
+
+        // http地址重新跳转到
+        if (!/^https:\/\//.test(gameUrl) && location.protocol != 'http:') {
+            var nUrl = 'http://www.shandw.com/libs/addUserInfo2.html?channel=' + channel + '&userInfo=' + encodeURIComponent(localStorage['H5_DATA15' + channel]) + '&gid=' + data.gid;
+            location.href = nUrl;
+            return;
+        }
+
+        // ----------------    地址重定向  ----------------
+        var gameContainer = document.querySelector('#my-game-container');
+        if (gameContainer) {
+            gameContainer.src = gameUrl;
+        } else {
+            $('body').append('<iframe frameborder="0" id="my-game-container" src="' + gameUrl + '"></iframe>');
+            $('#my-game-container').css('height', APP.height);
+        }
+
+        // //完成《王座守护者2》使用口袋玩的任务
+        // if (APP.onKD) {
+        //     activityAPI.finishedTask({
+        //         uid: USER_DATA.id,
+        //         tid: 18
+        //     }, function () {
+        //
+        //     });
+        // }
+    }
+
+}
+
+// module.exports = {};
+
+

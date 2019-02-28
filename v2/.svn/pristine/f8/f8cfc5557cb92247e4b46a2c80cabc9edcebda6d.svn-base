@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>模拟CP方调用</title>
+
+    <script>
+        //        document.write('<script src="../../libs/js/m-init.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="https://www.shandw.com/libs/js/sdwJs.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <style>
+        .btn, .btn2 {
+            width: 80%;
+            height: 50px;
+            line-height: 50px;
+            background: #39f;
+            text-align: center;
+            color: #fff;
+            margin: 10px auto;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div class="btn">点我设置分享1</div>
+<div class="btn">点我设置分享2</div>
+<div class="btn">点我设置分享3</div>
+
+
+<div class="btn2" id="openShare">唤起闪电玩的分享页面</div>
+
+</body>
+
+<script>
+    var btns = document.querySelectorAll('.btn');
+    for (var i = 0; i < btns.length; i++) {
+
+        btns[i].onclick = function (e) {
+            e.stopPropagation();
+            var message = this.innerText;
+
+            console.log('set ok');
+
+            sdw.onSetShareOperate({
+                title: '我是子页面的标题',
+                link: location.href,
+                desc: '我是子页面的分享内容',
+                success: function () {
+                    appendMessage('iframe message : ' + message);
+                }
+            })
+        }
+    }
+
+
+    function appendMessage(message) {
+        var div = document.createElement('div');
+        div.innerText = message;
+        document.body.appendChild(div);
+    }
+
+
+    var openShare = document.querySelector('#openShare');
+
+    openShare.onclick = function (e) {
+        e.stopPropagation();
+
+        if (SDW_WEB.onShandw) {
+
+            var targets = ['AppMessage', 'Timeline', 'QQ', 'QZone', 'Weibo'];
+
+            sdw.onSetToolBarOperation(targets.concat(['addDesktop', 'copyLink']));
+
+            // 显示
+            SDW_WEB.sdw.onShowToolBar();
+
+
+        } else {
+
+            dialog.show('error', '请在闪电玩中使用', 1);
+        }
+    }
+</script>
+</html>

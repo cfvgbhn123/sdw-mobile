@@ -1,0 +1,195 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+.game-long-container {
+  height: torem(120px);
+  padding: torem(20px) 0;
+  position: relative;
+  color: #fff;
+  //font-size: 0;
+  //background: #1fc7b9;
+
+  .long-icon {
+    width: torem(120px);
+    height: torem(120px);
+    display: block;
+    position: absolute;
+    top: torem(20px);
+    left: 0;
+    border-radius: 12px;
+  }
+
+  .g-long-name {
+    position: absolute;
+    top: torem(20px);
+    left: torem(150px);
+    text-align: left;
+    height: torem(40px);
+
+    span {
+      display: inline-block;
+      float: left;
+      margin-right: torem(6px);
+    }
+  }
+
+  .s-g-l {
+    color: #d77d12;
+    font-weight: bold;
+  }
+
+  .g-l-tag {
+    padding: 0 torem(4px);
+    min-width: torem(22px);
+    border-radius: 3px;
+    text-align: center;
+    font-size: torem(18px);
+    height: torem(30px);
+    margin-top: torem(5px);
+    line-height: torem(30px);
+  }
+
+  .g-l-name {
+    max-width: torem(280px);
+    font-size: torem(30px);
+    height: torem(40px);
+    line-height: torem(40px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .g-long-info {
+    color: #6c7583;
+    font-size: torem(22px);
+    height: torem(40px);
+    position: absolute;
+    top: torem(65px);
+    left: torem(150px);
+
+    span {
+      height: torem(40px);
+      line-height: torem(40px);
+      display: inline-block;
+      float: left;
+      position: relative;
+    }
+
+    .g-l-type {
+      margin-right: torem(18px);
+    }
+    //.g-l-type:before {
+    //  content: '';
+    //  width: 1px;
+    //  height: 50%;
+    //  background: #6c7583;
+    //  position: absolute;
+    //  top: 24%;
+    //  right: torem(-9px);
+    //  transform: scale(0.5, 1);
+    //}
+  }
+
+  .g-long-desc {
+    color: #6c7583;
+    height: torem(30px);
+    line-height: torem(30px);
+    width: torem(410px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    bottom: torem(20px);
+    left: torem(150px);
+    font-size: torem(24px);
+  }
+
+  .g-l-right {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+  }
+
+  .g-l-4 {
+    background: #e7af42;
+  }
+
+  .g-l-6 {
+    background: #3589d7;
+  }
+
+  .g-l-2 {
+    background: #00ae6d;
+  }
+
+  .g-l-5 {
+    background: #e45263;
+  }
+
+  .g-l-1 {
+    background: #df6b39;
+  }
+
+  .g-l-7 {
+    background: #6d78a8;
+  }
+
+  .g-l-3 {
+    background: #8b65f5;
+  }
+
+  .g-l-8 {
+    background: #ae42d1;
+  }
+
+  .g-l-9 {
+    background: #23bfc9;
+  }
+}
+
+.game-long-container:before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #414a58;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: scale(1, 0.5);
+}
+
+.game-long-container:first-child:after {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #414a58;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: scale(1, 0.5);
+}
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: torem(114px);
+  height: torem(50px);
+  line-height: torem(50px);
+  border-radius: torem(25px);
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px;
+  color: #fff;
+}
+
+.game-btn:before {
+  content: '';
+  width: 100%;
+  height: torem(140px);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+}

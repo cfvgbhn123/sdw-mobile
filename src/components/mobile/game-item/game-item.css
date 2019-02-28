@@ -1,0 +1,145 @@
+* {
+  padding: 0;
+  margin: 0; }
+
+.game-list-item {
+  position: relative;
+  width: 10.78125rem;
+  max-width: 345px;
+  border-radius: 6px; }
+
+.game-list-cover {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px 6px 0 0; }
+
+.game-more-info {
+  background: #fff;
+  padding: 0.46875rem 0;
+  border-radius: 0 0 6px 6px; }
+
+.game-cover-info {
+  border-radius: 6px 6px 0 0;
+  overflow: hidden;
+  width: 100%;
+  height: 7.5rem;
+  position: relative;
+  background: url("imgs/default-game-icon.png") center/2.46875rem 1.75rem no-repeat;
+  background-color: #fff; }
+
+.game-title {
+  text-shadow: 0 1px 1px #636363;
+  width: 100%;
+  height: 2.3125rem;
+  line-height: 2.3125rem;
+  text-align: center;
+  color: #fff;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 0.06) 30%, rgba(0, 0, 0, 0.6) 100%);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 16px;
+  /*32px*/ }
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: 4.28125rem;
+  height: 1.875rem;
+  line-height: 1.875rem;
+  border-radius: 0.9375rem;
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px;
+  /*32px*/
+  letter-spacing: 2px;
+  color: #fff; }
+
+.game-btn:before {
+  content: '';
+  width: 120%;
+  height: 120%;
+  position: absolute;
+  left: -10%;
+  top: -10%; }
+
+.larger {
+  margin-top: 0.3125rem;
+  margin-bottom: 0.3125rem; }
+
+.game-info {
+  height: 0.6875rem;
+  line-height: 0.6875rem;
+  font-size: 11px;
+  /*22px*/
+  color: #989898; }
+
+.light-num {
+  color: #ff9000; }
+
+.game-desc {
+  width: 95%;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  font-size: 12px;
+  /*24px*/
+  color: #989898;
+  height: 1.5625rem;
+  margin: 0 auto;
+  margin-top: 0.15625rem;
+  line-height: 1.5625rem; }
+
+.star-list {
+  width: 4.0625rem;
+  height: 0.6875rem;
+  display: inline-block; }
+
+.star0, .star1, .star2 {
+  display: block;
+  width: 0.71875rem;
+  height: 0.6875rem;
+  float: left;
+  margin-right: 0.0625rem; }
+
+.star0 {
+  background: url("imgs/star0.png") 0 0/100% 100% no-repeat; }
+
+.star1 {
+  background: url("imgs/star1.png") 0 0/100% 100% no-repeat; }
+
+.star2 {
+  background: url("imgs/star2.png") 0 0/100% 100% no-repeat; }
+
+.game-play-time {
+  text-align: left;
+  text-indent: 0.625rem;
+  width: 5.59375rem;
+  height: 1.59375rem;
+  background: url("imgs/tagstime.png") 0 0/100% 100% no-repeat;
+  color: #fff;
+  position: absolute;
+  top: 0.5rem;
+  left: -0.4375rem;
+  font-size: 0.75rem;
+  line-height: 1.25rem; }
+
+.tag-list {
+  width: 100%;
+  height: 2.03125rem;
+  position: absolute;
+  top: -0.15625rem;
+  left: 0; }
+  .tag-list .tags {
+    width: 1.8125rem;
+    height: 2.03125rem;
+    float: left;
+    margin-left: 0.3125rem; }
+  .tag-list .new {
+    background: url("imgs/newtag.png") 0 0/100% no-repeat; }
+  .tag-list .gift {
+    background: url("imgs/gifttag.png") 0 0/100% no-repeat; }
+
+/*# sourceMappingURL=game-item.css.map */

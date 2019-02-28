@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <!--<meta name='apple-mobile-web-app-capable' content='yes'>-->
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content="《野蛮人♂大作战》高能开启寻福之旅，Let\' s go 201發！"/>
+
+    <meta name='description' content='摩摩可送你新人福利'/>
+
+    <title>《野蛮人♂大作战》高能开启寻福之旅，Let's go 201發！</title>
+
+    <script>
+
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?v"' + (+new Date()) + '><\/script>');
+
+    </script>
+
+
+    <script>
+
+        // pc端跳转
+        if (SDW_WEB.onPC) {
+            location.href = 'http://www.barbarq.com/';
+        }
+
+        if (SDW_WEB.onWeiXin) {
+            document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"><\/script>');
+        }
+
+        var userInfo = SDW_WEB.Store.get(SDW_WEB.localItem, true);
+        if (userInfo) {
+            userInfo.secheme = +new Date();
+            userInfo.token = SDW_WEB.MD5('' + SDW_WEB.channel + userInfo.uid + userInfo.secheme + userInfo.otoken);
+            SDW_WEB.USER_INFO = userInfo;
+        } else {
+            SDW_WEB.USER_INFO = {};
+        }
+
+    </script>
+
+
+    <script src="js/velocity.min.js"></script>
+    <script src="js/velocity.ui.js"></script>
+    <!--<script src="http://www.shandw.com/libs/zepto.min.js"></script>-->
+
+</head>
+
+<body>
+
+
+<img src="http://www.shandw.com/h5/ymr-h5/images/share-icon.jpg"
+     style="position: absolute;top:-999999px;left: -999999px" alt="">
+
+<audio src="images/bg.mp3" id="audio" preload="auto" loop autoplay></audio>
+
+<div class="app-stage">
+    <!--顶部云层 需要添加三个云层动画 速率不同，视察效果-->
+    <div class="page2" id="mask"></div>
+
+    <div class="loading-container page2">
+        <div class="loading-info">
+            <div class="loading-text" id="loading-text">50%</div>
+            <div class="loading-ani"></div>
+        </div>
+    </div>
+
+    <!--首页-->
+    <div class="page hidden" data-index="0">
+
+        <div class="cloud-container" data-index="0">
+            <div class="cloud" data-index="1-1"></div>
+            <div class="cloud" data-index="1-2"></div>
+            <div class="cloud" data-index="1-3"></div>
+        </div>
+
+        <!--文案部分-->
+        <div class="title-container hidden">
+            <div class="title-list"></div>
+        </div>
+
+        <!--底部草地-->
+        <div class="grass-container">
+
+        </div>
+
+        <!--开始界面的按钮-->
+        <div class="go" id="go"></div>
+
+    </div>
+
+    <!--第一屏-->
+    <div class="page hidden" data-index="1">
+
+        <div class="title-container hidden">
+
+            <div class="icon"></div>
+
+            <div class="title-list">
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!--第二屏-->
+    <div class="page hidden" data-index="2">
+
+        <div class="title-container hidden">
+
+            <div class="title-list">
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--第三屏-->
+    <div class="page hidden" data-index="3">
+
+        <div class="title-container hidden">
+
+            <div class="title-list">
+
+            </div>
+
+        </div>
+
+        <!--底部宝箱的整体-->
+        <div class="box-container hidden" id="box-cont-3">
+            <div class="box" id="box"></div>
+            <div class="tap hidden" id="tap"></div>
+            <div class="tips hidden" id="tips">点击揭晓谜底</div>
+        </div>
+    </div>
+
+    <!--第四屏-->
+    <div class="page hidden" data-index="4">
+
+        <div class="cloud-container" data-index="4">
+            <div class="cloud" data-index="4-1"></div>
+            <div class="cloud" data-index="4-2"></div>
+            <div class="cloud" data-index="4-3"></div>
+        </div>
+
+        <!--我是第四屏，下载页面-->
+        <div class="title-container">
+            <div class="title-list">
+                <div class="app-icon"></div>
+            </div>
+        </div>
+
+
+        <div class="download-container">
+
+            <div class="down-top-info">
+
+                <div class="icon-egg"></div>
+                <div class="icon-egg-info"></div>
+
+            </div>
+
+            <div class="download-btn"
+                 data-type="help"></div>
+            <div class="download-btn"
+                 data-type="game"></div>
+        </div>
+
+
+    </div>
+
+    <!--第五屏-->
+    <div class="page hidden" data-index="5">
+
+        <!--轮播-->
+        <div class="my-banner-container">
+            <div class="banner" style="background: url(images/1.png) center/100% no-repeat" data-index="1"></div>
+            <div class="banner" style="background: url(images/2.png) center/100% no-repeat" data-index="2"></div>
+            <div class="banner" style="background: url(images/3.png) center/100% no-repeat" data-index="3"></div>
+            <div class="banner" style="background: url(images/4.png) center/100% no-repeat" data-index="4"></div>
+            <div class="banner" style="background: url(images/5.png) center/100% no-repeat" data-index="5"></div>
+        </div>
+
+        <img src="images/last-bg.png" alt="" class="last-bg-code">
+
+    </div>
+
+    <!--滚动背景层-->
+    <div class="page2 hidden loop-bg-ani" id="loop-layer"></div>
+
+    <!--野蛮人主角 默认暂停-->
+    <div class="player" data-play=""></div>
+
+    <!--页面的箭头-->
+    <div class="go-arr" data-type="main" id="go-arr"></div>
+
+    <!--礼物打开屏-->
+    <div class="gift-player-container hidden">
+        <!--宝箱动画-->
+        <div class="bx-ani"></div>
+        <!--打开后的礼物-->
+        <div class="gift-cont hidden">
+            <div class="gift-top-text"></div>
+            <div class="mmk-icon"></div>
+            <div class="mmk-text"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+</body>
+
+
+</html>

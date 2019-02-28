@@ -1,0 +1,89 @@
+.my-game-item {
+  display: inline-block;
+  width: 20.3125rem;
+  height: 6.875rem;
+  border-radius: 8px;
+  background: #fff;
+  margin-top: 0.625rem;
+  position: relative;
+  margin-left: 0.625rem; }
+  .my-game-item .game-cover {
+    width: 9.6875rem;
+    height: 6.78125rem;
+    position: absolute;
+    top: -0.625rem;
+    left: 0.9375rem;
+    border-radius: 8px;
+    box-shadow: 0 0 20px -2px rgba(0, 0, 0, 0.2); }
+    .my-game-item .game-cover img {
+      width: 9.6875rem;
+      height: 6.78125rem;
+      display: block;
+      border-radius: 8px; }
+  .my-game-item .game-title {
+    height: 2.5rem;
+    line-height: 2.625rem;
+    font-size: 1rem;
+    width: 7.8125rem;
+    overflow: hidden;
+    border-bottom: .5px solid #d2d2d2;
+    position: absolute;
+    top: 0;
+    right: 0.9375rem; }
+  .my-game-item .game-data-info {
+    height: 2.8125rem;
+    width: 7.8125rem;
+    position: absolute;
+    bottom: 1.09375rem;
+    right: 0.9375rem; }
+    .my-game-item .game-data-info .data-type {
+      overflow: hidden;
+      white-space: nowrap;
+      padding-left: 3.90625rem;
+      height: 1.40625rem;
+      line-height: 1.5625rem;
+      font-size: 1.0625rem;
+      color: #ff7200;
+      font-weight: bold; }
+    .my-game-item .game-data-info .data-type[data-index='-1'] {
+      padding-left: 1.25rem;
+      color: #ababab;
+      font-size: 0.875rem;
+      background: url("images/icon-no.png") left center/0.9375rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='1'] {
+      background: url("images/icon1.png") left center/3.53125rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='2'] {
+      background: url("images/icon2.png") left center/3.53125rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='3'] {
+      background: url("images/icon3.png") left center/3.5625rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='4'] {
+      background: url("images/icon4.png") left center/3.5rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='5'] {
+      background: url("images/icon5.png") left center/3.53125rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='6'] {
+      background: url("images/icon6.png") left center/3.5625rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='7'] {
+      background: url("images/icon7.png") left center/3.5625rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='8'] {
+      background: url("images/icon8.png") left center/3.6875rem auto no-repeat; }
+    .my-game-item .game-data-info .data-type[data-index='9'] {
+      background: url("images/icon9.png") left center/3.59375rem auto no-repeat; }
+  .my-game-item .game-data-info[data-length='1'] {
+    bottom: 0.46875rem; }
+  .my-game-item .game-play-time {
+    text-align: left;
+    text-indent: 0.625rem;
+    width: 6.5625rem;
+    height: 1.59375rem;
+    background: url("images/tagstime.png") 0 0/100% 100% no-repeat;
+    color: #fff;
+    position: absolute;
+    top: 0.5rem;
+    left: -0.4375rem;
+    font-size: 0.6875rem;
+    line-height: 1.25rem; }
+
+.my-game-item:last-child {
+  margin-right: 0.625rem; }
+
+/*# sourceMappingURL=game-card.css.map */

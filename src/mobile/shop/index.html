@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>成就商城</title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel
+            }, false, SDW_WEB.CHECK_URL);
+
+            // 获取用的信息
+            SDW_WEB.getUserInfo(null, checkUrl);
+        })();
+
+    </script>
+
+    <script src='https://www.shandw.com/mobile/js/vue.min.js?m=00'></script>
+
+</head>
+<body>
+
+<!--商城根节点-->
+<div id="shop-root" class="page" v-cloak>
+
+
+    <section class="bind-phone-info-container" v-show="bindInfo.show">
+
+        <div class="mask" @click.stop.self='bindInfo.show=false'></div>
+
+        <!--<transition name="fade2">-->
+
+        <div class="bind-phone-infos">
+
+            <div class="bind-phone-name">{{bindInfo.bindPhoneItem.title}}</div>
+            <div class="bind-phone-gift phone-gift-2">当前可充值话费为<span class="telNum">{{bindInfo.num}}</span>元</div>
+
+            <div class="desc">
+                <input type="tel" v-model="bindInfo.phone" readonly placeholder="请输入手机号码">
+            </div>
+            <div class="tip">
+                您已绑定该号码，话费将直接充值至该号码
+            </div>
+            <section class="login-btn-v3 btn-v4"
+                     @click.stop.self='click("charge",$event)'>充<span style="width: 20px;"> </span>值
+            </section>
+
+        </div>
+
+        <!--</transition>-->
+
+
+    </section>
+
+    <!--点券不足-->
+    <div class="tip-windows" :data-test="tipWindow +'3423'" v-show="tipWindow">
+
+        <div class="coin-mask" v-tap.stop.self="tipWindow=false"></div>
+
+        <div class="tip-cont">
+
+            <img src="https://www.shandw.com/mobile/images/sorry.png" class="sorry-icon">
+
+            <p class="message">点券不足了~<br>您可前往以下场景获得：</p>
+            <div class="btn-container">
+                <div class="btn" @click="gotoPage('egg')">玩蛋去</div>
+                <div class="btn" @click="gotoPage('lottery')">触电啦</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--未绑定手机号-->
+    <div class="tip-windows" v-if="phoneTipWindow">
+
+        <div class="tip-cont">
+            <img src="https://www.shandw.com/mobile/images/sorry.png" class="sorry-icon">
+            <p class="message">未绑定手机号~<br>您可前往'个人信息'页面绑定手机</p>
+            <div class="btn-container">
+                <div class="btn cancel" @touchend.self.stop="phoneTipWindow=0">取消</div>
+                <div class="btn" @touchend.self.stop="gotoAppMain('home')">去绑定</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--闪电币不足 click事件-->
+    <div class="tip-windows" v-if="coinTipWindow">
+        <!--<div class="tip-windows" v-if="coinTipWindow">-->
+
+        <div class="coin-mask" v-tap.stop.self="coinTipWindow=0"></div>
+
+        <div class="tip-cont">
+            <img src="https://www.shandw.com/mobile/images/sorry.png" class="sorry-icon">
+            <p class="message">闪电币不足了~<br>您可前往成就任务获得：</p>
+            <div class="btn-container">
+                <div class="btn cancel" @touchend.self.stop="coinTipWindow=0">取消</div>
+                <div class="btn" @touchend.self.stop="gotoAppMain('task')">成就任务</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!--头部信息-->
+    <div class="top-fixed-container">
+
+        <!--用户信息-->
+        <section class="user-container">
+
+            <img :src="user.avatar" class="user-avatar">
+
+            <div class="conts my-gold">{{user.gold}}
+                <div class="go-to-task" @click.stop.self='gotoAppMain("task")'></div>
+            </div>
+
+            <div class="conts my-stamp">{{user.stamp}}</div>
+
+            <img src="images/gifts-icon2.png" class="my-gifts-icon" @click.self="gotoMyexcPage()">
+
+        </section>
+
+        <!--顶部大导航-->
+        <section class="top-nav-container">
+            <img class="navs" src="images/egg.png" @click.stop.self="openGame('egg')" @touchend="scale(1,$event)"
+                 @touchstart="scale(0.8,$event)">
+            <img class="navs" src="images/lottery.png" @click.stop.self="openGame('lottery')"
+                 @touchend="scale(1,$event)"
+                 @touchstart="scale(0.8,$event)">
+        </section>
+
+    </div>
+
+    <!--资讯轮播-->
+    <section class="news-tips-container">
+        <img src="images/laba.png" class="laba">
+        <div class='scroll-cont' id='cbd'></div>
+    </section>
+
+    <!--抢购-->
+    <section class="qg-container" style="display: none">
+
+        <div class="timer">今日12:30开始</div>
+
+        <!--左侧的商品信息-->
+        <div class="left-container">
+
+            <div class="title">一元话费</div>
+            <div class="num">剩余499个</div>
+
+            <div class="get-btn">
+                <img src="images/stamp-icon.png" alt="">{{transCoins(1000)}}<i>抢兑</i>
+            </div>
+        </div>
+
+        <div class="img-cont">
+            <img src="https://www.shandw.com/static/mobile/shop/icons/I027.png">
+        </div>
+
+    </section>
+
+
+    <!--商城列表-->
+    <section class="list-container">
+
+        <div class="lists" v-for="item in lists">
+            <p class="list-title">{{item.name}}</p>
+            <div class="img-cont">
+                <img :src="'https://www.shandw.com/static/mobile/shop/icons/'+item.item+'.png'">
+            </div>
+            <!--count,limit都负数表示无限-->
+            <p class="list-num">{{showCountMsg(item)}}</p>
+
+            <div class="get-btn" @click.stop="click(item,$event)">
+                <img :src="item.typeUrl" alt="">{{transCoins(item.gold)}}<i>&nbsp;</i>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!--兑换提示框-->
+    <section class="task-info-container" v-show="taskInfo.show">
+
+        <div class="mask" @click.stop='taskInfo.show=0'></div>
+
+        <div class="task-infos" transition="task-transitionAni" v-show="taskInfo.show">
+
+            <div class="task-name">恭喜，您的兑换码</div>
+            <div class="task-gift" @click.stop="showCode(taskInfo.code)"><span class="conts-i">{{taskInfo.code}}</span>
+            </div>
+
+
+            <div class="desc">
+                <div class="left-container" v-html="taskInfo.info">
+                    兑换教学：<br/>⑴.前往闪电玩公众号聊天界面<br/>⑵.界面底部导航栏【福利社】-【卡密兑换】<br/>⑶.粘贴兑换码进行兑换<br/>*激活后流量当月有效
+                </div>
+
+                <div class="right-cont" @click.stop="gotoWeixinShandw()">
+                    <img src="images/icons-ewm.jpg">
+                    <div>点击前往</div>
+                </div>
+
+            </div>
+
+            <!--<div class="desc" :style="{textAlign: taskInfo.info ? 'left' : 'center'}" v-html="taskInfo.info"></div>-->
+            <section class="login-btn-v3" @click.stop='taskInfo.show=0'>确<span style="width: 20px;"> </span>定
+            </section>
+
+        </div>
+
+    </section>
+
+
+    <!--玩蛋功能 && 触电功能 主界面-->
+    <section class="games-container"
+             @click.stop.self="closePage('games',$event)"
+             v-show="lottery.show || egg.show">
+
+        <!--砸蛋游戏-->
+        <section id="egg" v-show="egg.show">
+
+            <img src="images/egg-rule.png" class="egg-rule"
+                 @click.stop.self="egg.rule=1">
+
+            <section class="games" id="egg-list">
+
+                <div id="egg-cz" class="egg-cz-0"></div>
+
+                <!--蛋的单个模板-->
+                <div v-for="item in egg.egg"
+                     class="eggs eggs-{{item.type}}-{{item.state}} egg-{{egg.pos?5:$index+1}}"
+                     @touchend.stop.self="eggFn(item,$index+1,$event)">
+                </div>
+
+                <div class="egg-text">({{user.luckyEggCost}}闪电币/次)</div>
+            </section>
+
+
+            <!--砸蛋奖励的规则2-->
+            <section class="egg-rule-info"
+                     v-show="egg.rule"
+                     @click.stop="egg.rule=0">
+                <div class="games egg-rule-cont">
+                    选择一枚心仪的蛋蛋砸开<br/>
+                    您将有机会砸出：<br/>
+                    [3点券]、[10点券]、[15点券]、[100点券]奖励。<br/>
+                    蛋无虚发，100%有奖。<br/>
+                    若出现隐藏炸"蛋"，则奖励翻倍哦！
+                </div>
+            </section>
+
+        </section>
+        <!--砸蛋游戏   end-->
+
+        <!--触电游戏-->
+        <section id="lottery" v-show="lottery.show">
+
+            <!--触电的主体匡-->
+            <section id="lottery-container" class="games">
+
+                <div class="lottery-top-text">{{user.luckyDrawCost}}闪电币一次</div>
+
+                <div class="lottery-border-{{lottery.btnState == 'light' ? 'light' : 'normal'}}"></div>
+
+                <div class="nodes left-node-{{lottery.btnState == 'light' ? 'light' : 'normal'}} left-node"></div>
+                <div class="nodes right-node-{{lottery.btnState == 'light' ? 'light' : 'normal'}} right-node"></div>
+
+                <!-- 齿轮组 -->
+                <div class="items-cont"></div>
+                <div class="cl-nodes-normal cl-left"></div>
+                <div class="cl-nodes-normal cl-right"></div>
+                <div class="cl-nodes-normal cl-bottom"></div>
+
+                <div class="{{lottery.btnState == 'light' ? 'node-light' : ''}}"></div>
+
+                <!-- 触电按钮 -->
+                <div class="lottery-btn-{{lottery.btnState}}"
+                     @touchstart.self="lotteryBtnClick('click')"
+                     @touchend.stop.self="lotteryBtnClick('light',$event)"></div>
+                <div class="lottery-btn-bottom"></div>
+
+                <!-- 触电的单个奖励选项 -->
+                <div v-for="item in lottery.lottery"
+                     class="lottery-items lottery-items-{{$index+1}}">
+                    <img :src="'https://www.shandw.com/static/mobile/shop/icons/'+item.item+'.png'" alt="">
+                    <div class="lottery-name">{{item.name}}</div>
+                </div>
+
+            </section>
+
+        </section>
+        <!--触电游戏  end-->
+
+    </section>
+
+    <!--奖励结果-->
+    <section class="result-container"
+             v-show="lottery.result.show || egg.result.show"
+             @click.stop="closePage('result',$event)">
+
+        <!--砸蛋的结果-->
+        <section class="egg-result games" v-if="egg.result.show">
+            <img src="images/flash-ligther.png" class="flash">
+            <img src="images/flash-bg.png" class="flash-bg">
+
+            <div class="egg-res">
+                <img src="https://www.shandw.com/static/mobile/shop/icons/I007.png" class="egg-res-icon">
+                <div class="egg-money">{{egg.result.money}}</div>
+            </div>
+        </section>
+
+        <!--触电的结果-->
+        <section class="lottery-result games" v-if="lottery.result.show" :style="{width:'18rem'}">
+
+            <i class="lott-close" @click.stop="closePage('result',$event)"></i>
+
+            <div class="res-text"></div>
+
+            <!--奖励的icon-->
+            <div class="res-container">
+
+                <div class="lottery-items lottery-center">
+
+                    <img :src="'https://www.shandw.com/static/mobile/shop/icons/'+lottery.result.icon+'.png'">
+                    <div class="lottery-name">{{lottery.result.name}}</div>
+                </div>
+
+            </div>
+
+            <div class="ok-btn" @click.stop="closePage('result',$event)" v-if="!lottery.result.code">确定</div>
+
+            <template v-if="lottery.result.code">
+                <div class="code-cont" @click.stop="showCode()">{{lottery.result.code}}</div>
+                <div class="long-tap-tips">点击兑换码复制</div>
+
+                <div class="code-clip-bg">
+                    <i class="line"></i>
+                </div>
+
+                <div class="desc2">
+
+                    <div class="left-container">
+                        兑换教学：<br/>⑴.前往闪电玩公众号聊天界面<br/>⑵.界面底部导航栏【福利社】-【卡密兑换】<br/>⑶.粘贴兑换码进行兑换<br/>*激活后流量当月有效
+                    </div>
+
+                    <div class="right-cont">
+                        <img src="images/icons-ewm.jpg">
+                        <div>扫码前往</div>
+                    </div>
+
+                </div>
+            </template>
+
+        </section>
+
+    </section>
+
+</div>
+
+</body>
+
+</html>

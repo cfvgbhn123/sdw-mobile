@@ -1,0 +1,68 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+.news-tips-container {
+  height: torem(60px);
+  //background: #fff1d4;
+  overflow: hidden;
+  border-radius: torem(8px);
+  width: 100%;
+  //margin: torem(5px) auto 0 auto;
+  //margin-top: torem(375px);
+  position: relative;
+}
+
+.laba {
+
+  position: absolute;
+  width: torem(60px);
+  height: torem(60px);
+  //width: torem(39px);
+  //height: torem(30px);
+  top: 0;
+  left: 0;
+  z-index: 90;
+  padding: 0 torem(20px);
+  background: url("images/laba.png") center/torem(39px) no-repeat;
+  background-color: #fff1d4;
+  //animation: flash 1.2s infinite linear;
+}
+
+.scroll-cont {
+
+  width: 90%;
+  height: torem(60px);
+  //box-sizing: border-box;
+  //padding: 0 7%;
+  //background: rgba(0, 0, 0, .5);
+  line-height: torem(62px);
+  color: #96701f;
+  font-size: torem(24px);
+  position: absolute;
+  z-index: 80;
+  top: 0;
+  left: 5%;
+  overflow: hidden;
+
+}
+
+.scroll-cont .text {
+  display: inline-block;
+  position: absolute;
+  width: auto;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+}
+
+.scroll-cont .scroll-texts-cont {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  height: 100%;
+}

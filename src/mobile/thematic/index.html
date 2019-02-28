@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <!--<meta name='apple-mobile-web-app-capable' content='yes'>-->
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <!--<link rel="stylesheet" href="https://www.shandw.com/mobile/scss/swiper.min.css">-->
+    <script>
+        document.write('<script src="https://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="https://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script src="../../libs/vue.js"></script>
+    <script>
+        (function () {
+            var goToUri = location.href.split('#')[0];
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, false, SDW_WEB.CHECK_URL);
+            SDW_WEB.getUserInfo(null, checkUrl, true);
+        })()
+    </script>
+
+    <script>
+        (function () {
+
+            if (SDW_WEB.onWeiXin) {
+                document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"><\/script>');
+            }
+        })()
+    </script>
+
+</head>
+<body>
+
+<!--
+游戏详情
+-->
+
+<div id="app" v-cloak class="app-shandw">
+
+    <div class="thematic-idx-list-container">
+
+        <div class="list-item" v-for="i in thematicList">
+            <img :src="i.icon" class="list-img" @click.stop.self="gotoThematic(i)">
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+
+</html>

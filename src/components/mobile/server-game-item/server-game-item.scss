@@ -1,0 +1,81 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+.server-item-container {
+  height: torem(120px);
+  padding: torem(18px) 0;
+  position: relative;
+
+  .s-b-icon {
+    width: torem(120px);
+    height: torem(120px);
+    border-radius: 12px;
+    display: block;
+    position: absolute;
+    top: torem(18px);
+    left: 0;
+  }
+
+  .server-g-name {
+    color: #fff;
+  }
+
+  .server-g-name {
+    height: torem(40px);
+    line-height: torem(41px);
+    font-size: torem(28px);
+    width: torem(260px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    top: torem(35px);
+    left: torem(150px);
+  }
+
+  .server-g-info {
+    height: torem(40px);
+    line-height: torem(41px);
+    font-size: torem(24px);
+    width: torem(260px);
+    overflow: hidden;
+    color: #fe8731;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    bottom: torem(35px);
+    left: torem(150px);
+  }
+
+  .server-time {
+    color: #6c7583;
+    height: torem(30px);
+    font-size: torem(20px);
+    position: absolute;
+    top: 50%;
+    right: torem(135px);
+    transform: translate(0, -50%);
+  }
+
+  .g-l-right {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%);
+  }
+  
+}
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: torem(114px);
+  height: torem(50px);
+  line-height: torem(51px);
+  border-radius: torem(25px);
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px; /*32px*/
+  color: #fff;
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>分享设置</title>
+
+    <script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+
+    <script>
+        document.write('<script src="../../libs/js/m-init.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+
+    <script>
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel
+
+            }, true, SDW_WEB.CHECK_URL);
+
+            // 获取用的信息
+            SDW_WEB.getUserInfo(null, checkUrl);
+
+        })();
+    </script>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+
+<iframe src="shareTest.html" frameborder="0"></iframe>
+
+</body>
+
+<script>
+    SDW_WEB.sdw.onSetShareOperate({
+        title: '我是父级页面的标题',
+        link: location.href,
+        desc: '我是父级面的分享内容',
+        success: function () {
+            console.log('parent message : success');
+        }
+    });
+</script>
+</html>

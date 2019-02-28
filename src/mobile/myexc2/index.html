@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>兑换记录</title>
+
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+
+        (function () {
+            // 获取用户的基本信息
+            SDW_WEB.checkUserInfo();
+        })();
+
+    </script>
+
+    <script src='http://www.shandw.com/m/libs/clipboard.min.js'></script>
+    <script src='http://www.shandw.com/libs/vue.js'></script>
+
+</head>
+<body>
+
+<!--我的兑换记录-->
+<div id="shop-root" class="page" v-cloak>
+
+    <!--头部导航栏-->
+    <div class="top-nav-container">
+        <div class="nav-list"
+             @click="switchNavList(item)"
+             :data-show="item.show"
+             v-for="(item,index) in navList">
+            {{item.title}}
+        </div>
+    </div>
+
+
+    <!--商城兑换历史记录-->
+    <div class="shop-list-item-container" v-show="showIndex==1">
+
+        <div class="s-list-item"
+             data-type="shop"
+             @click.stop="showShopItem(item)"
+             v-if="navList[0].data.length"
+             v-for="item in navList[0].data">
+
+            <img :src="item.icon" class="shop-icon">
+
+            <div class="right-container">
+                <div class="s-list-title">
+                    {{item.name}}
+                </div>
+                <!--订单，礼包等-->
+                <div class="s-list-info" v-if="item._mInfo">{{item._mInfo}}</div>
+                <div class="s-list-price" :data-type='item.typeUrl'>{{item.gold}}</div>
+
+            </div>
+            <div class="s-date">{{transTime(item.time)}}</div>
+        </div>
+
+    </div>
+
+    <div class="no-container"
+         v-if="showIndex==1 && !navList[0].data.length">
+        <img src="https://www.shandw.com/mobile/images/sorry.png" class="sorry-icon">
+        <div class="no-text">您还没有任何兑换记录哦</div>
+    </div>
+
+
+    <!--闪电币兑换记录-->
+    <div class="shop-list-item-container" v-show="showIndex==2">
+
+
+        <div class="s-list-item"
+             data-type="shop"
+             @click.stop="showShopItem(item)"
+             v-if="navList[1].data.length"
+             v-for="item in navList[1].data">
+
+            <!--<img :src="item.icon" class="shop-icon">-->
+
+            <div class="right-container no-left">
+                <div class="s-list-title">
+                    {{item.msg}}
+                </div>
+                <div class="s-list-price" :data-type='item.typeUrl'>{{item.gold}}</div>
+            </div>
+            <div class="s-date">{{transTime(item.time)}}</div>
+        </div>
+
+    </div>
+
+    <div class="no-container"
+         v-if="showIndex==2 && !navList[1].data.length">
+        <img src="https://www.shandw.com/mobile/images/sorry.png" class="sorry-icon">
+        <div class="no-text">您还没有任何兑换记录哦</div>
+    </div>
+
+
+    <!--弹窗集合-->
+    <section class="shop-item-container"
+             @click.self="hiddenAlert()"
+             v-show="showAlert">
+
+        <transition name="scale">
+            <!--type:gameSuccess  游戏礼包购买成功-->
+            <div class="info-container" v-if="showAlertList.gameSuccess">
+                <div class="message-title">购买成功</div>
+
+                <div class="title-msg">{{alertInfo.name}}</div>
+
+                <!--礼包内容-->
+                <div class="item-msg" v-html="alertInfo.sub"></div>
+
+
+                <div class="game-code-container">
+                    <div class="bd-code-cont">
+                        <div class="bd-code">{{myGameCode}}</div>
+                    </div>
+
+                    <button class="copy-btn"
+                            @click="setCopyCode(myGameCode)"
+                            :data-clipboard-text="myGameCode">一键复制
+                    </button>
+                </div>
+
+                <div class="item-cont" v-html="alertInfo.msg"></div>
+
+                <div class="user-confirm-btn"
+                     @click.self="goToGamePage(alertInfo)">
+                    开始游戏
+                </div>
+            </div>
+        </transition>
+
+
+        <!--type:code 兑换提示框-->
+        <transition name="tasks">
+            <div class="task-infos" v-if="showAlertList.code">
+                <div class="task-name">恭喜，您的兑换码</div>
+                <div class="task-gift" @click.stop="showCode(codeInfo.code)"><span
+                        class="conts-i">{{codeInfo.code}}</span>
+                </div>
+
+                <div class="desc">
+                    <div class="left-container" v-html="codeInfo.info"></div>
+                    <div class="right-cont" @click.stop="gotoWeixinShandw()">
+                        <img src="images/icons-ewm.jpg">
+                        <div>点击前往</div>
+                    </div>
+                </div>
+                <section class="login-btn-v3" @click.stop='hiddenAlert()'>确 定</section>
+            </div>
+        </transition>
+
+
+        <!--type:goods 实物订单兑换提示框-->
+        <transition name="tasks">
+            <div class="info-container" v-if="showAlertList.goods">
+                <div class="message-title">订单信息</div>
+
+                <img :src="alertInfo.icon" alt="" class="goods-icon">
+
+                <div class="goods-name">{{alertInfo.name}}</div>
+
+                <div class="info-list">
+
+                    <div class="b-t">收货地址</div>
+                    <div class="s-t">{{myGoodsInfo.address}}</div>
+                    <div class="s-t">{{myGoodsInfo.userNick}} {{myGoodsInfo.phone}}</div>
+
+                    <div class="b-t">订单信息</div>
+                    <div class="s-t">订单号：{{myGoodsInfo.orderId}}</div>
+                    <div class="s-t">快递状态：{{myGoodsInfo.expressNo || '未发货' }}</div>
+                    <div class="s-t">费用：{{myGoodsInfo.price+myGoodsInfo.priceType}}</div>
+
+                    <div class="b-t">客服电话</div>
+                    <div class="s-t">0571-56690669</div>
+                </div>
+
+                <div class="user-confirm-btn" @click.self="hiddenAlert()">确定</div>
+            </div>
+        </transition>
+
+    </section>
+
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,188 @@
+@import "../reset.scss";
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.game-list-container, .search-type-container {
+  width: torem(690px);
+  margin: 0 auto;
+}
+
+.search-type-container {
+  font-size: 0;
+}
+
+.type-item {
+  box-sizing: border-box;
+  font-size: torem(28px);
+  display: inline-block;
+  height: torem(70px);
+  line-height: torem(65px);
+
+  padding: 0 torem(30px);
+  border-radius: torem(35px);
+  background: #38414e;
+  border: torem(2px) solid #38414e;
+  color: #fff;
+  margin-right: torem(20px);
+  margin-bottom: torem(20px);
+}
+
+.type-item-select {
+  border: torem(2px) solid #1fc7b9;
+  color: #1fc7b9;
+  background: transparent;
+}
+
+.search-tips, .search-tips2 {
+  height: torem(50px);
+  line-height: torem(50px);
+  padding: torem(15px) 0;
+  color: #4f5764;
+  font-size: torem(28px);
+  margin-bottom: torem(25px);
+  position: relative;
+}
+
+.search-tips2 {
+  margin-bottom: 0 !important;
+}
+
+.search-tips:before, .search-tips2:before {
+  content: '';
+  width: 100%;
+  height: 1px;
+  background: #414a58;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: scale(1, 0.5);
+}
+
+.search-header-container {
+  padding: torem(20px) 0;
+  border-bottom: torem(25px) solid #232b36;
+}
+
+.search-header-container:last-child {
+  border-bottom: none;
+}
+
+.g-l-tag {
+  display: inline-block;
+  padding: 0 torem(4px);
+  min-width: torem(22px);
+  border-radius: 3px;
+  text-align: center;
+  font-size: torem(18px);
+  height: torem(30px);
+  margin-top: torem(3px);
+  line-height: torem(30px);
+  margin-left: torem(5px);
+}
+
+.g-l-4 {
+  background: #e7af42;
+}
+
+.g-l-3 {
+  background: #8b65f5;
+}
+
+.g-l-6 {
+  background: #3589d7;
+}
+
+.g-l-2 {
+  background: #00ae6d;
+}
+
+.g-l-5 {
+  background: #e45263;
+}
+
+.g-l-1 {
+  background: #df6b39;
+}
+
+.g-l-7 {
+  background: #6d78a8;
+}
+
+.search-input-container {
+  height: torem(70px);
+  line-height: torem(70px);
+  padding: torem(10px);
+  border-radius: torem(45px);
+  background-color: #fff;
+  width: torem(690px);
+
+  margin: torem(30px) auto 0 auto;
+  position: relative;
+
+  .input-search {
+    display: inline-block;
+    width: torem(480px);
+    height: torem(40px);
+    line-height: torem(41px);
+    position: absolute;
+    left: torem(40px);
+    top: torem(25px);
+    font-size: torem(30px);
+    color: #6c7583;
+    -webkit-appearance: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+  }
+
+  .search-btn {
+    width: torem(70px);
+    height: torem(70px);
+    background-image: url(images/ic_search-icon.png);
+    background-repeat: no-repeat;
+    background-size: torem(70px) auto;
+    background-position: right center;
+    position: absolute;
+    top: torem(10px);
+    right: torem(10px);
+  }
+}
+
+.clear-search-btn {
+  height: torem(70px);
+  width: torem(70px);
+  position: absolute;
+  top: torem(10px);
+  right: torem(90px);
+  background-image: url("images/ic_close.png");
+  background-position: center;
+  background-size: torem(21px) auto;
+  background-repeat: no-repeat;
+}
+
+.server-list-container {
+  width: torem(690px);
+  margin: torem(20px) auto;
+}
+
+.index-search-icon {
+  width: torem(50px);
+  height: torem(50px);
+  background-image: url("images/ic_search.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: torem(35px) auto;
+  position: absolute;
+  top: torem(15px);
+  right: 0;
+}

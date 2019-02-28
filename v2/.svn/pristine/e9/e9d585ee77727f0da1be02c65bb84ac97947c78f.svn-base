@@ -1,0 +1,555 @@
+/**
+ * Created by CHEN-BAO-DENG on 2017/3/20.
+ *
+ * 游戏部分功能初始化
+ *
+ * 1.游客模式的检查
+ * 2.闪电玩分享对象
+ *
+ */
+
+
+// 分享成功的回调函数
+SDW_WEB.share_success_callback = function () {
+
+    dialog.show('ok', '您已经分享成功', 1);
+
+    var PAGE_TIME = SDW_WEB.getNow();
+
+    // 分享成功，设置分享的时间
+    SDW_WEB.Store.set('_SDW_SHARE_TIME_' + SDW_WEB.USER_INFO.uid, PAGE_TIME, true);
+    localStorage['_SDW_SHARE_TIME_' + SDW_WEB.USER_INFO.uid] = '' + PAGE_TIME;
+
+    // 打开HTTP的设置分享时间页面
+    if (location.protocol != 'https:') {
+        var has = document.querySelector('#setShareIFM');
+        if (has) return;
+        var sStr = "https://www.shandw.com/mobile/auth/setShare.html?mydate=" + PAGE_TIME;
+        $('body').append('<iframe frameborder="0"  id="setShareIFM" src=' + sStr + '></iframe>');
+    }
+
+    // 分享成功后给王座进行回调 ****************************
+    var ifm = document.querySelector('#my-game-container');
+
+    if (ifm && SDW_WEB.queryParam['gid'] == '1414483796') {
+
+        ifm.contentWindow.postMessage(JSON.stringify({
+            from: 'shandw',
+            postData: 'sdw_share_success'
+        }), '*');
+    }
+    // 分享成功后给王座进行回调 ****************************
+
+};
+
+
+// 设置游戏的分享链接
+SDW_WEB.changeShareLinks = function (link) {
+
+    link = link || location.href.split('#')[0];
+
+    var senderId = SDW_WEB.USER_INFO.uid;
+    var querySendId = SDW_WEB.queryParam[SDW_WEB.sender_sdw_id];
+
+    // 如果连接上不存在发送者的ID，进行进添加
+    if (senderId && !querySendId) {
+        link += '&' + SDW_WEB.sender_sdw_id + '=' + senderId;
+    }
+
+    // 如果存在发送者的ID，进行跟当前的id进行对比，如果不一致，替换成当前的id
+    if (senderId && querySendId) {
+
+        if (senderId != querySendId) {
+            // 替换成当前的id
+
+        }
+
+    }
+
+    // 保证分享出去全部是https的地址
+    var shareLinks = /https/.test(link) ? link : link.replace(/http/, 'https');
+
+    return shareLinks;
+};
+
+function checkVisitor() {
+
+    if (SDW_WEB.USER_INFO && SDW_WEB.USER_INFO.uid) {
+        visitorMode.isVisitor = false;
+    } else {
+        visitorMode.isVisitor = true;
+    }
+}
+
+var HTTP_AUTH = HTTP_USER_STATIC + 'authgame';
+
+// var url = getUrlObj();
+
+// 游客模式对象
+var visitorMode = {
+    isVisitor: true,
+    visitorToken: '',
+    /**
+     * 游客模式授权游戏
+     */
+    authGame: function (callback) {
+        var gid = SDW_WEB.queryParam['gid'], self = this;
+
+        if (!gid) {
+            alert('缺少游戏id');
+            return;
+        }
+
+        var channel = SDW_WEB.channel;
+        var sec = +new Date();
+        var token = SDW_WEB.MD5('' + channel + gid + SDW_WEB.guid + sec + '0ef7a6ba9d8d288fbeca1cdebf13c03e');
+
+        var postUri = SDW_WEB.URLS.addParam({
+            channel: channel,
+            token: token,
+            gid: gid,
+            sec: sec,
+            loginType: 0
+        }, false, HTTP_USER_STATIC + 'vstgame');
+
+        SDW_WEB.getAjaxData(postUri, function (data) {
+
+            if (data.result == 1) {
+                setShareInfo(data);
+
+                visitorMode.isVisitor && (document.querySelector('#visitorIcon').src = data.sIcon);
+
+                self.visitorToken = data.vstToken;
+
+                checkGameUrl(data);
+
+                callback && callback(data.sIcon);
+
+                hideLoadPage();
+            } else {
+                alert(data.msg);
+            }
+        });
+    },
+
+};
+
+function setShareInfo(data) {
+    document.title = data.name;
+    $('.sIcon').attr('href', data.sIcon);
+    $('.sTitle').attr('content', data.name);
+    $('#setShareImg').attr('src', data.sIcon);
+}
+
+// 接收子页面的消息传递
+window.onmessage = function (e) {
+    try {
+
+        var postData = JSON.parse(e.data);
+
+        // ello小游戏消息传递
+        if (postData.postElloData) {
+
+            _myFuchuang.fchiddenFn(0);
+            _myFuchuang.tabNav(window.moreGame, window.moreGame.$index);
+            SDW_WEB.onIOS && $('#my-game-container').addClass('my-game-container-ani');
+
+        } else if (postData.postSdwData) {
+
+            if (postData.operate == 'createNativeBridgeCallback') {
+
+                var option = JSON.parse(postData.optionStr);
+
+                option.success = option.success && eval("(" + option.success + ")");
+                option.fail = option.fail && eval("(" + option.fail + ")");
+                option.cancel = option.cancel && eval("(" + option.cancel + ")");
+                option.complete = option.complete && eval("(" + option.complete + ")");
+
+                var callback = (postData.functionName == 'quickPayment') ? top.NativeBridge.createSDKCallback(option) : top.NativeBridge.createCallback(option);
+
+                top.NativeBridge.callbacks[postData.callbackId] = callback;
+
+                var jsonString = JSON.stringify({
+                    callbackId: postData.callbackId,
+                    args: postData.args
+                });
+
+                var uri = postData.functionName == 'quickPayment' ? 'payment://' : 'sdw://';
+                uri += postData.functionName + '#' + jsonString;
+
+                var iFrame = document.createElement("IFRAME");
+                iFrame.src = uri;
+                document.documentElement.appendChild(iFrame);
+                iFrame.parentNode.removeChild(iFrame);
+                iFrame = null;
+
+            } else if (postData.operate == 'callquickPayment_Android') {
+
+                var option = JSON.parse(postData.optionStr);
+                option.complete = option.complete && eval("(" + option.complete + ")");
+
+                var callback = top.NativeBridge.createSDKCallback(option);
+
+                CDLAndroid.quickPayment(JSON.stringify(option));
+                top.onDHSDKResult = callback;
+
+            } else if (postData.operate == 'setSDWShareInfo') {
+
+                var postShareData = postData.shareInfo;
+
+                // 跨域页面通过父级的sdw接口进行设置分享
+                // 需要保存本页面的回调函数
+                SDW_WEB.sdw.onSetShareOperate({
+                    title: postShareData.title,
+                    desc: postShareData.desc,
+                    imgUrl: postShareData.imgUrl,
+
+                    // 【注意】对于子页面设置的分享地址，直接替换成父页面设置的
+                    link: SDW_WEB.changeShareLinks(),
+                    notSave: true,
+                    success: function () {
+                        // 执行本页面的回调
+                        window.sdwShareState.successCallback();
+
+                        // 通知子页面，成功
+                        e.source.postMessage(JSON.stringify({
+                            postSdwData: true,
+                            oprate: 'shareCallback_success'
+                        }), '*');
+                    },
+                    cancel: function () {
+                        // 执行本页面的回调
+                        window.sdwShareState.cancelCallback();
+
+                        // 通知子页面，取消
+                        e.source.postMessage(JSON.stringify({
+                            postSdwData: true,
+                            oprate: 'shareCallback_cancel'
+                        }), '*');
+                    }
+                })
+
+
+            } else if (postData.operate == 'checkVisitorMode') {
+
+                // 检查是否是游客模式
+                if (visitorMode.isVisitor) {
+
+                    dialog.show('error', '充值请先登录', 1);
+                    _myFuchuang && _myFuchuang.fchiddenFn(0);
+
+                } else {
+
+                    var ifm = document.querySelector('#my-game-container');
+
+                    ifm.contentWindow.postMessage(JSON.stringify({
+                        postSdwData: true,
+                        oprate: 'choosePayCheckState_ok'
+                    }), '*');
+                }
+
+            } else if (postData.operate == 'sdw_setLocalStorage') {
+
+                // 设置本地数据
+                var _key = postData.key;
+                var _data = postData.data;
+
+                SDW_WEB.Store.set(_key, _data, true);
+
+            } else if (postData.operate == 'sdw_getLocalStorage') {
+
+                // 读取本地数据
+                var _key = postData.key;
+                var _data = SDW_WEB.Store.get(_key, true);
+
+                // 读取到后，消息通知给子页面，进行相应的回调操作；
+                e.source.postMessage(JSON.stringify({
+                    postSdwData: true,
+                    data: _data,
+                    oprate: 'getLocalStorage_ok'
+                }), '*');
+
+            } else if (postData.operate == 'lo') {
+
+                var link = postData.link;
+                location.href = link;
+            }
+
+        } else if (postData.wxappId && postData.wxpaySign) {
+
+            WeixinJSBridge.invoke(
+                'getBrandWCPayRequest', {
+                    "appId": postData.wxappId,//公众号名称，由商户传入
+                    "timeStamp": postData.wxtimeStamp, //时间戳，自1970年以来的秒数
+                    "nonceStr": postData.wxnonceStr, //随机串
+                    "package": postData.wxpackage,
+                    "signType": postData.wxsignType, //微信签名方式
+                    "paySign": postData.wxpaySign //微信签名
+                },
+                function (res) {
+                    if (res.err_msg == "get_brand_wcpay_request:ok") {
+                        //  alert("OK");
+                    }
+                }
+            );
+
+        } else if (postData.operate == 'requestOpenAPP_wxPay') {
+
+            // 微信采用跳转地址
+            if (postData.resultInfo) {
+                location.href = postData.resultInfo;
+            }
+
+        } else if (postData.operate == 'requestOpenAPP_alipayPay') {
+
+            // 支付宝采用
+            if (postData.resultInfo) {
+                document.querySelector('#alipay_form').innerHTML = postData.resultInfo;
+                document.querySelector('#alipaysubmit').submit();
+            }
+
+        } else if (postData.operate == 'requestShowQrcode') {
+            // 展示微信二维码
+            showPayModelMask(postData.codeUrl);
+
+        } else if (postData.operate == 'requestHideQrcode') {
+            // 关闭微信二维码;
+            hidePayModelMask();
+        }
+
+    } catch (e) {
+
+    }
+};
+
+window.visitorMode = visitorMode;
+
+// window.sdwShareState = sdwShareState;
+
+function readShareInfo_Random() {
+
+    var random = Math.random() * _gameShareData_.shareInfo.length >> 0;
+    return _gameShareData_.shareInfo[random];
+
+}
+
+// 正常授权游戏
+function authGame(callback) {
+
+    callback = callback || function () {
+        };
+
+    var query = SDW_WEB.queryParam, gid = query['gid'], link,
+        params = {gid: gid}, userInfo = SDW_WEB.USER_INFO, isM3guo = query['s_from'] == 'm3g';
+
+    if (typeof gid != 'undefined') {
+
+        params.uid = isM3guo ? query['uid'] : userInfo['uid'];
+        params.token = isM3guo ? query['token'] : userInfo['token'];
+        params.sec = isM3guo ? query['sec'] : userInfo['secheme'];
+        params.channel = isM3guo ? query['channel'] : SDW_WEB.channel;
+
+        // 游戏的授权地址
+        link = SDW_WEB.URLS.addParam(params, false, HTTP_AUTH);
+
+        // 获取到游戏的信息
+        SDW_WEB.getAjaxData(link, function (data) {
+
+            if (data.result == 1) {
+
+                // 如果存在分享配置项，随机读取里面的内容.
+                if (typeof _gameShareData_ != 'undefined') {
+                    var shareRandomInfo = readShareInfo_Random();
+                    data.sTit = shareRandomInfo[0];
+                    data.sDes = shareRandomInfo[1];
+                }
+
+                // 设置服务器的时间
+                checkGameUrl(data);
+                setShareInfo(data);
+                setShandwDesktop(data);
+
+                var targets = ['AppMessage', 'Timeline', 'QQ', 'QZone', 'Weibo'];
+
+                SDW_WEB.onShandw && SDW_WEB.sdw.onSetToolBarOperation(targets.concat(['addDesktop', 'copyLink']));
+
+                SDW_WEB.sdw.onSetShareOperate({
+                    target: targets,
+                    title: data.sTit,
+                    desc: data.sDes,
+                    link: SDW_WEB.changeShareLinks(),
+                    imgUrl: data.sIcon,
+                    success: function () {
+                        SDW_WEB.share_success_callback();
+                    },
+                    cancel: function () {
+
+                    }
+                });
+
+                setTimeout(function () {
+                    hideLoadPage();
+                }, 200);
+
+            } else if (data.result == -3) {
+                // 重新授权
+                alert('-3');
+            } else {
+                alert(data.msg);
+            }
+
+            // 如果有自定的添加的回调
+            callback && callback(data);
+        });
+
+    } else SDW_WEB.Log('缺少游戏参数');
+
+}
+
+// 设置闪电玩游戏的桌面
+function setShandwDesktop(data) {
+
+    if (!SDW_WEB.onShandw) return;
+
+    if (SDW_WEB.onIOS) {
+
+        var tranUrl = SDW_WEB.MOBILE_ROOT + 'gotoApp/';
+
+        var linkUrl = SDW_WEB.URLS.addParam({
+            gid: SDW_WEB.queryParam['gid'],
+            'g-name': data.name,
+            'g-icon': data.icon.replace(/:/ig, 'T-C_MH').replace(/\//ig, 'T-C_XG')
+        }, true, tranUrl);
+
+        SDW_WEB.sdw.createDesktop({
+            isSet: true,
+            title: data.name,
+            icon: data.icon,
+            link: linkUrl,
+        });
+
+    } else {
+
+        SDW_WEB.sdw.createDesktop({
+            isSet: true,
+            title: data.name,
+            icon: data.icon,
+            link: location.href.split('#')[0],
+            isFullScreen: false,
+            showMoreBtn: true
+        });
+    }
+}
+
+/**
+ * 检测游戏地址
+ * @param data
+ */
+function checkGameUrl(data) {
+
+    // if (window.FIRST_TRANS) return;
+
+    // 获取游戏的地址
+    if (data.param) {
+
+        var gameUrl, url_https = /https:\/\//.test(data.url), local_https = (location.protocol == 'https:');
+
+        if (SDW_WEB.queryParam['sdw_test'] == 'true') {
+
+            gameUrl = data.testUrl || data.url;
+
+        } else {
+
+            gameUrl = data.url;
+        }
+
+        if (gameUrl.indexOf('?') == -1) {
+            gameUrl += '?' + data.param;
+        } else {
+            gameUrl += '&' + data.param;
+        }
+
+        gameUrl += '&cburl=' + encodeURIComponent(location.href);
+        gameUrl += '&reurl=' + encodeURIComponent(location.href);
+
+        // http地址重新跳转到
+        var isVisitor = visitorMode.isVisitor ? '&isVisitor=1' : '';
+
+        if (!/^https:\/\//.test(gameUrl) && location.protocol != 'http:') {
+
+            // 在闪电玩APP中，不需要用户信息的保存，直接跳转。
+            if (SDW_WEB.onShandw) {
+
+                location.href = location.href.replace(/https:\/\//, 'http://');
+            } else {
+
+                if (/(test\/mobile)/ig.test(location.href)) {
+
+
+                    var nUrl = 'http://www.shandw.com/libs/addUserInfotest.html?channel=' + SDW_WEB.channel + '&userInfo='
+                        + encodeURIComponent(JSON.stringify(SDW_WEB.USER_INFO)) + '&gid=' + data.gid + isVisitor + '&storeType=' + window.DATAITEM;
+
+                    window.prompt('url', nUrl);
+
+                    location.href = nUrl;
+
+                } else {
+
+                    window.FIRST_TRANS = true;
+                    var nUrl = 'http://www.shandw.com/libs/addUserInfo2.html?channel=' + SDW_WEB.channel + '&userInfo='
+                        + encodeURIComponent(JSON.stringify(SDW_WEB.USER_INFO)) + '&gid=' + data.gid + isVisitor + '&storeType=' + window.DATAITEM;
+                    location.href = nUrl;
+                }
+
+            }
+
+            return;
+        }
+
+        // ----------------    地址重定向  ----------------
+        var gameContainer = document.querySelector('#my-game-container');
+        if (gameContainer) {
+            gameContainer.src = gameUrl;
+        } else {
+            $('body').append('<iframe frameborder="0" id="my-game-container" class="my-game-container my-game-opacity" src="' + gameUrl + '"></iframe>');
+            $('#my-game-container').css('height', SDW_WEB.height);
+        }
+
+        // //完成《王座守护者2》使用口袋玩的任务
+        // if (APP.onKD) {
+        //     activityAPI.finishedTask({
+        //         uid: USER_DATA.id,
+        //         tid: 18
+        //     }, function () {
+        //
+        //     });
+        // }
+    }
+}
+
+function hideLoadPage() {
+
+    var now = +new Date();
+
+    var del = now - loadPageTime;
+
+    if (del > 1400) {
+        del = 0;
+    } else {
+        del = 1400 - del;
+    }
+
+    // 至少1400毫秒
+    setTimeout(function () {
+        $('.loading-container').addClass('loading-hidden');
+        $('.my-game-opacity').removeClass('my-game-opacity')
+    }, del);
+
+}
+
+
+// 在非闪电玩APP中，进行游客模式的检查
+SDW_WEB.onShandw || checkVisitor();
+
+
+

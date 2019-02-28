@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" href="https://www.shandw.com/mobile/scss/swiper.min.css">
+    <script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>
+</head>
+<body>
+
+
+<div id="app">
+
+
+
+    <!--轮播底部的模糊图片-->
+    <img id="topBanner" style="display: none">
+
+    <!--下载-->
+    <div class="download-container">
+
+        <div id="download"></div>
+
+    </div>
+
+    <div class="banner-conatiner" id="banners">
+        <div class="swiper-wrapper" id="bannercont">
+
+        </div>
+    </div>
+
+
+    <img src="" alt="" id="btnImg">
+
+
+    <!--评论图片-->
+    <div class="image-list-container">
+
+    </div>
+
+</div>
+
+
+</body>
+
+<script>
+    var download = document.querySelector('#download');
+    download.innerText = gameConfig.download.text;
+    download.style.background = gameConfig.download.background;
+    download.style.color = gameConfig.download.color;
+    download.onclick = function () {
+        location.href = '{$APP_URL}';
+    };
+</script>
+
+
+</html>

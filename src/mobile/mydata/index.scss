@@ -1,0 +1,142 @@
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+$mainBackground: #2b323d;
+
+body {
+  background: $mainBackground;
+  font-family: arial, helvetica, "Microsoft YaHei";
+  -webkit-tap-highlight-color: rgba(88, 44, 22, 0);
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+#app {
+  width: torem(750px);
+  margin: 0 auto;
+  position: relative;
+  display: block;
+  padding-bottom: torem(130px);
+}
+
+.my-data {
+
+  width: torem(710px) !important;
+  margin: torem(20px) auto !important;
+  background: #fff;
+  border-radius: 5px;
+
+  .line {
+    border-bottom: 0.5px solid #dedede;
+  }
+
+  .avatar-container {
+    height: torem(245px);
+    position: relative;
+
+    .avatar {
+      display: block;
+      box-shadow: 0 0 15px rgba(0, 0, 0, .31);
+      width: torem(128px);
+      height: torem(128px);
+      border-radius: 50%;
+      border: torem(6px) solid #fff;
+      //margin: torem(30px) auto;
+      position: absolute;
+      top: torem(25px);
+      left: 50%;
+      transform: translate3d(-50%, 0, 0)
+    }
+
+    .edit-avatar {
+      font-size: torem(22px);
+      width: 100%;
+      height: torem(40px);
+      line-height: torem(40px);
+      position: absolute;
+      
+      bottom: torem(20px);
+      left: 0;
+      text-align: center;
+      color: #999999;
+    }
+
+  }
+
+  .data-list {
+    height: torem(100px);
+    line-height: torem(100px);
+  }
+
+  .left-title {
+    width: torem(180px);
+    margin-left: torem(30px);
+
+  }
+
+  .float {
+    float: left;
+    font-size: torem(32px);
+  }
+
+  .right-container {
+    width: torem(470px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .more-select {
+    background-image: url("images/more2.png");
+    background-position: right center;
+    background-size: torem(14px) auto;
+    background-repeat: no-repeat;
+  }
+
+  .no-select {
+    filter: grayscale(100%);
+    -webkit-filter: grayscale(100%);
+    opacity: .5;
+  }
+
+}
+
+.sex-container {
+  margin-right: torem(60px);
+  display: inline-block;
+  padding-right: torem(45px);
+  line-height: torem(103px);
+}
+
+.sex1 {
+  background-image: url("images/sex1.png");
+  background-repeat: no-repeat;
+  background-size: torem(30px);
+  background-position: right center;
+
+}
+
+.sex2 {
+  background-image: url("images/sex2.png");
+  background-repeat: no-repeat;
+  background-size: torem(30px);
+  background-position: right center;
+
+}
+
+
+

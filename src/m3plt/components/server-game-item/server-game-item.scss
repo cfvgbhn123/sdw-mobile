@@ -1,0 +1,110 @@
+
+.server-item-container {
+  position: relative;
+}
+
+.server-cont-normal {
+  height: 40px;
+  position: relative;
+  font-size: 14px;
+
+  .server-g-name {
+    text-indent: 20px;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    text-align: left;
+    float: left;
+  }
+
+  .server-g-info {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    color: #fe8731;
+    text-align: center;
+    float: left;
+  }
+
+  .server-time {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    color: #5e6a78;
+    text-align: right;
+    float: left;
+  }
+}
+
+.server-select {
+  //display: none;
+  height: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: url("images/server-bg.png") 0 0 /100% auto repeat-y;
+  position: relative;
+
+  .s-b-icon {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 12px;
+  }
+
+  font-size: 14px;
+
+  .server-g-name {
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: #fff;
+    position: absolute;
+    top: 15px;
+    left: 95px;
+  }
+
+  .server-g-info {
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: #fe8731;
+    position: absolute;
+    top: 35px;
+    left: 95px;
+  }
+
+  .server-time {
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: #5e6a78;
+    position: absolute;
+    top: 55px;
+    left: 95px;
+  }
+
+
+  .start-game-btn {
+    color: #24cbb3;
+    border: 1px solid #24cbb3;
+    position: absolute;
+    top: 30px;
+    left: 230px;
+  }
+
+  //.start-game-btn {
+  //  text-align: center;
+  //  display: block;
+  //  position: absolute;
+  //  width: 114px;
+  //  height: 50px;
+  //  line-height: 51px;
+  //  border-radius: 25px;
+  //  background: linear-gradient(to right, #22cab5, #3fe28f);
+  //  color: #fff;
+  //}
+}
+

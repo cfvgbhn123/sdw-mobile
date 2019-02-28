@@ -1,0 +1,65 @@
+.server-item-container {
+  height: 3.75rem;
+  padding: 0.5625rem 0;
+  position: relative; }
+  .server-item-container .s-b-icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    border-radius: 12px;
+    display: block;
+    position: absolute;
+    top: 0.5625rem;
+    left: 0; }
+  .server-item-container .server-g-name {
+    color: #fff; }
+  .server-item-container .server-g-name {
+    height: 1.25rem;
+    line-height: 1.28125rem;
+    font-size: 0.875rem;
+    width: 8.125rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    top: 1.09375rem;
+    left: 4.6875rem; }
+  .server-item-container .server-g-info {
+    height: 1.25rem;
+    line-height: 1.28125rem;
+    font-size: 0.75rem;
+    width: 8.125rem;
+    overflow: hidden;
+    color: #fe8731;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: absolute;
+    bottom: 1.09375rem;
+    left: 4.6875rem; }
+  .server-item-container .server-time {
+    color: #6c7583;
+    height: 0.9375rem;
+    font-size: 0.625rem;
+    position: absolute;
+    top: 50%;
+    right: 4.21875rem;
+    transform: translate(0, -50%); }
+  .server-item-container .g-l-right {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(0, -50%); }
+
+.game-btn {
+  text-align: center;
+  position: relative;
+  margin: 0 auto;
+  width: 3.5625rem;
+  height: 1.5625rem;
+  line-height: 1.59375rem;
+  border-radius: 0.78125rem;
+  background: linear-gradient(to right, #22cab5, #3fe28f);
+  font-size: 16px;
+  /*32px*/
+  color: #fff; }
+
+/*# sourceMappingURL=server-game-item.css.map */

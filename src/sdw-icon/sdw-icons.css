@@ -1,0 +1,29 @@
+/*
+-------------------------------------------------------------------
+Created with TexturePacker https://www.codeandweb.com/texturepacker
+-------------------------------------------------------------------
+Inline:     <i class="yourspritesname"></i>
+Responsive: <div class="yourspritesname"></div>
+*/
+
+
+.sdw-icon1 {max-width:170px; max-height:170px; }
+.sdw-icon1::after {content: ' ';display: inline-block; width:170px; height:170px; background-position: 0% 0%;background-size: 600% 100%;background-image: url(sdw-icons.png);padding: 0; }
+div.sdw-icon1::after {max-width:170px; width:100%;height:0;padding: 0 0 100% 0;}
+.sdw-icon2 {max-width:170px; max-height:170px; }
+.sdw-icon2::after {content: ' ';display: inline-block; width:170px; height:170px; background-position: 20% 0%;background-size: 600% 100%;background-image: url(sdw-icons.png);padding: 0; }
+div.sdw-icon2::after {max-width:170px; width:100%;height:0;padding: 0 0 100% 0;}
+.sdw-icon3 {max-width:170px; max-height:170px; }
+.sdw-icon3::after {content: ' ';display: inline-block; width:170px; height:170px; background-position: 40% 0%;background-size: 600% 100%;background-image: url(sdw-icons.png);padding: 0; }
+div.sdw-icon3::after {max-width:170px; width:100%;height:0;padding: 0 0 100% 0;}
+.sdw-icon4 {max-width:170px; max-height:170px; }
+.sdw-icon4::after {content: ' ';display: inline-block; width:170px; height:170px; background-position: 60% 0%;background-size: 600% 100%;background-image: url(sdw-icons.png);padding: 0; }
+div.sdw-icon4::after {max-width:170px; width:100%;height:0;padding: 0 0 100% 0;}
+.sdw-icon5 {max-width:170px; max-height:170px; }
+.sdw-icon5::after {content: ' ';display: inline-block; width:170px; height:170px; background-position: 80% 0%;background-size: 600% 100%;background-image: url(sdw-icons.png);padding: 0; }
+div.sdw-icon5::after {max-width:170px; width:100%;height:0;padding: 0 0 100% 0;}
+.sdw-icon6 {max-width:170px; max-height:170px; }
+.sdw-icon6::after {content: ' ';display: inline-block; width:170px; height:170px; background-position: 100% 0%;background-size: 600% 100%;background-image: url(sdw-icons.png);padding: 0; }
+div.sdw-icon6::after {max-width:170px; width:100%;height:0;padding: 0 0 100% 0;}
+
+/* $TexturePacker:SmartUpdate:7407ecee016bc66940989bd29fb3b08c:454f01c612f83cc0a79dfb777e3b8b4f:b5733a89ee6bfa2e055ce2dc14fc7ad6$ */

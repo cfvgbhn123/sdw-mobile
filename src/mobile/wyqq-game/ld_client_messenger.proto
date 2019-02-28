@@ -1,0 +1,191 @@
+// Message System Messenger Protocol
+//
+// Version:	1.0.0
+// Date:2016-11-25
+
+//package ld_client_messenger;
+//syntax = "proto3";
+
+//SPEED: 表示生成的代码运行效率高，但是由此生成的代码编译后会占用更多的空间。
+//CODE_SIZE: 和SPEED恰恰相反，代码运行效率较低，但是由此生成的代码编译后会占用更少的空间，通常用于资源有限的平台，如Mobile。
+//LITE_RUNTIME: 生成的代码执行效率高，同时生成代码编译后的所占用的空间也是非常少。
+option optimize_for = LITE_RUNTIME;
+
+option java_package = "com.ld.messenger";
+
+enum CommandProtocol {
+	//客户端 到 服务器 的信令
+	//心跳信令
+	KEEP_ALIVE=0;
+	//验证登录
+	ACCOUNT_VERIFY=1000;
+	//服务器返回登陆结果信息
+	ACCOUNT_VERIFY_ACK=1001;
+	//账号退出登陆信令,和服务器确认退出登录
+	ACCOUNT_LOGOUT=1002;
+	ACCOUNT_LOGOUT_ACK=1003;
+	//发当个用户信息信令
+	MESSAGE_USER=1004;
+	MESSAGE_USER_ACK=1005;
+	//发群或者组消息,多人操作指令区间2000~3000
+	MESSAGE_GROUP=2006;
+	MESSAGE_GROUP_ACK=2007;
+	//发组消息
+	MESSAGE_TEMP_GROUP=2008;
+	MESSAGE_TEMP_GROUP_ACK=2009;
+	//游戏聊天室消息
+	MESSAGE_GAME_ROOM=2010;
+	MESSAGE_GAME_ROOM_ACK=2011;
+
+	//测试游戏指令
+	GAME_USER_OPTION=4000;
+}
+//消息类型
+enum MessageContentType {
+	//文本
+	TEXT=0;
+	//图片
+	IMAGE=1;
+	//语音
+	VOICE=2;
+	//视频
+	VIDEO=3;
+	//表情
+	EMOJI=4;
+}
+//操作系统类型
+enum OsType {
+	PC=0;//pc
+	ANDROID=1;//安卓
+	IOS=2;//苹果
+}
+//针对ios的网络类型
+enum IOSNetType {
+	NONE=0;//无网络连接
+	WIFI=1;//wifi网络
+	GPRS=2;//2g/3g/4g
+}
+//用户关系类型
+enum UserRelationType{
+	TYPE_DEFAULT=0;//默认，陌生人
+	TYPE_FRIEND=1;// 好友
+	TYPE_FOLLOW=2;//我关注的
+	TYPE_FAN=3;//关注我的
+	TYPE_BACK_LIST=4;//黑名单
+}
+// ACCOUNT_VERIFY
+message AccountVerifyInfo {
+	required uint32 id = 1;//玩家id
+	required string token = 2;//验证码
+	required string scheme=3;//动态码 使用时间戳，单位秒
+	required uint32 os=4;//操作系统类型
+	required string imei=5;//手机唯一标记
+	optional string codeVersion=6;//客户端代码版号
+	optional string model=7;//手机型号
+	optional uint32 net_type=8;//网络类型
+	optional string sub_version=9;//子版本号
+	optional string device_token=10;//ios 的device_token
+}
+// ACCOUNT_VERIFY_ACK
+message AccountVerifyACK {
+	required int32 code = 1;//登陆结果。1成功
+	required string message = 2;//消息提示
+	optional uint32 server_time = 3;//服务器当前时间
+	optional string fileUrl=4;//图片上传地址
+	optional UserBasicInfo user_info=5;//用户的个人信息
+	optional uint32 heart_beat=6;//心跳时长，秒作为单位
+}
+//简单消息详细结构
+message SimpleMessage {
+	required uint32 sender = 1;//发送消息者id
+	required string content = 2;//内容
+	required uint32 time=3;//消息的时间
+	optional uint32 receiver=4;//消息接收者id
+	optional uint32 content_type=5;//内容类型
+	optional string nick=6;//发送者的昵称
+	optional string icon=7;//发送者的头像
+	optional uint32 sex=8;//用户的性别 0女 1男
+	optional uint32 vip=9;//玩家vip等级
+	optional string remark=10;//备注信息，如果是表情则为表情的连接，表情名称放在content，如果是带有格式的消息则为消息的格式规则说明
+}
+
+//多条消息结构
+message SimpleMessageMutil {
+	required uint32 count = 1;//一共多少条消息
+	repeated SimpleMessage extra_msg = 2;//消息
+}
+//收到用户信息确认信息SEND_MESSAGE_RET
+message SimpleMessageACK {
+	required uint32 msg_id=1;//指令消息id
+	required uint32 time=2;//服务器时间
+	optional string message=3;//附加描述
+}
+//ACCOUNT_LOGOUT 玩家被迫下线或者异地登录
+message AccountLogout {
+	required string message=1;//消息内容
+	required uint32 time=2;//时间
+}
+//用户的基础信息
+message UserBasicInfo {
+	required uint32 id = 1;//用户的账号uid,如果是修改备注的时候这个为备注人的id。修改自己的信息则为自己的id
+	optional string nick = 2;//用户的昵称
+	optional string remark = 3;//用户的备注信息
+	optional string phone=4;//玩家手机号
+	optional string avatar=5;//用户的头像
+	optional uint32 sex=6;//用户的性别 0女 1男
+	optional string province=7;//省份
+	optional string city=8;//城市
+	optional string sign=9;//玩家个性签名
+	optional uint32 vip=10;//用户vip等级
+	optional uint32 relation_type=11;//用户和我的关系类型
+	optional uint32 follow_num=12;//我关注的人的数量
+	optional uint32 fans_num=13;//关注我的人的数量
+	optional uint32 year=14;//出生年
+	optional uint32 month=15;//出生月
+	optional uint32 day=16;//出生日
+	optional uint32 gold=17;//玩家代币数量
+	optional uint32 diamond=18;//玩家的钻石数量
+	optional uint32 score=19;//玩家的等级积分
+	optional uint32 play_num=20;//玩家玩过的游戏数量
+	optional uint32 collect_num=21;//我那家收藏的游戏数量
+	optional uint32 time=22;//用户最近修改个人信息的时间
+}
+
+
+
+//移动方向
+enum MoveDirection{
+	FORWARD=1;//向前
+	BACKWARD=2;//向后
+	LEFT=3;//向左
+	RIGHT=4;//向右
+}
+//游戏对象类型
+enum TargetType{
+	PLAYER=1;//玩家
+	MONSTER=2;//怪物
+	BUILDING=3;//建筑
+}
+
+//对象加入
+message GameJoinOption{
+	required uint32 id=1;//对象id
+	required TargetType type=2;//目标类型
+	required int32 x=3;//x轴位置
+	required int32 y=4;//y轴位置
+	optional int32 z=5;//z轴位置
+}
+//玩家操作
+message GameUserOption {
+	required uint32 id=1;//操作源或者动作对象
+	optional uint32 target=2;//目标
+	optional MoveDirection move_direction=3;//移动方向
+	optional uint32 move_distance = 4;//移动距离
+	optional string skill=5;//释放技能id
+}
+message GameUserOptionMutil {
+	required uint32 frame=1;//帧
+	required uint32 time=2;//时间
+	repeated GameUserOption options=3;//操作集合
+	repeated GameJoinOption joinList=4;//对象加入
+}

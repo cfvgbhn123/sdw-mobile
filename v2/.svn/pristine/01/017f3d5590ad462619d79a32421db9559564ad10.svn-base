@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>Title</title>
+</head>
+<body>
+
+<script src='https://res.wx.qq.com/open/js/jweixin-1.0.0.js'></script>
+<script src="https://www.shandw.com/mobile/js/sha1.min.js"></script>
+<script src="https://www.shandw.com/v2/test/libs/js/m-init.min.js?m=05662356223"></script>
+
+<script>
+
+    (function () {
+
+        var goToUri = location.href.split('#')[0];
+
+        var checkUrl = SDW_WEB.URLS.addParam({
+
+            datatype: window.DATAITEM,
+            goto: goToUri,
+            channel: SDW_WEB.channel
+
+        }, true, SDW_WEB.CHECK_URL);
+
+        SDW_WEB.getUserInfo(null, checkUrl, true);
+
+    })();
+
+
+    SDW_WEB.configWX({
+        sTit: '哇哈哈哈，测试',        // 分享标题
+        sDes: '我的描述文字，描述文字', // 分享描述
+        link: location.href + '&_sender_id=12345667',          // 分享链接
+        sIcon: 'http://app.m3guo.com/h5/2016/h5gameimg/AI04.png'
+    });
+
+</script>
+
+</body>
+</html>

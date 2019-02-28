@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <!--<script src="../../libs/js/m-init.min.js?m=0"></script>-->
+    <script src="../../libs/vue.js"></script>
+    <script src="clipboard.min.js"></script>
+    <script>
+        (function () {
+
+            // var goToUri = location.href.split('#')[0];
+            //
+            // var checkUrl = SDW_WEB.URLS.addParam({
+            //
+            //     datatype: window.DATAITEM,
+            //     goto: goToUri,
+            //     channel: SDW_WEB.channel
+            //
+            // }, false, SDW_WEB.CHECK_URL);
+            // SDW_WEB.checkUserInfo()
+            //
+            // // 礼包界面不强制登录
+            // SDW_WEB.getUserInfo(null, checkUrl, true);
+
+            // 通用的外部获取方法
+            SDW_WEB.checkUserInfo(true);
+
+        })()
+    </script>
+    <!--<script src="https://www.shandw.com/libs/js/zepto.min.js?v=2"></script>-->
+</head>
+<body>
+
+<div id="app" v-cloak class="app-shandw">
+
+    <!--快速登录-->
+    <fast-login ref="login" show=""></fast-login>
+
+    <!--游戏礼包列表-->
+
+
+    <div class="gift-list-container" v-for="item in giftLists">
+
+        <div class="game-head-container">
+            <img :src="item.icon" class="game-cover-icon">
+            <div class="game-title">{{item.name}}</div>
+            <div class="game-desc">{{item.sub}}</div>
+            <div class="gift-btn game-btn-fill" @click.stop.self="checkGameSate(item.id)">开玩</div>
+        </div>
+
+
+        <gift-item :gift-item="it" v-for="it in item.list">
+            <div class="gift-progress" slot="gift-line">
+                <div class="line-container">
+                    <div class="line-width" :style="{width:computedQuantity(it)+'%'}"></div>
+                </div>
+                <div class="line-text" v-if="it._hasGet!=1">剩余{{100-computedQuantity(it)}}%</div>
+                <div class="line-text" v-if="it._hasGet==1">礼包码{{it.code}}</div>
+            </div>
+            <div slot="gift-btn"
+                 class="gift-btn"
+                 :class="it._hasGet == 1 ? 'gift-get' : 'gift-normal'"
+                 @click.stop.self="checkGiftState(it)"
+            >{{it._hasGet==1 ? '已领取' : '领取' }}
+            </div>
+        </gift-item>
+
+    </div>
+
+</div>
+
+<!--vue中，clip.js无效，留个坑，求大神解决-->
+<div class="gift-bg-container" style="display: none">
+
+    <div class="gift-cover">
+
+        <button class="game-code"
+                data-clipboard-text=""
+        ></button>
+
+        <div class="goto-game-btn"></div>
+    </div>
+</div>
+
+
+<!--<button class="game-code"-->
+<!--data-clipboard-text="我是测试"-->
+<!--&gt;我是测试-->
+<!--</button>-->
+
+</body>
+
+
+</html>

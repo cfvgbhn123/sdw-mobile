@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+
+    <script>
+        (function () {
+            var goToUri = location.href.split('#')[0];
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, false, SDW_WEB.CHECK_URL);
+            SDW_WEB.getUserInfo(null, checkUrl);
+        })()
+    </script>
+
+    <!--<script src="https://www.shandw.com/pc/js/libs/MD5.min.js"></script>-->
+    <!--<script src="https://www.shandw.com/libs/js/iscroll.min.js"></script>-->
+    <!--<script src="../../libs/v-tap2.0.js"></script>-->
+</head>
+<body>
+
+<!--
+
+我的个人主页
+
+-->
+
+<div id="app" v-cloak :class="onShandw?'app-shandw' : ''">
+
+    <!--<div id="saishi-btn" @click="gotoActivity()">商城</div>-->
+    <!--<div id="saishi-btn2" @click="gotoActivity2()">成就</div>-->
+    <!--<div id="saishi-btn2" @click="gotoActivity2()">孵蛋</div>-->
+
+    <!--快速登录-->
+    <fast-login ref="login" show="" v-on:login-ok="loginOkCallback"></fast-login>
+
+    <bind-phone
+            ref='binPhone'
+            showbind=""
+            :bind-phone-item="bindPhoneItem"
+            v-on:bind-callback="bindPhoneCallback"
+    ></bind-phone>
+
+
+    <!--解锁新成就，引导前往-->
+    <task-get-alert
+            ref="taskgetalert"
+            show-info=""
+            typeindex="1"
+            :task-item-info='bindPhoneItem'
+    >
+        <div class="task-get-btn"
+             @click.stop.self="gotoTaskPage()">前往领取
+        </div>
+    </task-get-alert>
+
+    <!--我的个人信息-->
+    <div class="my-header">
+
+
+        <div class="my-set" @click.stop="gotoMySet()"></div>
+
+        <!--<div class="logout-container" v-if="onSafari" @click.stop="logoutFn()"></div>-->
+
+        <!--我的头像-->
+        <div class="my-avatar-container">
+            <img :src="user.avatar" class="my-avatar">
+            <i class="my-sex-icon" :class="user.sex==2?'sex-woman':'sex-man'"></i>
+        </div>
+
+        <div class="my-nick">{{user.nick || user.uid}}</div>
+        <div class="my-id">ID:{{user.uid}}</div>
+
+    </div>
+
+
+    <!--我的导航-->
+    <div class="my-nav-container" v-if="onShandw">
+    <!--<div class="my-nav-container" v-if="false">-->
+        <div class="nav" @click="gotoCollect()">
+            <div class="my-collect">
+                红包提现
+            </div>
+        </div>
+
+        <div class="nav" @click="gotoSaishi()">
+            <div class="my-phone">
+                话费领取
+            </div>
+        </div>
+        <!--<div class="nav" @click="checkMyPhone()">-->
+        <!--<div class="my-phone">-->
+        <!--{{user.phone || '绑定手机'}}-->
+        <!--</div>-->
+        <!--</div>-->
+
+    </div>
+
+    <!--我的游戏记录-->
+    <div class="game-list-container" v-if="gameList.length">
+        <div class="my-play-text">我最近在玩</div>
+        <game-item class="g-list" :game-item="item" v-for="item in gameList"
+                   v-on:tap-game="checkGameSate"></game-item>
+    </div>
+
+    <!--没有玩过游戏的界面-->
+    <div v-if="!gameList.length" class="no-play">
+        <img src="images/sorry.png" class="sorry">
+        <p class="sorry-tips">您还没有玩过游戏哦！</p>
+    </div>
+
+    <!--<div class="my-set-container">-->
+
+    <!--<div class="set-list ios-set-bg">-->
+
+    <!--<div class="list-item ios-set-item-bg cancel" @click="refreshUser()">切换账号</div>-->
+    <!--<div class="list-item ios-set-item-bg cancel" @click="clearAppCache()">清除缓存</div>-->
+
+    <!--<div class="list-item ios-set-item-bg cancel">取消</div>-->
+
+    <!--</div>-->
+
+    <!--</div>-->
+
+    <sdw-footer type="home"></sdw-footer>
+</div>
+
+
+</body>
+
+<script>
+
+</script>
+
+</html>

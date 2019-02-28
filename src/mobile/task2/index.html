@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>成就任务</title>
+
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+        (function () {
+            // 获取用户的基本信息
+            SDW_WEB.checkUserInfo();
+        })();
+    </script>
+
+    <!--<script src='http://www.shandw.com/libs/vue.js'></script>-->
+    <script src='http://www.shandw.com/libs/vue.js'></script>
+    <script src='http://www.shandw.com/m/libs/clipboard.min.js'></script>
+    <script src="http://www.shandw.com/libs/js/iscroll.min.js?m=0"></script>
+
+</head>
+<body>
+
+<!--商城根节点-->
+<div id="task-root">
+
+    <div class="top-fixed-container">
+        <!--用户信息-->
+        <user-info :user="userInfos"></user-info>
+
+        <!--顶部大导航栏-->
+        <div class="content-nav-list">
+            <div class="list-title"
+                 :data-type='item.show?"select":""'
+                 @click="switchNavList(item)"
+                 v-for="item in contentNav">
+                {{item.title}}
+            </div>
+        </div>
+    </div>
+
+
+    <!--每日任务-->
+    <div class="task-container" v-show="showIndex==0" data-type='1'>
+
+        <div class="task-item-list"
+             @click="showAlertDayInfo(item)"
+             v-for="item in dayList">
+
+            <div class="task-name ellipsis">{{item.title}}</div>
+
+            <div class="p-c">
+                奖励<span class="s-list-price" :data-type='item.typeUrl'>{{item.coin}}</span>
+            </div>
+
+            <div class="task-btn"
+                 @click.stop="checkDayTaskItem(item)"
+                 :data-type="item.flag">{{item.btnMsg}}
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--成就任务-->
+    <div v-show="showIndex==1" data-type='2'>
+
+        <!--成就总值-->
+
+        <div class="task-container" data-type='3'>
+            <div class="task-item-list">
+
+                <div class="task-name ellipsis">成就总值<span
+                        class="t-total-num">({{userInfos.atAll || '0'}}/{{userInfos.atSize}})</span></div>
+                <!--进度条-->
+                <div class="line-container">
+                    <div class="line-bg"
+                         :style="{width:(userInfos.atAll/userInfos.atSize*100)+'%'}"></div>
+
+                    <!--达成后的图标-->
+                    <div class="task-total-icon"
+                         :data-type="totalType"
+                         @click="checkDayTaskItem({},'all')"></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="task-container" data-type='2'>
+            <!--单个任务列表-->
+            <div class="task-item-list"
+                 v-for="item in tList"
+                 @click.stop="showAlertInfo(item)">
+
+                <div class="task-name ellipsis">{{item.title}}</div>
+
+                <div class="p-c">
+                    奖励<span class="s-list-price"
+                            :data-type='item.typeUrl'>{{item.coin}}</span>
+                    <span class="p-c-info">{{item.sub || ''}}</span>
+                </div>
+
+                <div class="task-btn top-btn"
+                     @click.stop="checkDayTaskItem(item)"
+                     :data-type="item.flag">{{item.btnMsg}}
+                </div>
+
+                <!--进度条-->
+                <div class="line-container">
+                    <div class="line-bg"
+                         :style="{width:(item.finishNum/item.size*100)+'%'}"></div>
+                    <div class="line-num">{{item.finishNum}}/{{item.size}}</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!--任务详情-->
+    <section class="shop-item-container"
+             @click.self="hiddenAlert()"
+             v-show="showAlert || showAlertDay">
+
+        <transition name="tasks">
+
+            <div class="task-infos" v-if="showAlert">
+                <div class="task-name ellipsis">{{alertItemInfo.current.title}}</div>
+
+                <div class="p-c al-task">
+                    奖励<span class="s-list-price" :data-type='alertItemInfo.current.typeUrl'>{{alertItemInfo.current.coin}}</span>
+                </div>
+
+                <div class="c-task ellipsis">{{alertItemInfo.current.sub || '暂无数据'}}</div>
+
+                <div class="task-m-info" v-html="alertItemInfo.current.info"></div>
+
+                <!--任务的列表-->
+                <div class="task-list-container" id="scroll-view">
+                    <div class="scrolls">
+
+                        <!--单个列表元素-->
+                        <div class="task-line-cont"
+                             :data-index="index"
+                             v-for="(item,index) in alertItemInfo.list">
+
+                            <div class="left-cont" :data-type="item.flag">
+                                <div class="p-c al-task2">
+                                    <span class="s-list-price"
+                                          :data-type='item.typeUrl'>{{item.coin}}</span>
+                                </div>
+                            </div>
+
+                            <div class="right-cont"
+                                 :data-index="index"
+                                 :data-type="item.flag">
+                                {{item.title}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <section class="login-btn-v3" @click.stop='hiddenAlert()'>知道了</section>
+
+            </div>
+
+        </transition>
+
+
+        <!--每日任务的弹窗-->
+        <transition name="tasks">
+
+            <div class="task-infos"
+                 data-type="day"
+                 v-if="showAlertDay">
+                <div class="task-name ellipsis">{{alertDayInfo.title}}</div>
+
+                <div class="p-c al-task">
+                    奖励<span class="s-list-price" data-type='gold'>{{alertDayInfo.coin}}</span>
+                </div>
+
+
+                <div class="task-m-info" v-html="alertDayInfo.info"></div>
+
+                <section class="login-btn-v3" @click.stop='hiddenAlert()'>知道了</section>
+
+            </div>
+
+        </transition>
+    </section>
+
+
+    <bind-phone
+            ref='bindPhone'
+            showbind=""
+            :bind-phone-item="bindPhoneItem"
+            v-on:bind-callback="bindPhoneCallback"
+    ></bind-phone>
+
+</div>
+
+</body>
+
+</html>

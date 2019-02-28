@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>Title</title>
+</head>
+<body>
+
+<input type="file" accept="image/*" id="file">
+<input type="button" value="确定">
+
+
+
+</body>
+
+<script>
+
+    var file = document.querySelector('#file');
+    file.onchange = function (e) {
+        if (!this.files.length) return;
+        var file = this.files[0];
+
+        console.log(file);
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            var result = this.result;
+            var img = new Image();
+            img.src = result;
+            document.body.appendChild(img);
+            img.onload = function () {
+                var img2 = new Image();
+                img2.src = compress(img);
+                document.body.appendChild(img2);
+            }
+        }
+    }
+
+
+    function compress(img) {
+        var width = img.width;
+        var height = img.height;
+        var canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        // document.body.appendChild(canvas);
+        var context = canvas.getContext('2d');
+        context.drawImage(img, 0, 0, width, height);
+        var b64Data = canvas.toDataURL('image/jpeg', 0.3);
+        return b64Data;
+    }
+
+
+</script>
+</html>

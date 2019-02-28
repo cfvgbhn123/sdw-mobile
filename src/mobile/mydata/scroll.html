@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>Title</title>
+    <link rel="stylesheet" href="src/iosSelect.css">
+    <script src="src/iosSelect.js"></script>
+</head>
+<body>
+
+<div id="showBank">showBank</div>
+<div id="bankId"></div>
+
+</body>
+
+<script>
+
+    var data = [
+        {'id': '10001', 'value': '123456789'},
+        {'id': '10002', 'value': 'sfsafasdf'},
+        {'id': '10003', 'value': 'sdfsdaf閾惰'},
+        {'id': '10004', 'value': '涓sdfsdfds'},
+        {'id': '10005', 'value': '浜ら€氶摱琛�'},
+        {'id': '10006', 'value': '娴﹀dsfsdf'},
+        {'id': '10007', 'value': '涓婃捣閾惰'},
+        {'id': '10008', 'value': 'dsfds'},
+        {'id': '10009', 'value': 'dsfds'},
+        {'id': '10010', 'value': '鎷涘晢dfgfd閾惰'},
+        {'id': '10011', 'value': '涓fgdfg'},
+        {'id': '10012', 'value': 'fdgsfdg'},
+        {'id': '10013', 'value': '骞冲fdg畨閾惰'},
+        {'id': '10014', 'value': '鍗庡sfdg閾惰'},
+        {'id': '10015', 'value': '骞垮彂fdgfd閾惰'},
+        {'id': '10016', 'value': '鍖椾含fgdf閾惰'}
+    ];
+
+    var showBankDom = document.querySelector('#showBank');
+    var bankIdDom = document.querySelector('#bankId');
+    showBankDom.addEventListener('click', function () {
+        var bankId = showBankDom.dataset['id'];
+        var bankName = showBankDom.dataset['value'];
+
+        var bankSelect = new IosSelect(1,
+            [data],
+            {
+                container: '.container',
+                title: '银行卡选择',
+                itemHeight: 50,
+                itemShowCount: 3,
+                oneLevelId: bankId,
+                callback: function (selectOneObj) {
+                    bankIdDom.value = selectOneObj.id;
+                    showBankDom.innerHTML = selectOneObj.value;
+                    showBankDom.dataset['id'] = selectOneObj.id;
+                    showBankDom.dataset['value'] = selectOneObj.value;
+                }
+            });
+    });
+
+</script>
+</html>

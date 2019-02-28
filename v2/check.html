@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='闪电玩授权'/>
+    <meta name='description' content='闪电玩授权'/>
+    <title>闪电玩授权</title>
+</head>
+<body>
+
+</body>
+
+<script>
+    //document.write('<script src="libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    //http://www.shandw.com/libs/js/minit.min.js;
+    document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+</script>
+
+<script>
+
+
+    (function () {
+
+        var _protocol_ = location.protocol;
+
+        var url = SDW_WEB.queryParam;
+
+        //    var DATAITEM = url['datatype'] + '';
+        var goUrl = url['goto'];
+
+        var APP_ROOT = _protocol_ + '//www.shandw.com/mobile/';
+        var HTTP_STATIC = _protocol_ + '//platform.shandw.com/';// 平台首页
+        var HTTP_USER_STATIC = _protocol_ + '//auth.shandw.com/';  // 账号类
+
+
+        var channel = SDW_WEB.channel;
+
+        if (SDW_WEB.onWeiXin) {
+
+            // 来自微信的跳转
+            var HTTP_URL = HTTP_USER_STATIC + 'wxauth?channel=' + channel + '&flag=1&appid=wxfd695e777664b347';
+            var aUrl = HTTP_URL + '&code=' + url['code'];
+
+            // **需要根据不同的channel来跳转不同的微信的授权账号
+
+        }
+        else if (SDW_WEB.onKD) {
+            // 口袋
+            var kdUser = SDW_WEB.Store.get('kd_user') || {};
+
+            // alert(JSON.stringify(kdUser));
+            var aUrl = HTTP_USER_STATIC + 'kdauth?channel=' + channel + '&flag=1&token=' + kdUser.token + '&uid=' + kdUser.uid + '&sec=' + kdUser.secheme;
+
+        }
+        else if (SDW_WEB.onQQ || url['sdw_authFlag'] === 'qq') {
+
+            var HTTP_URL = HTTP_USER_STATIC + 'qqauth?channel=' + channel + '&flag=1&appid=101359011';
+            var aUrl = HTTP_URL + '&code=' + url['code'] + '&redirect_uri=' + encodeURIComponent(SDW_WEB.CHECK_URL);
+        }
+        else if (SDW_WEB.onWeiBo || url['sdw_authFlag'] === 'wb') {
+
+            var HTTP_URL = HTTP_USER_STATIC + 'wbauth?channel=' + channel + '&flag=1&appid=530008665';
+            var aUrl = HTTP_URL + '&code=' + url['code'] + '&redirect_uri=' + encodeURIComponent(SDW_WEB.CHECK_URL);
+        }
+        else {
+            var aUrl = '';
+        }
+
+
+        if (localStorage && localStorage.getItem(DATAITEM) && sessionStorage['FIRST_LOAD'] == '1') {
+
+            location.href = goUrl;
+
+        }else {
+
+            if (SDW_WEB.onKD && kdUser.uid == 'undefined') {
+
+                alert('请登入口袋');
+
+            }else if (aUrl) {
+
+                /**
+                 * 【修改】获取游客模式下的信息 2017-5-17
+                 */
+                if (url['vst'] && url['vsttoken']) {
+                    aUrl += '&vst=' + url['vst'] + '&vsttoken=' + url['vsttoken'];
+                }
+
+                // 请求用户授权信息
+                SDW_WEB.getAjaxData(aUrl, function (data) {
+                    console.log(data);
+                    if (data.result === 1) {
+
+
+                        sessionStorage['FIRST_LOAD'] = '1';
+
+                        localStorage.setItem(DATAITEM, JSON.stringify(data));
+
+                        // v2版本的用户数据  id => uid
+                        var v2UserData = {
+                            uid: data.id,
+                            otoken: data.token,
+                            nick: data.nick,
+                            sex: data.sex,
+                            avatar: data.avatar,
+                            city: data.city,
+                            fl: data.fl
+                        };
+
+                        v2UserData.secheme = +new Date();
+                        v2UserData.token = SDW_WEB.MD5('' + SDW_WEB.channel + v2UserData.uid + v2UserData.secheme + v2UserData.otoken);
+
+                        SDW_WEB.Store.set(SDW_WEB.localItem, v2UserData, true);
+
+//                        alert(JSON.stringify(v2UserData));
+//                        alert(location.protocol);
+
+                        setTimeout(function () {
+                            location.href = goUrl;
+                        }, 300);
+
+                    } else {
+
+                        alert('error');
+                    }
+
+                });
+
+            }else if (SDW_WEB.onAliPay) {
+
+                // flag [2017-11-02 11:16:26] 支付宝的授权
+                // http://example.com/doc/toAuthPage.html?app_id=2014101500013658&source=alipay_wallet&scope=auth_user&auth_code=ca34ea491e7146cc87d25fca24c4cD11
+                var HTTP_URL = HTTP_USER_STATIC + 'alipayauth?channel=' + channel + '&flag=1&appid=2017101109247098';
+                // var HTTP_URL = 'http://192.168.110.148:9060/alipayauth?channel=' + channel + '&flag=1&appid=2017101109247098';
+                aUrl = HTTP_URL + '&code=' + url['auth_code'] + '&redirect_uri=' + encodeURIComponent(SDW_WEB.CHECK_URL);
+            }
+            else {
+
+                alert('授权地址错误');
+            }
+        }
+
+    })();
+
+
+</script>
+</html>

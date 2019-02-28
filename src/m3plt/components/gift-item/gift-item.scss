@@ -1,0 +1,96 @@
+
+.gift-item-container {
+  position: relative;
+}
+
+.gift-cont-normal {
+  height: 40px;
+  position: relative;
+  font-size: 14px;
+
+  .gift-g-info {
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    float: left;
+  }
+  .gift-time {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    color: #5e6a78;
+    text-align: right;
+    float: left;
+
+    span {
+      color: #fe8731;
+    }
+
+  }
+}
+
+.gift-select {
+  //display: none;
+  height: 60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background: url("images/server-bg.png") 0 0 /100% auto repeat-y;
+  position: relative;
+
+  .s-b-icon {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    border-radius: 12px;
+  }
+
+  font-size: 14px;
+
+  .gift-g-name {
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: #fff;
+    position: absolute;
+    top: 15px;
+    left: 95px;
+  }
+
+  .gift-g-info {
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: #fff;
+    position: absolute;
+    top: 35px;
+    left: 95px;
+  }
+
+  .gift-time {
+    width: 120px;
+    height: 20px;
+    line-height: 20px;
+    color: #5e6a78;
+    position: absolute;
+    top: 55px;
+    left: 95px;
+
+    span {
+      color: #fe8731;
+    }
+
+  }
+
+  .gift-game-btn {
+    color: #fe8731;
+    border: 1px solid #fe8731;
+    position: absolute;
+    top: 30px;
+    left: 230px;
+  }
+
+}
+

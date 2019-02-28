@@ -1,0 +1,102 @@
+.task-get-container {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999999;
+  background: rgba(0, 0, 0, 0.7); }
+  .task-get-container .mask {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; }
+
+.task-get-info, .task-get-info2 {
+  width: 19.375rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%) scale(1, 1);
+  padding: 1.40625rem 0;
+  background: #ebf0f4;
+  border-radius: 4px; }
+  .task-get-info .conts-i, .task-get-info2 .conts-i {
+    margin-left: 0.3125rem;
+    padding-left: 1.5625rem;
+    position: relative;
+    display: inline-block;
+    font-weight: bolder;
+    color: #ff9000; }
+  .task-get-info .conts-i:before, .task-get-info2 .conts-i:before {
+    content: '';
+    width: 1.25rem;
+    height: 1.625rem;
+    position: absolute;
+    top: -0.09375rem;
+    left: 0;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    background-image: url("images/gold-icons.png"); }
+
+.task-get-info:before {
+  content: '';
+  width: 20.8125rem;
+  height: 11.71875rem;
+  background: url("images/get-gold-bg.png") 0 0/100% no-repeat;
+  position: absolute;
+  top: -10.78125rem;
+  left: 50%;
+  transform: translateX(-50%); }
+
+.task-get-info2:before {
+  content: '';
+  width: 20rem;
+  height: 5rem;
+  background: url("images/get-header-bg.png") 0 0/100% no-repeat;
+  position: absolute;
+  top: -4.0625rem;
+  left: 50%;
+  transform: translateX(-50%); }
+
+.task-get-btn {
+  width: 9.5625rem;
+  height: 2.8125rem;
+  line-height: 2.84375rem;
+  border-radius: 10.78125rem;
+  margin: 0 auto;
+  font-size: 1.1875rem;
+  color: #fff;
+  text-align: center;
+  background-image: linear-gradient(90deg, #ff6027, #ff8f19); }
+
+.task-get-btn:active {
+  -webkit-tap-highlight-color: 0, 0, 0, 0.8; }
+
+.task-infos-container {
+  text-align: center;
+  width: 17.59375rem;
+  padding: 1.875rem 0;
+  border-radius: 4px;
+  background: #fff;
+  margin: 0 auto;
+  margin-bottom: 1.40625rem;
+  color: #333; }
+  .task-infos-container .task-name {
+    margin: 0.3125rem 0;
+    font-size: 19px; }
+  .task-infos-container .task-gift {
+    font-size: 1rem; }
+
+.scale2-enter-active {
+  transition: transform 0.38s cubic-bezier(0.5, 1.68, 0.49, 0.63), opacity 0.4s;
+  transform: translate(-50%, -40%) scale(1, 1);
+  opacity: 1; }
+
+.scale2-enter {
+  transform: translate(-50%, -40%) scale(0.26, 0.53);
+  opacity: 0; }
+
+/*# sourceMappingURL=task.css.map */

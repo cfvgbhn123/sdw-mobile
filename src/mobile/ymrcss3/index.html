@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>野蛮人大作战助手</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+  <!--重置浏览器样式-->
+  <style type="text/css">
+  body,div,li,ol,p,td,th,ul{margin:0;padding:0}li{list-style:none}img{border:0;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;touch-callout:none}table{border-spacing:0;border-collapse:collapse}html{font-family:sans-serif;-webkit-user-select:none;user-select:none;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}:focus{outline:0}:link,:visited{text-decoration:none}a:active,a:hover{outline:0}.clearfix:after{display:block;clear:both;height:0;font-size:0;content:''}.pull-left{float:left}.pull-right{float:right}.show{display:block!important}.hide{display:none!important}.visible{visibility:visible}.invisible{visibility:hidden}.text-left{text-align:left}.text-center{text-align:center}.text-right{text-align:right}.dv{display:inline-block;vertical-align:middle}.di{display:inline-block}.text-hide{border:0;background-color:transparent;font:0/0 a;color:transparent;text-shadow:none}.text-ellipsis{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.btn{display:inline-block;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;text-align:center;vertical-align:middle;white-space:nowrap;-webkit-tap-highlight-color:transparent}.btn:hover{text-decoration:none}*{-webkit-box-sizing:border-box;box-sizing:border-box}
+  </style>
+  <link rel="stylesheet" href="./css/style.min.css">
+  <!-- <script src="./hotcss.js"></script> -->
+  <!-- <script src="./jquery.js"></script> -->
+</head>
+<script>
+  var doc = document ;
+  var WIDTH = doc.documentElement.clientWidth;
+  var fontSize = WIDTH / 375 * 16;
+  fontSize = Math.min(fontSize, 19);
+  doc.documentElement.style.fontSize = fontSize + 'px';
+</script>
+<body>
+<div class="container">
+  <div class="carousel">
+    <ul>
+      <li><img src="img/3.png" alt=""></li>
+      <li><img src="img/2.png" alt=""></li>
+      <li><img src="img/1.png" alt=""></li>
+      <li><img src="img/4.png" alt=""></li>
+      <li><img src="img/5.png" alt=""></li>
+    </ul>
+  </div>
+  <div class="footer"></div>
+</div>
+<script>
+  var download = document.querySelectorAll('.download-btn');
+  download.forEach(function(item,index,arr){
+    item.onclick = function(){
+      // location.href = 'http://www.baidu.com';
+      // location.href = '{$APP_URL}';
+    };
+  });
+</script>
+<script src="./carousel.js"></script>
+</body>
+</html>

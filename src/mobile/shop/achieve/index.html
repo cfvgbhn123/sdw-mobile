@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='TITLE'/>
+    <meta name='description' content='description'/>
+    <title>成就</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="../../js/check.js"></script>
+    <script src='../../js/vue.js'></script>
+    <script src='../../js/vue-tap.js'></script>
+    <script>
+
+        var FIRST_LOAD = 1;
+        (function () {
+            var trans = CHECK_URL + '?datatype=' + DATAITEM + '&goto=' + encodeURIComponent(location.href);
+            checkUserData(null, trans, FIRST_LOAD);
+        })();
+
+        (function () {
+            var WIDTH = document.documentElement.clientWidth;
+
+            // 控制最大的宽度
+            if (WIDTH > 450) {
+                WIDTH = 450;
+            }
+
+            var fontSize = Math.min(19, WIDTH / 375 * 16 >> 0);
+            document.documentElement.style.fontSize = fontSize + 'px';
+        })();
+    </script>
+</head>
+<body>
+
+<!--任务-->
+<div id="shop-root" class="page2" v-cloak>
+
+    <!--用户信息-->
+    <section class="user-container">
+
+        <img src="../images/default_avatar.png" class="user-avatar">
+        <div class="user-nick">{{user.nick || user.id}}</div>
+
+        <div class="user-right-container" v-show="user.gold != null">
+            <div class="conts my-money">{{user.gold}}</div>
+        </div>
+
+    </section>
+
+
+    <a href="../index.html"><img src="shop-banner.png" class="shop-banner"></a>
+
+
+    <!--任务列表-->
+    <section class="list-container">
+
+        <div class="lists" v-for="item in lists">
+            <p class="list-title">{{item.title}}</p>
+            <p class="list-cont">
+                <span class="jl-text">奖励</span>
+                <span class="jl-coin">{{item.coin}}</span>
+            </p>
+            <div class="btn {{item.flag == 2 ? 'btn-finish' : 'btn-normal' }}"
+                 v-tap.stop="finishTask(item,$event)">
+                {{item.flag == 2 ? '已领取' : '领取'}}
+            </div>
+        </div>
+
+    </section>
+
+
+</div>
+
+</body>
+<script src='http://app.m3guo.com/h5/dwz/js/zepto.min.js'></script>
+<script src='http://www.shandw.com/pc/js/libs/MD5.min.js'></script>
+<script src='index.js'></script>
+
+</html>

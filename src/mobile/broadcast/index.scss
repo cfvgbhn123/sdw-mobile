@@ -1,0 +1,107 @@
+//@import "../reset.scss";
+
+@function torem($px) {
+  @return $px / 32px * 1rem;
+}
+
+@function topx($px) {
+  @return $px / 32px * 16px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: rgba(0, 0, 0, .6);
+}
+
+.broadcast-container {
+  width: torem(540px);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: torem(40px);
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.broadcast-container:before {
+
+  content: '';
+  width: torem(620px);
+  height: torem(154px);
+  background: url("images/brocast-bg.png") center/100% auto no-repeat;
+  position: absolute;
+  top: torem(-54px);
+  left: 0;
+
+}
+
+.user-edit-cont {
+  margin-top: torem(100px);
+  min-height: torem(330px);
+  max-height: torem(450px);
+  //background: #00ae6d;
+  margin-bottom: torem(40px);
+}
+
+.close-btn {
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  width: torem(190px);
+  height: torem(70px);
+  line-height: torem(71px);
+  border-radius: torem(35px);
+  margin: 0 auto;
+  background-image: linear-gradient(90deg, #22cab5, #3fe28f);
+}
+
+.scroll {
+  -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 2px;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+h1 {
+  font-size: torem(40px);
+  margin-bottom: torem(20px);
+  
+}
+
+.links {
+  color: #0c0c10;
+  text-decoration: none;
+}
