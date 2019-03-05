@@ -8,7 +8,8 @@ var BASE_CONFIG = require('../../webpack-base');
 // var HtmlWebpackPlugin = require('html-webpack-plugin');
 // var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-var BUILD_PATH = path.resolve(__dirname, '../../../v2/libs/');
+var BUILD_PATH = path.resolve(__dirname, '../../../../sdwDev/libs/');
+// var BUILD_PATH = path.resolve(__dirname, '../../../v2/libs/');
 
 var bases = BASE_CONFIG({
     dirname: __dirname,

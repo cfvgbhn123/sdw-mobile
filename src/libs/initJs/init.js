@@ -255,7 +255,8 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         qq: 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101359011&redirect_uri=URLREPLACE&scope=get_user_info&state=123456&display=mobile',
         wb: 'https://api.weibo.com/oauth2/authorize?client_id=530008665&redirect_uri=URLREPLACE&response_type=code',
         wx: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd695e777664b347&redirect_uri=URLREPLACE&response_type=code&scope=snsapi_userinfo&state=125455#wechat_redirect',
-        ali: 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2017101109247098&scope=auth_user&redirect_uri=URLREPLACE'
+        ali: 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2017101109247098&scope=auth_user&redirect_uri=URLREPLACE',
+        jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000414&redirect_uri=URLREPLACE&scope=base&state=321cba',
         // ali: 'https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016090800465815&scope=auth_user&redirect_uri=URLREPLACE'
     };
 
@@ -279,18 +280,14 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
 
     // 检查口袋的账号问题（待测试）
     var checkKdUid = function (cacheUser) {
-
         cacheUser = cacheUser || {uid: -2};
-
         // 判断是否有登录口袋
         var kdUser = SDW_WEB.Store.get('kd_user');
         kdUser.uid = kdUser.uid || -1;
-
         if (kdUser.uid != cacheUser.uid) {
             cacheUser = null;
             return true;
         }
-
         return false;
     };
 
@@ -302,8 +299,6 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
             oldUserInfo = null;
         }
     }
-
-
     // 进行账号的校验检查
     if (userInfo) {
         userInfo.secheme = +new Date();
@@ -353,7 +348,6 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
 
     // 2.需要强行进行授权的
     else if (!ignoreLogin) {
-
         // 获取外部曾用QQ，微博等授权过的信息，用于直接跳转登录
         var outer_platform = null, auth_platform = null;
         if (outerAuthInfo) {
@@ -378,9 +372,9 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         else if (this.onKD) {
             location.href = authUrl;
         }
-
+        
         // QQ授权
-        else if (this.onQQ || this.onQQBrowser || outer_platform === 'qq') {
+        else if (this.onQQ || (this.onQQBrowser && !this.onJDJR) || outer_platform === 'qq') {
             location.href = authConfig['qq'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
 
@@ -389,7 +383,13 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         else if (this.onWeiBo || outer_platform === 'wb') {
             location.href = authConfig['wb'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
-
+        // 京东金融授权
+        else if (this.onJDJR || outer_platform === 'jdjr') {
+            if(_protocol_ === "http:"){
+                authUrl = authUrl.replace(/http/,"https");
+            }
+            location.href = authConfig['jdjr'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
+        }
         else if (this.onAliPay) {
             location.href = authConfig['ali'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }

@@ -13,12 +13,12 @@ OS.onQQBrowser = u.indexOf("QQBrowser") > -1;
 OS.onMQQBrowser = u.indexOf("MQQBrowser") > -1;
 OS.onWeiXin = u.indexOf('MicroMessenger') > -1;
 OS.onWeiBo = u.indexOf('Weibo') > -1;
+OS.onJDJR = u.indexOf('JDJR') > -1;
 OS.onSafari = u.indexOf('Safari') > -1;
-OS.onQQ = OS.onIOS ? (u.indexOf('QQ') > -1 && !(OS.onMQQBrowser || OS.onQQBrowser)) : OS.onMQQBrowser && !OS.onWeiXin; // 需要单独对QQ应用做处理
+OS.onQQ = OS.onIOS ? (u.indexOf('QQ') > -1 && !(OS.onMQQBrowser || OS.onQQBrowser)) : OS.onMQQBrowser && !OS.onWeiXin && !OS.onJDJR; // 需要单独对QQ应用做处理
 OS.onPC = !OS.onMobile;
 OS.QBCore = /QBCore/.test(u);
 OS.onKD = /KDM3G/.test(u) || /KDM3GNEW/.test(u) || typeof kdjs != 'undefined' || typeof callKDMSGToResponse != 'undefined';
-
 OS.width = document.documentElement.clientWidth;
 OS.height = document.documentElement.clientHeight;
 OS.onShandw = /Shandw/.test(u);
@@ -42,11 +42,9 @@ if (/wwyq/.test(u)) {
     OS.onQQ = false;
 }
 
-OS.onAPPs = OS.onMobile && (OS.onWeiXin || OS.onQQ || OS.onKD || OS.onShandw || OS.onWeiBo || OS.onMDZZHelper || OS.onAliPay);
+OS.onAPPs = OS.onMobile && (OS.onWeiXin || OS.onQQ || OS.onKD || OS.onShandw || OS.onWeiBo || OS.onMDZZHelper || OS.onAliPay || OS.onJDJR);
 
 OS.ky = window !== parent;
-
-
 // 操作系统
 OS.os = 0;
 if (OS.onIOS) {
