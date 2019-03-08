@@ -71,7 +71,6 @@
         }
         else if (SDW_WEB.onJDJR || url['sdw_authFlag'] === 'jdjr') {
             var HTTP_URL = HTTP_USER_STATIC + 'jdjrauth?channel=' + channel + '&flag=1&appid=530008665';
-            alert("HTTP_URL"+HTTP_URL);
             var aUrl = HTTP_URL + '&code=' + url['code'] + '&redirect_uri=' + encodeURIComponent(SDW_WEB.CHECK_URL);
         }
         else {
