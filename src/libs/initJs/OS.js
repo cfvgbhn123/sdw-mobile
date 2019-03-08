@@ -13,6 +13,7 @@ OS.onQQBrowser = u.indexOf("QQBrowser") > -1;
 OS.onMQQBrowser = u.indexOf("MQQBrowser") > -1;
 OS.onWeiXin = u.indexOf('MicroMessenger') > -1;
 OS.onWeiBo = u.indexOf('Weibo') > -1;
+// 京东金融
 OS.onJDJR = u.indexOf('JDJR') > -1;
 OS.onSafari = u.indexOf('Safari') > -1;
 OS.onQQ = OS.onIOS ? (u.indexOf('QQ') > -1 && !(OS.onMQQBrowser || OS.onQQBrowser)) : OS.onMQQBrowser && !OS.onWeiXin && !OS.onJDJR; // 需要单独对QQ应用做处理
