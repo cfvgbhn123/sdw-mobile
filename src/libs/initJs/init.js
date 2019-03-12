@@ -15,7 +15,6 @@ SDW_WEB.sender_sdw_id = '_sender_sdw_rfid_';
 SDW_WEB.verReg = /v=/;
 SDW_WEB.version = '315';
 
-
 SDW_WEB.addJSFile = function (url, callback) {
     var oHead = document.getElementsByTagName('HEAD').item(0);
     var oScript = document.createElement("script");
@@ -256,7 +255,8 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         wb: 'https://api.weibo.com/oauth2/authorize?client_id=530008665&redirect_uri=URLREPLACE&response_type=code',
         wx: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd695e777664b347&redirect_uri=URLREPLACE&response_type=code&scope=snsapi_userinfo&state=125455#wechat_redirect',
         ali: 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2017101109247098&scope=auth_user&redirect_uri=URLREPLACE',
-        jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000414&redirect_uri=URLREPLACE&scope=base&state=321cba',
+        jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000418&redirect_uri=URLREPLACE&scope=base&state=cba',
+        // jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000414&redirect_uri=URLREPLACE&scope=base&state=cba',
         // ali: 'https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016090800465815&scope=auth_user&redirect_uri=URLREPLACE'
     };
 
