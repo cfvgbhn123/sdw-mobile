@@ -257,8 +257,6 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         wx: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd695e777664b347&redirect_uri=URLREPLACE&response_type=code&scope=snsapi_userinfo&state=125455#wechat_redirect',
         ali: 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2017101109247098&scope=auth_user&redirect_uri=URLREPLACE',
         jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000418&redirect_uri=URLREPLACE&scope=base&state=cba',
-        // jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000414&redirect_uri=URLREPLACE&scope=base&state=cba',
-        // ali: 'https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016090800465815&scope=auth_user&redirect_uri=URLREPLACE'
     };
 
     // 在闪电玩中，或者在微端中，直接退出，采用其他的方式获取...
@@ -384,6 +382,7 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         else if (this.onWeiBo || outer_platform === 'wb') {
             location.href = authConfig['wb'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
+        
         // 京东金融授权
         else if (this.onJDJR || outer_platform === 'jdjr') {
             if(_protocol_ === "http:"){
