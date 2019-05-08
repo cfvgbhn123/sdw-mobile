@@ -3,6 +3,7 @@
  */
 
 var OS = {}, u = navigator.userAgent;
+// alert(u);
 OS.onIOS = !!u.match(/\(i[^;]+;(U;)? CPU.+Mac OS X/);
 OS.onMobile = !!u.match(/AppleWebKit.*Mobile.*/);
 OS.onIPhone = u.indexOf("iPhone") > -1;

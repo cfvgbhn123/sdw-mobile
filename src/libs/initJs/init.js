@@ -14,6 +14,7 @@ var _protocol_ = location.protocol;
 SDW_WEB.sender_sdw_id = '_sender_sdw_rfid_';
 SDW_WEB.verReg = /v=/;
 SDW_WEB.version = '315';
+// alert(location.href);
 
 SDW_WEB.addJSFile = function (url, callback) {
     var oHead = document.getElementsByTagName('HEAD').item(0);
