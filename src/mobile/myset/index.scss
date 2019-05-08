@@ -45,12 +45,20 @@ body {
   //margin: torem(15px) 0;
   box-sizing: border-box;
   height: torem(110px);
-  padding-left: torem(120px);
+  //padding-left: torem(120px);
   line-height: torem(110px);
   color: #333;
   //text-align: center;
   //background: #fff;
   font-size: torem(28px);
+  i{
+    display: inline-block;
+    width:  torem(120px);
+    height: torem(110px);
+    background-repeat: no-repeat;
+    background-position: torem(50px) center;
+    vertical-align: top;
+  }
 }
 
 .list-item:active {
@@ -91,31 +99,30 @@ body {
 .clear {
   background-image: url("images/refresh.png");
   background-size: torem(38px) auto;
-  background-repeat: no-repeat;
-  background-position: torem(50px) center;
 }
 
 .appstore {
   background-image: url("images/5xing.png");
   background-size: torem(38px) auto;
-  background-repeat: no-repeat;
-  background-position: torem(50px) center;
 }
 
 .cancel {
   background-image: url("images/logout.png");
   background-size: torem(38px) auto;
-  background-repeat: no-repeat;
-  background-position: torem(50px) center;
 }
 
 .address {
   background-image: url("images/address.png");
   background-size: torem(50px) auto;
-  background-repeat: no-repeat;
-  background-position: torem(50px) center;
 }
-
+.phone{
+  background-image: url("images/ico_phone.png");
+  background-size: torem(32px) auto;
+}
+.identify{
+  background-image: url("images/ico_identity.png");
+  background-size: torem(50px) auto;
+}
 .sdw-v-info {
   position: fixed;
   bottom: torem(50px);
@@ -190,4 +197,108 @@ body {
 .add-list:last-child {
   border-bottom: none;
 }
+/*实名认证页面*/
+.page-identify{
+  color: #6c7583;
+  font-size: torem(24px);
+  line-height: 1.4em;
+  width: torem(710px);
+  height:100%;
+  margin: 0 auto;
+  .txt-tip{
+    padding: torem(32px) 0px torem(20px) ;
+  }
+  .ipt{
+    width: 100%;
+    background: #fff;
+    border:none;
+    border-radius: torem(10px);
+    margin-bottom: torem(25px);
+    color: #000;
+    font-size: torem(28px);
+    height: torem(85px);
+    line-height: torem(85px);
+    padding-left:torem(30px);
+    box-sizing: border-box;
+  }
+  .long-btn{
+    width: 100%;
+    height: torem(80px);
+    line-height:torem(80px);
+    color: #fff;
+    text-align: center;
+    font-size: torem(36px);
+    margin: torem(25px) auto;
+    border-radius: torem(40px);
+    background: linear-gradient(90deg,#22cab5,#3fe28f);
+  }
+  .shuoming{
+    color: #6ac5b6;
+    text-align: center;
+    i{
+      display: inline-block;
+      vertical-align: top;
+      width: torem(28px);
+      height: torem(28px);
+      background: url("images/ico_tip.png") center /100% 100% no-repeat;
+      position: relative;
+      top: torem(3px);
+      left: torem(-10px);
+    }
+    a{
+      color: #6ac5b6;
+    }
 
+  }
+  .bottom{
+    text-align: justify;
+    width: torem(710px);
+    position: absolute;
+    left: 50%;
+    margin-left: torem(-355px);
+    bottom: torem(30px);
+  }
+}
+.info-container{
+  padding-left: torem(30px);
+  box-sizing: border-box;
+  margin-bottom: torem(25px);
+}
+.tip-error{
+  font-size: torem(20px);
+  margin: torem(18px) 0px torem(30px) torem(42px);
+  height: torem(24px);
+  line-height: torem(24px);
+  color: #ef4134;
+  i{
+    display: inline-block;
+    vertical-align: top;
+    width: torem(22px);
+    height: torem(23px);
+    background: url("http://www.shandw.com/m/libs/icons/ico_error.png") center /100% 100% no-repeat;
+    position: relative;
+    top: torem(2px);
+    left: torem(-10px);
+  }
+}
+.ipt-code{
+  position: relative;
+}
+.getCode{
+  position: absolute;
+  height: 100%;
+  width: torem(180px);
+  line-height: torem(46px);
+  height: torem(46px) ;
+  top:50%;
+  margin-top: torem(-30px);
+  border-left: 1px solid #e1e1e1;
+  text-align: center;
+  color: #000;
+  right: 0px;
+  font-size: torem(24px) ;
+}
+.forbidGet{
+  color: #838fa1;
+  font-size: torem(18px);
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"><meta name="apple-mobile-web-app-status-bar-style"content="black"><meta name="title"class="sTitle"content=""><meta name="apple-mobile-web-app-title"content=""class="sTitle"><meta content="telephone=no"name="format-detection"><meta content="email=no"name="format-detection"><link rel="apple-touch-icon"class="sIcon"><link rel="bookmark"class="sIcon"><meta name="description"content=""class="sDesc"><title></title><style>#app{width:100%;height:100%;position:absolute;top:0;left:0}</style><script src="//www.shandw.com/libs/js/iscroll.min.js?m=0"></script><script>document.write('<script src="//www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="//www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');</script><script>//if (window.top !== window)
+           // SDW_WEB.onWyqq = true;  // 强制指定在网易圈圈APP中
+        // 获取用户的基本信息
+        SDW_WEB.checkUserInfo();
+        // if (SDW_WEB.onWeiXin) {
+        //     document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"><\/script>');
+        // }
+      document.write('<script src="//www.shandw.com/mi/game/js/initGame.min.js?m=' + (+new Date()) + '"><\/script>');</script><link href="styles.css?0733"rel="stylesheet"></head><script src="//www.shandw.com/libs/js/vue.js"></script><script src="//www.shandw.com/libs/js/zepto.min.js"></script><script src="https://www.shandw.com/pc/js/libs/qrcode.js"></script><body style="display:none"><img id="setShareImg"style="position:absolute;top:-99999999px;left:-99999999px"><div class="loading-container"><div class="loading"><span></span> <span></span> <span></span></div></div><script>var loadingCtl = document.querySelector('.loading-container');
+    if(SDW_WEB.queryParam['channel'] == '12212'){
+        loadingCtl.classList.add('loading-container-geely');
+    }</script><div id="alipay_form"style="display:none"></div><div class="pay-model-mask"id="payModelMask"style="display:none"><div id="PayModelBox"class="pay-model-box"><section id="PayboxCode"class="payboxCode"style="display:block"><div class="pay-model-bd"><div class="pay-model-wayer">支付<a href="javascript:void(0);"class="closepaybtn">✕</a></div><div id="payWayerTit"class="pay-wayer-tit">长按二维码识别</div><div class="codecon"id="CodeContent"><img src=""></div></div></section></div></div><div id="app"><div class="login-container"v-show="showLogin"><h1 class="login-title">登陆过期，微信扫码重新登录</h1><div class="login-code"id="ewm"></div><div class="txt-tip">小提示：在微信公众号“闪电玩”开玩游戏，数据互通</div></div><div v-show="!landscape"><div class="code-container"><img src="http://dhurl.cn/jUZJnm"alt=""></div><div class="banner-container"><img src="http://dhurl.cn/YZVVNv"alt=""></div></div><div v-show="landscape"class="lanscape-container"><div id="my-menu"><div id="menu-btn"class="sdw-icon-ani"data-state="sdw"></div><div class="tapme"></div></div><div class="mask-container"@click.self="closeMask()"v-show="showfocus"><div class="mask-code-container"><div class="kf-b-container kf-bw-container"><div class="kf-title">更多精彩</div><img :src="'images/focuscode/'+gid+'.png' || 'http://www.shandw.com/m/game/images/qcode-img.png'"alt=""><div class="kf-text2">扫码关注“闪电玩”<br>手机也能继续玩哦~~~!</div></div></div></div></div></div><div id="g-container"class="warp"style="position:fixed;min-height:100%;height:100%;max-width:100%;display:none;left:50%;transform:translateX(-50%)"></div><script type="text/javascript"src="js/index.min.js?0733"></script></body><script>var payModelMask = document.querySelector('#payModelMask');
+    var closepaybtn = document.querySelector('.closepaybtn');
+    var CodeContent = document.querySelector('#CodeContent');
+
+    function showPayModelMask(img) {
+        CodeContent.innerHTML = '<img src=' + img + '>';
+        payModelMask.style.display = 'block';
+    }
+
+    function hidePayModelMask() {
+        payModelMask.style.display = 'none';
+    }
+
+    payModelMask.onclick = function (e) {
+        if (e.target == this) {
+            closeAndHideMessage()
+        }
+    };
+
+    closepaybtn.onclick = function (e) {
+
+        if (e.target == this)
+            closeAndHideMessage()
+    };
+
+    // 用户点击关闭支付。
+    function closeAndHideMessage() {
+
+        hidePayModelMask();
+
+        // 关闭通知
+        var iframe = document.querySelector('#my-game-container').contentWindow;
+        if (iframe) {
+            iframe.postMessage(JSON.stringify({
+                closeCode: true
+            }), '*');
+        }
+    }</script></html>

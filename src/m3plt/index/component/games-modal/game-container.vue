@@ -1,64 +1,58 @@
-<!--
-
-移动版游戏主页-单个游戏模块
-
-
--->
-
+<!--移动版游戏主页-单个游戏模块-->
 <template>
     <!--v-show="gameInfo.playing" -->
    <div>
-       <div v-show="((gameInfo.screen&&index===0&&gameInfo.playing) || (gameInfo.screen&&gameInfo.sOn))"  :class="gameInfo.playing?'screen-box game-box':'game-box slide-in-top'"  ref="gameBox">
-       <div class="do-box do-box-2">
-           <span>{{gameInfo.name}}</span>
-           <div class="close-btn" @click="closeGame()"></div>
-           <!-- <div class="mix-btn" @click="mixGame()" ></div> -->
-           <div class="refresh-btn" @click="refreshGame()"></div>
-           <div class="cpy-btn" :data-clipboard-text="cpyUrl"></div>
-       </div>
-       <div class="game-container screen-container">
-           <iframe ref="gameContainer" :src="gameInfo.gameUri" frameborder="0" ></iframe>
-       </div>
-       <div class="code-container">
-           <div class="q-code-border" v-show="showQCode">
-               <div class="q-code-flash"></div>
-               <div class="q-code-cont" ref="myCode"></div>
-           </div>
-           <div class="q-code"
-                @mouseover.self='qCodeOver()'
-                @mouseout.self='qCodeOut()'
-           ></div>
-           <span :class="{'mycolor': changeColor}">手机扫码开玩</span>
-       </div>
-   </div>
-   <div v-show="((!modalInfo.gamePlayList[0].screen&&!gameInfo.screen&&gameInfo.playing) || (!gameInfo.screen&&gameInfo.sOn))"  :class="gameInfo.playing?'no-screen game-box':'game-box slide-in-top'"  ref="gameBox" >
-       <div class="do-box do-box-2" >
-           <span>{{gameInfo.name}}</span>
-           <div class="close-btn" @click="closeGame()"></div>
-           <!-- <div class="mix-btn" @click="mixGame()" ></div> -->
-           <div class="refresh-btn" @click="refreshGame()"></div>
-           <div class="cpy-btn" :data-clipboard-text="cpyUrl"></div>
-       </div>
-       <div class="game-container">
-           <iframe ref="gameContainer" :src="gameInfo.gameUri" frameborder="0" ></iframe>
-       </div>
-       <div class="code-container">
-           <div class="q-code-border" v-show="showQCode">
-               <div class="q-code-flash"></div>
-               <div class="q-code-cont" ref="myCode"></div>
-           </div>
-           <div class="q-code"
-                @mouseover.self='qCodeOver()'
-                @mouseout.self='qCodeOut()'
-           ></div>
-           <span :class="{'mycolor': changeColor}">手机扫码开玩</span>
-       </div>
-   </div>
+        <div v-show="((gameInfo.screen==1&&index===0&&gameInfo.playing) || (gameInfo.screen==1&&gameInfo.sOn))"  :class="[gameInfo.playing?'screen-box game-box':'game-box slide-in-top', {'m3plt-screen-container': onM3pltGame}]">
+            <div class="do-box do-box-2">
+                <span>{{gameInfo.name}}</span>
+                <div class="close-btn" @click="closeGame()"></div>
+                <!-- <div class="mix-btn" @click="mixGame()" ></div> -->
+                <div class="refresh-btn" @click="refreshGame"></div>
+                <div class="cpy-btn" :data-clipboard-text="cpyUrl"></div>
+            </div>
+            <div class="game-container screen-container">
+                <iframe ref="gameContainer1" v-if="gameInfo.screen==1" :src="gameInfo.gameUri" frameborder="0" ></iframe>
+            </div>
+            <div class="code-container">
+                <div class="q-code-border" v-show="showQCode">
+                    <div class="q-code-flash"></div>
+                    <div class="q-code-cont" ref="myCode1"></div>
+                </div>
+                <div class="q-code"
+                        @mouseover.self="qCodeOver('1')"
+                        @mouseout.self='qCodeOut()'
+                ></div>
+                <span :class="{'mycolor': changeColor}">手机扫码开玩</span>
+            </div>
+        </div>
+        <div v-show="((!modalInfo.gamePlayList[0].screen&&!gameInfo.screen&&gameInfo.playing) || (!gameInfo.screen&&gameInfo.sOn))"  :class="[gameInfo.playing?'no-screen game-box':'game-box slide-in-top', {'m3pltGame-no-screen': onM3pltGame}]">
+            <div class="do-box do-box-2">
+                <span>{{gameInfo.name}}</span>
+                <div class="close-btn" @click="closeGame()"></div>
+                <!-- <div class="mix-btn" @click="mixGame()" ></div> -->
+                <div class="refresh-btn" @click="refreshGame"></div>
+                <div class="cpy-btn" :data-clipboard-text="cpyUrl"></div>
+            </div>
+            <div :class="['game-container', {'m3plt-game-container': onM3pltGame}]">
+                <iframe ref="gameContainer2" v-if="!gameInfo.screen" :src="gameInfo.gameUri" frameborder="0" ></iframe>
+            </div>
+            <div class="code-container">
+                <div :class="['q-code-border', {'m3plt-code-border': fromM3plt || onM3pltGame}]" v-show="showQCode">
+                    <div class="q-code-flash"></div>
+                    <div class="q-code-cont" ref="myCode2"></div>
+                </div>
+                <div class="q-code"
+                        @mouseover.self="qCodeOver('2')"
+                        @mouseout.self='qCodeOut()'
+                ></div>
+                <span :class="{'mycolor': changeColor}">手机扫码开玩</span>
+            </div>
+        </div>
    </div>
 </template>
 
 <script>
-
+    var $=require('jquery');
    var CheckOpenGame = require('../../../components/js/CheckOpenGame.js');
     import Clipboard from '../../libs/clipboard.min.js';
     export default {
@@ -69,15 +63,19 @@
                 showQCode: false,
                 hasQCode: null,
                 changeColor: false,
-                cpyUrl: ""
+                cpyUrl: "",
+                //梦平台游戏内
+                onM3pltGame: SDW_WEB.onM3pltGame
             }
         },
-        props: ['gameInfo', 'index', 'modalInfo'],
+        props: ['gameInfo', 'index', 'modalInfo', 'container-width'],
 
         methods: {
-            refreshGame:function () {
+            refreshGame:function (e) {
+                var gameCon = this.$refs.gameContainer1 || this.$refs.gameContainer2;
                 var newUri = this.changeURLPar(this.gameInfo.gameUri,'mySec',new Date().getTime());
-                this.gameInfo.gameUri = newUri ;
+                // this.gameInfo.gameUri = newUri ;
+                gameCon.contentWindow.location.replace(newUri);
             },
             mixGame:function () {
                 var _t = this ;
@@ -106,6 +104,13 @@
                 if(index){
                     this.modalInfo.gamePlayList.splice(index-1,1);
                 }
+                //关闭非全屏游戏后判断第一个游戏是否全屏
+                if(this.modalInfo.gamePlayList[0]&&this.modalInfo.gamePlayList[0].screen !=2&&this.modalInfo.gamePlayList[0].screen !=3) {
+                    //1非全屏游戏
+                }else {
+                    //2全屏游戏
+                    this.modalInfo.isFull = true;
+                }
                 /*判断屏幕上是否还有游戏在玩*/
                 var palyingCount  = 0 ;
                 for(var i = 0 ;i < this.modalInfo.gamePlayList.length;i++ ){
@@ -122,22 +127,21 @@
                 });
             },
 
-            qCodeOver: function () {
+            qCodeOver: function (param) {
 
                 var self = this;
                 this.showQCode = true;
 
                 if (!self.hasQCode) {
 
-                    var dom = self.$refs.myCode;
+                    var dom = param=='1' ? self.$refs.myCode1 : self.$refs.myCode2;
                     var qcode = new QRCode(dom, {
-                        width: 75,
-                        height: 75
+                        width: 94,
+                        height: 92
                     });
 
                     // 梦平台二维码扫一扫，只能在口袋中打开
                     var src = CheckOpenGame.createQCode(self.gameInfo.id);
-                    console.log('src',src);
                     qcode.makeCode(src);
                     self.hasQCode = true;
                 }
@@ -211,9 +215,13 @@
             gameUrl: function () {
                 var myUrl = CheckOpenGame.createMyUrl(this.gameItem);
                 return myUrl;
+            },
+            fromM3plt: function () {
+                return SDW_WEB.queryParam['from'] === 'm3plt';
             }
         },
         mounted: function() {
+            var self = this;
             this.cpyUrl = SDW_PATH.GAME_URL('play', this.gameInfo.id);
             //粘贴复制游戏地址
             var cpy = new Clipboard('.cpy-btn');
@@ -226,8 +234,40 @@
                 // console.error('Action:', e.action);
                 dialog.show('error', "抱歉您的浏览器不支持该功能", 2);
             });
+        },
+        updated: function() {
+            var self = this;
+            //游戏布局调整
+            (function () {
+                //竖屏个数
+                var gameLen1 = 0;
+                var gameW1 = 0;
+                var gameH1 = 0;
+                var containerHeight = $(".games-container").height()>>0;
+                var containerWidth = self.containerWidth;
+                $(".no-screen").each(function(index, e) {
+                    if($(e).css('display')!="none") {
+                        gameLen1++;
+                    }
+                });
+                if(gameLen1) {
+                    gameW1 = $(".no-screen").eq(0).width();
+                    gameH1 = $(".no-screen").eq(0).height();
+                }
+                var spaceW1 = containerWidth-gameW1*gameLen1;
+                var averW1 = (0.5*spaceW1/(gameLen1+1))>>0;
+                // document.querySelector("#myOwnTip").innerHTML = "w: "+containerWidth+"h: "+gameW1+ "num"+ gameLen1;
+                $(".no-screen").each(function(index, e) {
+                    if($(e).css('display')!="none") {
+                        $(e).css({
+                            margin: "0 " + averW1 + "px"
+                        })
+                    }
+                });
+            })();
         }
     }
+
 </script>
 
 <style lang="sass">

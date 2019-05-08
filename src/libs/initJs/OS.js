@@ -36,6 +36,8 @@ OS.hasH5NativePay = /ONE-GAME-APP/.test(u);  // flag [2018-03-20 13:48:03] 类�
 
 OS.wyxq = /star_client/.test(u);  // 网易星球
 
+OS.landscape = /Landscape/.test(u);  // 横屏设备
+OS.wxLoginPay = /WXLoginPay/.test(u);  // 扫码登录，扫码支付
 /*盈盈有钱*/
 if (/wwyq/.test(u)) {
     OS.onQQBrowser = false;

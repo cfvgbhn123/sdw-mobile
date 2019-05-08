@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闪电玩H5游戏中心_电魂旗下H5游戏平台</title>
+    <meta name="keywords" content="h5游戏,在线游戏,小游戏,轻游戏,手机游戏,微信送话费,电魂,闪电玩h5">
+    <meta name="description" content="闪电玩是中国领先的h5小游戏专业网站，免费提供上百款多人小游戏和单机游戏，传奇世界、决战沙城、大天使之剑、火影忍者、口袋妖怪、一代宗师、楚乔传、侠客行（降龙十八掌）、仙剑客栈、十里桃花白浅传等类型繁多的精品h5游戏。">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <script src="https://www.shandw.com/libs/vue.js"></script>
+    <!-- <script src="https://www.shandw.com/pc/js/libs/q.min.js"></script> -->
+    <script src="https://www.shandw.com/pc/js/libs/qrcode.js"></script>
+    <script>
+        document.write('<script src="https://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="https://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+
+    <script>
+
+
+        (function () {
+
+            var goToUri = location.href.split('#')[0];
+
+            var checkUrl = SDW_WEB.URLS.addParam({
+                datatype: window.DATAITEM,
+                goto: goToUri,
+                channel: SDW_WEB.channel,
+            }, true, SDW_WEB.CHECK_URL);
+
+            SDW_WEB.getUserInfo(null, checkUrl, true);
+
+        })();
+
+    </script>
+</head>
+<body>
+<div id="app">
+<div id="app-container" v-cloak :class="['container',m3pltC, m3pltCGame]">
+    <div v-if="!onM3plt && !onM3pltGame">
+        <!-- 顶部下载 -->
+        <top-download v-if="downloadApp" @close-dialog="closeDialog"></top-download>
+        <!-- 联系客服 -->
+        <div class="contact-container" :style="contactContainer"  @click="choseConContainer">
+            <top-contact @close-contact="closeContact"></top-contact>
+        </div>
+        <!-- 顶部栏 -->
+        <div class="top-info">
+            <home-page-top :usr-info="usrInfo" @download-dialog="showDownloadDialog" @gift-page="showGiftPage" @contact-serv="showConDialog"  @login-dialog="getDialog"></home-page-top>
+        </div>
+        <!-- 登录 -->
+        <top-login :style="loginShow" @on-login="onLogin" :app="APP" @login-close="loginClose"></top-login>
+    </div>
+    <alert-game :url="currentGameUrl" v-on:hide-alert-game="hideMask"></alert-game>
+    <!--左边的内容-->
+    <div :class="['left-container', m3pltL, m3pltLGame]">
+        <!--面包导航栏-->
+        <div class="nav-list-container" v-if="onM3plt||onM3pltGame">
+            <div class="back-btn" onclick="history.back()">返回</div>
+            <a class="nav-list-item nav-list-arr" :href="APP_ROOT_HOME">首页</a>
+            <a class="nav-list-item" href="javascript:void(0);">开服详情</a>
+        </div>
+        <div class="title-container linear-title" style="margin-top: 30px">
+            <div class="title cls-title">
+                <div class="cls-tab" :class="{'cls-tab-select': titleSelected===index}" style="font-size: 17px;" v-for="(item, index) in titleList" @click.stop.self = "getServerType(index)">
+                    {{item}}
+                </div>
+            </div>                              
+        </div>
+        <!-- 游戏信息列表 -->
+        <div class="games-server-l clearFix">
+            <game-info :class="{'addSpace': (index+1)%4!==0?true:false}"
+                :game-info="item"
+                :from-m3plt="fromM3plt"
+                :on-m3plt="onM3plt"
+                :on-m3pltGame="onM3pltGame"
+                @go-detail="gotoDetail"
+                v-for="(item, index) in ServerDataList[currentServer]"
+                :games-modal="gamesModal"
+                @login-dialog="getDialog">
+            </game-info>
+        </div>
+        <!-- 加载更多数据 -->
+        <div class="more-server" v-if="showMoreBtn" @click.stop.self = "getMoreServer">
+            点击加载更多...
+        </div>
+    </div>
+
+    <!--右边的内容-->
+    <div :class="['right-container', m3pltR, m3pltRGame]" :style="{right:rightFixed+'px', left: m3plRrightFixed}">
+
+        <div class="gift-search">
+            <search-input v-on:search-btn-fn="searchBtnFn"></search-input>
+        </div>
+
+
+        <div class="title-container linear-title gift-position">
+            <div class="title">游戏名称</div>
+        </div>
+
+
+        <!--游戏礼包的分类-->
+        <div class="gift-game-list-cls">
+
+            <div class="cls-g-item"
+                    @click.stop="changeGameItem(i)"
+                    :class="i.isClick ? 'cls-g-item-click' : ''"
+                    v-for="(i, index) in gameListMap[currentServer]">{{i.name}}
+            </div>
+
+        </div>
+    </div>
+    <left-part :info = "gamesModal" :usr-info="usrInfo" @login-dialog="getDialog"></left-part>
+    <right-part :info = "gamesModal" v-show="!gamesModal.isFull && !onM3plt"></right-part>
+    <full-part :info="gamesModal" v-show="gamesModal.isFull"></full-part>
+</div>
+<footer-item></footer-item>
+</div>
+</body>
+</html>

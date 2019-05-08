@@ -15,6 +15,7 @@ SDW_WEB.sender_sdw_id = '_sender_sdw_rfid_';
 SDW_WEB.verReg = /v=/;
 SDW_WEB.version = '315';
 
+
 SDW_WEB.addJSFile = function (url, callback) {
     var oHead = document.getElementsByTagName('HEAD').item(0);
     var oScript = document.createElement("script");
@@ -239,7 +240,7 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
 
     // 加上缓存
     authUrl = SDW_WEB.URLS.addParam({
-        'sdwVers': SDW_WEB.version
+        'sdwVers': SDW_WEB.version,
     }, true, authUrl);
 
 
@@ -254,9 +255,7 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         qq: 'https://graph.qq.com/oauth2.0/authorize?response_type=code&client_id=101359011&redirect_uri=URLREPLACE&scope=get_user_info&state=123456&display=mobile',
         wb: 'https://api.weibo.com/oauth2/authorize?client_id=530008665&redirect_uri=URLREPLACE&response_type=code',
         wx: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd695e777664b347&redirect_uri=URLREPLACE&response_type=code&scope=snsapi_userinfo&state=125455#wechat_redirect',
-        ali: 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2017101109247098&scope=auth_user&redirect_uri=URLREPLACE',
-        jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000418&redirect_uri=URLREPLACE&scope=base&state=cba',
-        // jdjr: 'https://open.jr.jd.com/oauth2/authorization/forward?appid=JD0000414&redirect_uri=URLREPLACE&scope=base&state=cba',
+        ali: 'https://openauth.alipay.com/oauth2/publicAppAuthorize.htm?app_id=2017101109247098&scope=auth_user&redirect_uri=URLREPLACE'
         // ali: 'https://openauth.alipaydev.com/oauth2/appToAppAuth.htm?app_id=2016090800465815&scope=auth_user&redirect_uri=URLREPLACE'
     };
 
@@ -280,14 +279,18 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
 
     // 检查口袋的账号问题（待测试）
     var checkKdUid = function (cacheUser) {
+
         cacheUser = cacheUser || {uid: -2};
+
         // 判断是否有登录口袋
         var kdUser = SDW_WEB.Store.get('kd_user');
         kdUser.uid = kdUser.uid || -1;
+
         if (kdUser.uid != cacheUser.uid) {
             cacheUser = null;
             return true;
         }
+
         return false;
     };
 
@@ -299,6 +302,8 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
             oldUserInfo = null;
         }
     }
+
+
     // 进行账号的校验检查
     if (userInfo) {
         userInfo.secheme = +new Date();
@@ -348,6 +353,7 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
 
     // 2.需要强行进行授权的
     else if (!ignoreLogin) {
+
         // 获取外部曾用QQ，微博等授权过的信息，用于直接跳转登录
         var outer_platform = null, auth_platform = null;
         if (outerAuthInfo) {
@@ -364,6 +370,7 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
 
         // 微信授权
         if (this.onWeiXin) {
+           // alert(authConfig['wx'].replace(/URLREPLACE/, encodeURIComponent(authUrl)))
             location.href = authConfig['wx'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
 
@@ -372,9 +379,9 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         else if (this.onKD) {
             location.href = authUrl;
         }
-        
+
         // QQ授权
-        else if (this.onQQ || (this.onQQBrowser && !this.onJDJR) || outer_platform === 'qq') {
+        else if (this.onQQ || this.onQQBrowser || outer_platform === 'qq') {
             location.href = authConfig['qq'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
 
@@ -383,13 +390,7 @@ SDW_WEB.getUserInfo = function (success, authUrl, ignoreLogin, loginFn) {
         else if (this.onWeiBo || outer_platform === 'wb') {
             location.href = authConfig['wb'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
-        // 京东金融授权
-        else if (this.onJDJR || outer_platform === 'jdjr') {
-            if(_protocol_ === "http:"){
-                authUrl = authUrl.replace(/http/,"https");
-            }
-            location.href = authConfig['jdjr'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
-        }
+
         else if (this.onAliPay) {
             location.href = authConfig['ali'].replace(/URLREPLACE/, encodeURIComponent(authUrl));
         }
@@ -476,7 +477,7 @@ SDW_WEB.changeUrl = function () {
     }
 
     if (oldUrl.indexOf('?') == -1) {
-        var res = oldUrl.replace(/&/, '?')
+        var res = oldUrl.replace(/&/, '?');
     } else {
         res = oldUrl;
     }
@@ -578,7 +579,8 @@ SDW_WEB.createXMLHTTPRequest = function () {
 SDW_WEB.getAjaxData = function (url, success, checkResult,options) {
 
     if (!url) {
-        alert('[getAjaxData]: url error');
+       console.log(url);
+       alert('[getAjaxData]: url error');
         return;
     }
 
@@ -793,8 +795,8 @@ SDW_WEB.checkUserInfo = function (ignore) {
         datatype: window.DATAITEM,
         goto: goToUri,
         channel: SDW_WEB.channel,
-    }, true, SDW_WEB.CHECK_URL);
 
+    }, true, SDW_WEB.CHECK_URL);
     // 只是获取初始的用户信息，不用强制登录
     SDW_WEB.getUserInfo(null, checkUrl, ignore);
 };
@@ -982,25 +984,54 @@ document.addEventListener('DOMContentLoaded', function () {
         msgCont: null,
         icons: null,
         timer: null,
-        types: ['ok', 'error', 'loading'],
+        types: ['ok', 'error', 'loading','inform'],
         init: function () {
             var dom = document.createElement('div');
-            dom.innerHTML = '<section class="dialogs"><div id="icons"></div><div class="msg"></div></section>';
-
+            dom.innerHTML = '<section class="dialogs">' +
+                '<div id="d-title"></div>' +
+                '<div id="icons"></div>' +
+                '<div class="msg"></div>' +
+                '<div id="dia-btns"></div>'+
+                '</section>';
             dom.className = 'dialogsCont';
-
             if (document.body) {
                 document.body.appendChild(dom);
                 dialog.dom = dom;
                 dialog.msgCont = document.querySelector('.dialogs .msg');
                 dialog.icons = document.querySelector('#icons');
+                dialog.title = document.querySelector('#d-title');
+                dialog.btn= document.querySelector('#dia-btns');
+                dialog.btn.onclick = dialog.hidden;
             }
+
         },
-        show: function (type, msg, autoHidden) {
+        show: function (type, msg, autoHidden,options) {
 
             if (dialog.timer) {
                 clearTimeout(dialog.timer);
                 dialog.timer = null;
+            }
+            if(options){
+                if(options.title){
+                    dialog.title.innerHTML = options.title;
+                    dialog.title.style.display = 'block';
+                    dialog.icons.style.display = 'none';
+                 }else{
+                    dialog.icons.style.display = 'block';
+                    dialog.title.style.display = 'none';
+                }
+
+                if(options.btn){
+                    dialog.btn.innerHTML = options.btn;
+                    dialog.btn.style.display = 'block';
+                }else{
+                    dialog.btn.style.display = 'none';
+                }
+
+            }else{
+                dialog.icons.style.display = 'block';
+                dialog.btn.style.display = 'none';
+                dialog.title.style.display = 'none';
             }
 
             dialog.msgCont.innerHTML = msg;

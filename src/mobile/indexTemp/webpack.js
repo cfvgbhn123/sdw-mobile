@@ -16,7 +16,10 @@ var bases = BASE_CONFIG({
     entry: {
         index: './index2.js',
         bannerindex:'./bannerindex.js',
-        brightindex:'./brightindex'
+        brightindex:'./brightindex',
+        jdcenter:'./jdcenter',
+        geelycenter:'./geelycenter',
+        test:'./test',
     }
 });
 
@@ -46,6 +49,32 @@ bases.plugins.push(new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'bannerindex.html'), // 源模板文件
         filename: 'bannerindex.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
         chunks: ["bannerindex"]
+    })
+);
+
+
+bases.plugins.push(new HtmlWebpackPlugin({
+        title: '游戏中心',
+        template: path.resolve(__dirname, 'jdcenter.html'), // 源模板文件
+        filename: 'jdcenter.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
+        chunks: ["jdcenter"]
+    })
+);
+
+
+bases.plugins.push(new HtmlWebpackPlugin({
+        title: '游戏中心',
+        template: path.resolve(__dirname, 'geelycenter.html'), // 源模板文件
+        filename: 'geelycenter.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
+        chunks: ["geelycenter"]
+    })
+);
+
+bases.plugins.push(new HtmlWebpackPlugin({
+        title: '游戏中心',
+        template: path.resolve(__dirname, 'test.html'), // 源模板文件
+        filename: 'test.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
+        chunks: ["test"]
     })
 );
 // 进行图像文件拷贝

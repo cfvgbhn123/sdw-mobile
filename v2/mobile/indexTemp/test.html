@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name='title' content='游戏中心'/>
+    <meta name='description' content='' class='sDesc'/>
+    <title>游戏中心</title>
+
+    <style>
+        .drop-item {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-size: 100%;
+            z-index: 9999999999;
+        }
+
+        #drop-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999999999;
+            display: block;
+        }
+
+    </style>
+    <script>
+        localStorage.SDW_USER_DATA__Store_CHEN_ = '{"timestamp":1553830220481,"data":{"avatar":"http://thirdqq.qlogo.cn/g?b=oidb&k=hjIldcRg25o3muaaewqia5Q&s=100","fl":3,"nick":"朱家2小姐","otoken":"b3f3fb907fab470f9ba0da924df4eb5b","sex":2,"uid":1820046540,"day":1,"month":1,"result":1,"secheme":1553830220479,"year":2017,"token":"36c543ffe40224681bdfb76812413030"}}';
+    </script>
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+    <link rel="stylesheet" href="https://www.shandw.com/mobile/scss/swiper.min.css">
+    <script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>
+    <script>
+        (function () {
+            if (SDW_WEB.onWeiXin) {
+                document.write('<script src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"><\/script>');
+            }
+        })()
+    </script>
+<link href="styles.css?0b83" rel="stylesheet"></head>
+
+
+<script>
+    (function () {
+        // if (SDW_WEB.onPC) {
+        //     location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
+        // }
+        // 判断烟草的地址的合法性
+        if (SDW_WEB.channel === '10041') {
+            location.href = SDW_WEB.MOBILE_ROOT + 'cigarette/?channel=10041';
+        }
+        if (SDW_WEB.channel === '10059') {
+            location.href = 'http://www.shandw.com/activities/redpacket/index.html?channel=10059';
+        }
+        // 通用的外部获取方法
+        SDW_WEB.checkUserInfo(true);
+
+        if(SDW_WEB.queryParam['theme'] == 'bright'){
+            SDW_WEB.readParam('sdw_simple', '2');
+        }else{
+            SDW_WEB.readParam('sdw_simple', '1');
+        }
+        // 默认加上简易版的字段
+
+    })();
+</script>
+
+<body>
+
+<div id="app" v-cloak style="padding-bottom: 0;padding-top: 1.2rem;">
+    <!--活动浮窗按钮-->
+    <div id="my-menu"
+         style="z-index: 99999999"
+         v-if="activity.state">
+        <div id="menu-btn">
+            <div class="sdw-icon-ani" :data-state="activity.state">
+                <!--<div class="timer-text" v-if="activity.state === 'timer'">{{eggInfo.timerMessage}}</div>-->
+            </div>
+        </div>
+    </div>
+    <!--推荐资源位 或者 我最近玩过的-->
+
+    <!--返回顶部-->
+    <!--<div class="go-top" @click.stop.self="gotoTopFn()" style="display: none" id="goBackBtn"></div>-->
+    <div class="recent-game" v-if="recentList.length && theme == 'bright'">
+        <div class="recent-left">
+            <b>最近在玩</b>
+            <p class="all-txt" @click="goMorePage">查看全部 <i class="ico-more"></i></p>
+        </div>
+        <div class="recent-right" v-if="recentList.length">
+            <img class="item" v-for="item in recentList" :src="item.icon"  @click="checkGameSate('play',item.id)"/>
+        </div>
+    </div>
+    <!--轮播底部的模糊图片-->
+    <img id="topBanner" style="visibility: hidden">
+
+    <!--轮播  广告 -->
+    <div class="banner-conatiner" id="banners">
+        <div class="swiper-wrapper" id="bannercont"></div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="recent-view" v-if="recentList.length && theme == 'dark'">
+        <recent-game :recommend-list="recentList"></recent-game>
+    </div>
+    <!--列表导航-->
+    <div class="nav-list-container">
+        <div class="nav-item "
+             @click="switchNav(item)"
+             :class="item.current ? 'nav-item-select' : ''"
+             v-for="item in navList">{{item.title}}
+        </div>
+    </div>
+
+    <!--列表的内容-->
+    <div class="g-long-list" v-for="items in navList" v-show="items.current">
+        <long-game-item :game-item="item"
+                        v-for="item in items.list"
+                        v-on:tap-game="checkGameSate"></long-game-item>
+    </div>
+
+    <!--加载更多的提示-->
+    <!--<loading-view v-show="pageHasLoading"></loading-view>-->
+
+</div>
+
+<script type="text/javascript" src="js/test.min.js?0b83"></script></body>
+<script>
+    if(SDW_WEB.URLS.queryUrl()['theme']  == 'bright'){
+        document.body.className = 'bright-theme' ;
+    }
+</script>
+
+</html>

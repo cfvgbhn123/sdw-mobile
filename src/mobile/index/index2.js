@@ -7,12 +7,14 @@
 
 // var path = require('path');
 
-var ActivityConfig = require('./config');
+// var ActivityConfig = require('./config');
+var ActivityConfig = require('../libs/config');
 
 require('./index2.scss');
 require('../../components/initcss.scss');
 var _protocol_ = location.protocol;
 var gameItem = require('../../components/mobile/game-item2/game-item2.vue');
+// var identifyContainer = require('../../components/identify/identify.vue');
 var sdwFooter = require('../../components/mobile/main-footer/main-footer-n.vue');
 var loadingView = require('../../components/mobile/loading/loading.vue');
 var bindPhone = require('../../components/mobile/bind-phone/bind-phone.vue');
@@ -223,7 +225,8 @@ function initToolIcon() {
             var links = ActivityConfig.activityPage+'?channel=' + SDW_WEB.channel;
 
             if(ActivityConfig.openState == 1){
-                dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
+                dialog.show('ok','敬请期待<br>'+ActivityConfig.activityName+'活动将于'+ActivityConfig.startTime[1]+'月'+ActivityConfig.startTime[2]+'号开启哦~！',1);
+               // dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
                 return ;
             }
 
@@ -1713,6 +1716,7 @@ var _indexView = new Vue({
         longGameItem: longGameItem,
         smallGameItem: smallGameItem,
         serverGameItem: serverGameItem,
+        // identifyContainer:identifyContainer,
         // qiandao: qiandao,
     }, watch: {
         hasShowMoreNav: function (_nV, oV) {

@@ -2,9 +2,7 @@
 <template>
 
 
-    <div class="server-item-container"
-         @mouseover="onMouseOver()"
-    >
+    <div class="server-item-container" @mouseover="onMouseOver()">
 
         <div class="server-cont-normal" v-show="!tap">
             <div class="server-g-name ellipsis">{{gameItem.name}}</div>
@@ -14,17 +12,15 @@
 
 
         <div class="server-select" v-show="tap">
-            <img :src="gameItem.icon" class="s-b-icon">
+            <img :src="gameItem.icon" class="s-b-icon" @click.stop="authToGame(gameItem)">
 
-            <div class="server-g-name">{{gameItem.name}}</div>
+            <div class="server-g-name" @click.stop="gotoDetail(gameItem)">{{gameItem.name}}</div>
             <div class="server-g-info">{{gameItem.sName}}</div>
 
             <div class="server-time">{{gameItem.serverDateStr}}</div>
 
             <a class="start-game-btn"
-               :href="gameUrl"
-               @click.stop="checkOpenGame(gameItem)"
-               target="_blank">开玩</a>
+               @click.stop="authToGame(gameItem)">开玩</a>
         </div>
 
     </div>
@@ -34,7 +30,7 @@
 <script>
 
     var CheckOpenGame = require('../js/CheckOpenGame.js');
-
+    import Fn from '../../index/js/Fn';
     export default {
         name: 'server-game-item',
         data: function () {
@@ -43,14 +39,19 @@
             }
         },
 
-        props: ['gameItem', 'tap'],
+        props: ['gameItem', 'tap', 'games-modal'],
         methods: {
+            // 跳转详情页采用相对路径处理
+            gotoDetail: function (item) {
+                this.$emit('go-detail', item.id)
+            },
             onMouseOver: function () {
                 this.$emit('on-mouse-over', 'serverGameListData', this.gameItem);
             },
-            checkOpenGame: function (item) {
-                CheckOpenGame.checkOpenUrl(item);
-            }
+            checkOpenGame: Fn.checkOpenGame,
+            authToGame: Fn.authToGame,
+            getQuery: Fn.getQuery,
+            findGame: Fn.findGame
         },
 
         computed: {
@@ -61,8 +62,6 @@
         }
     }
 </script>
-
-
 <style lang="sass">
     @import "./server-game-item.scss";
 </style>

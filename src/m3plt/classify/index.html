@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>闪电玩H5游戏中心_电魂旗下H5游戏平台</title>
+    <meta name="keywords" content="h5游戏,在线游戏,小游戏,轻游戏,手机游戏,微信送话费,电魂,闪电玩h5">
+    <meta name="description" content="闪电玩是中国领先的h5小游戏专业网站，免费提供上百款多人小游戏和单机游戏，传奇世界、决战沙城、大天使之剑、火影忍者、口袋妖怪、一代宗师、楚乔传、侠客行（降龙十八掌）、仙剑客栈、十里桃花白浅传等类型繁多的精品h5游戏。">
     <meta name='viewport'
           content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
     <meta name='apple-mobile-web-app-capable' content='yes'>
@@ -9,13 +12,11 @@
     <meta name='apple-mobile-web-app-title' content='index'>
     <meta content='telephone=no' name='format-detection'/>
     <meta content='email=no' name='format-detection'/>
-    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
-    <meta name='description' content='description'/>
-    <title><%=htmlWebpackPlugin.options.title%></title>
     <script src="https://www.shandw.com/libs/vue.js"></script>
     <script src="https://www.shandw.com/pc/js/libs/q.min.js"></script>
     <script>
         document.write('<script src="https://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="https://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
     </script>
 
     <script>
@@ -37,16 +38,29 @@
     </script>
 </head>
 <body>
-
-<div id="app" v-cloak class="container">
-
+<div id="app">
+<div id="app-container" v-cloak :class="['container',m3pltC, m3pltCGame]">
+    <div v-if="!onM3plt && !onM3pltGame">
+        <!-- 顶部下载 -->
+        <top-download v-if="downloadApp" @close-dialog="closeDialog"></top-download>
+        <!-- 联系客服 -->
+        <div class="contact-container" :style="contactContainer"  @click="choseConContainer">
+            <top-contact @close-contact="closeContact"></top-contact>
+        </div>
+        <!-- 顶部栏 -->
+        <div class="top-info">
+            <home-page-top :usr-info="usrInfo" @contact-serv="showConDialog" @download-dialog="showDownloadDialog" @gift-page="showGiftPage" @login-dialog="getDialog"></home-page-top>
+        </div>
+        <!-- 登录 -->
+        <top-login :style="loginShow"  @on-login="onLogin" :app="APP" @login-close="loginClose"></top-login>
+    </div>
     <alert-game :url="currentGameUrl" v-on:hide-alert-game="hideMask"></alert-game>
 
     <!--左边的内容-->
-    <div class="left-container">
+    <div :class="['left-container', m3pltL, m3pltLGame]">
 
         <!--面包导航栏-->
-        <div class="nav-list-container">
+        <div class="nav-list-container" v-if="onM3plt||onM3pltGame">
 
             <div class="back-btn" onclick="history.back()">返回</div>
 
@@ -62,37 +76,39 @@
                     游戏
                 </div>
             </div>
+        </div>
+        <div v-if="!searchGameListData.length && firstSearchFlg" class="no-res">
+            没有找到您要搜索的游戏
+        </div>
+        <template v-if="searchGameListData.length && firstSearchFlg">
+            <div class="hot-game-list">
+                <!--搜索到的游戏-->
+                <l-game-item
+                        :from-m3plt="fromM3plt"
+                        :on-m3plt="onM3plt"
+                        :on-m3pltGame="onM3pltGame"
+                        :game-item="item"
+                        :games-modal="gamesModal"
+                        i-type="star"
+                        @login-dialog="getDialog"
+                        @go-detail="gotoDetail"
+                        v-for="item in searchGameListData"
+                ></l-game-item>
 
-            <div v-if="!searchGameListData.length && firstSearchFlg" class="no-res">
-                没有找到您要搜索的游戏
             </div>
 
-            <template v-if="searchGameListData.length && firstSearchFlg">
-                <div class="hot-game-list">
-                    <!--搜索到的游戏-->
-                    <l-game-item
-                            :game-item="item"
-                            i-type="star"
-                            v-for="item in searchGameListData"
-                    ></l-game-item>
-
-                </div>
-
-                <div class="get-more-gift"
-                     v-if="showMoreBtn"
-                     @click.stop="loadMoreSearchGame()"
-                >点击加载更多游戏
-                </div>
-            </template>
-
-        </div>
-
+            <div class="get-more-gift"
+                 v-if="showMoreBtn"
+                 @click.stop="loadMoreSearchGame()"
+            >点击加载更多游戏
+            </div>
+        </template>
     </div>
 
     <!--右边的内容-->
-    <div class="right-container"
-         :style="{right:rightFixed+'px'}">
-
+    <div :class="['right-container', m3pltR, m3pltRGame]"
+         :style="{right:rightFixed+'px', left: m3plRrightFixed}">
+        
         <search-input
                 v-on:search-btn-fn="searchBtnFn"
         ></search-input>
@@ -127,11 +143,27 @@
 
 
     </div>
-
+    <left-part :info = "gamesModal" :usr-info="usrInfo" @login-dialog="getDialog"></left-part>
+    <right-part :info = "gamesModal" v-show="!gamesModal.isFull && !onM3plt"></right-part>
+    <full-part :info="gamesModal" v-show="gamesModal.isFull"></full-part>
+    <!-- 玩游戏界面礼包码弹窗 -->
+    <gift-alert></gift-alert>
 </div>
-
-
+<!-- <div class="my_footer mft_black">
+    <div class="mft_wrap">
+          <div class="mft_left">
+            <a href="javascript:void(0)" target="_blank" class="mft_dhLogo"></a>
+            <span class="mft_wenLogo"></span>
+          </div>
+          <div class="mft_right">
+              <p>杭州电魂网络科技股份有限公司版权所有丨2008-2017 Electronic Soul - All rights reserved</p>
+              <p>《增值电信业务经营许可证》编号：浙B2-20090296</p>
+              <p>网路文化经营许可证编号：浙网文【2012】0804-079号丨互联网出版许可证编号：新出网证（浙）45号</p>
+              <p>公司地址：杭州市滨江区滨安路435号电魂大厦</p>
+          </div>
+      </div>
+</div> -->
+<footer-item></footer-item>
+</div>
 </body>
-
-
 </html>

@@ -1,0 +1,298 @@
+/*
+	dhpay.css
+	@version 1.2
+	@date 2016-12-20
+	@author baosheng
+	v1.1 修复2个不显示bug
+    v1.2 调整二维码显示位置
+*/
+* {
+    margin: 0;
+    padding: 0
+}
+
+/*body{ font:12px/22px Microsoft YaHei,Arial, Helvetica, sans-serif;color:#333;-webkit-text-size-adjust:none;}*/
+li {
+    list-style: none
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+
+img {
+    border: 0px;
+    vertical-align: middle;
+}
+
+input {
+    vertical-align: middle;
+}
+
+form {
+    display: inline-block;
+    width: 100%;
+}
+
+s {
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+b {
+    vertical-align: middle;
+}
+
+em {
+    font-style: normal;
+}
+
+table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+textarea {
+    overflow-y: auto;
+    overflow-x: hidden;
+    outline-style: none;
+    outline-width: initial;
+    outline-color: initial;
+    resize: none
+}
+
+.clear {
+    clear: both;
+}
+
+/*clear clearfix*/
+.clearfix:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+label {
+    display: inline-block;
+}
+
+.pay-model-mask {
+    position: absolute;
+    display: none;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#7f000000", EndColorStr="#7f000000");
+    zoom: 1;
+}
+
+.pay-model-box {
+    width: 12rem;
+    height: 13rem;
+    background: #fff;
+    border-radius: 0.25rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -6.5rem;
+    margin-left: -6rem;
+    overflow: hidden;
+    /*transform: scale(2);*/
+}
+
+.pay-model-box section {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.pay-model-box.small {
+    height: 5rem;
+}
+
+.pay-model-hd {
+    position: relative;
+    height: 6rem;
+    line-height: 1.4rem;
+    background: #fea531;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    color: #fff;
+}
+
+.pay-model-hd p {
+    height: 3.6rem;
+    line-height: 5rem;
+    font-size: 2.2rem;
+    text-align: center;
+}
+
+.pay-model-hd span {
+    display: block;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.pay-model-wayer {
+    position: relative;
+    width: 11.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    font-size: 0.6rem;
+    color: #333;
+    text-align: center;
+    border-bottom: 0.005rem solid #ddd;
+    margin: 0 auto;
+}
+
+.pay-wayer-tit {
+    color: #fe9131;
+    font-size: 0.65rem;
+    text-align: center;
+    height: 2.2rem;
+    line-height: 2rem;
+}
+
+.pay-model-hd .closepaybtn {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #fff;
+    position: absolute;
+    top: 0.1rem;
+    right: 0.1rem;
+    font-size: 0.8rem;
+}
+
+.pay-model-wayer .closepaybtn {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #c3c3c3;
+    position: absolute;
+    top: 0.25rem;
+    right: 0;
+    font-size: 0.8rem;
+}
+
+.pay-model-bd {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.payway-list {
+    overflow: hidden;
+    width: 120%;
+}
+
+.payway-list li {
+    display: none;
+    width: 5.9rem;
+    height: 6rem;
+    float: left;
+}
+
+.payway-list li.center {
+    float: none;
+    margin: 0 auto;
+    margin-left: 3.05rem;
+}
+
+.payway-list li a {
+    display: block;
+    width: 3.2rem;
+    padding-top: 0.2rem;
+    height: 3rem;
+    margin: 0 auto;
+    margin-top: 1.2rem;
+}
+
+.payway-list li img {
+    display: block;
+    margin: 0 auto;
+    width: 2.55rem;
+    height: 2.55rem;
+}
+
+.payway-list li span {
+    display: block;
+    text-align: center;
+    font-size: 0.6rem;
+    color: #9b9b9b;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    font-family: "Microsoft YaHei";
+}
+
+.codecon img {
+    display: block;
+    width: 7.4rem;
+    height: 7.4rem;
+    margin: 0 auto;
+}
+
+.pay-model-tip span {
+    float: left;
+    height: 1.4rem;
+    line-height: 1.4rem;
+    font-size: 0.6rem;
+    text-indent: 0.5rem;
+}
+
+.pay-model-tip a {
+    float: right;
+    width: 1.4rem;
+    height: 1.4rem;
+    line-height: 1.4rem;
+    text-align: center;
+    color: #333;
+    font-size: 0.7rem;
+}
+
+#CodeContent {
+    width: 11.5rem;
+    height: 8.4rem;
+    border-bottom: 0.005rem solid #ddd;
+    margin: 0 auto;
+}
+
+.container1 > div, .container2 > div, .container3 > div {
+    width: 22px;
+    height: 22px;
+    background-color: #ececeb;
+    border-radius: 100%;
+    position: absolute;
+    -webkit-animation: bouncedelay 1.2s infinite ease-in-out;
+    animation: bouncedelay 1.2s infinite ease-in-out;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both
+}
+
+.spinner .spinner-container {
+    position: absolute;
+    width: 100%;
+    height: 100%
+}

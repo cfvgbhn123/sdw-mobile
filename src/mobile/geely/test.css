@@ -1,0 +1,11 @@
+@svg square {
+    @rect {
+        fill: var(--color, black);
+        width: var(--size);
+        height: var(--size);
+    }
+}
+
+.example {
+    background: svg(square param(--color green) param(--size 100%)) center / cover;
+}

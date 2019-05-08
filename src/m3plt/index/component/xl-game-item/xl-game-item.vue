@@ -38,7 +38,7 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
             <img :src="gameItem.bIcon" alt="">
 
 
-            <div class="q-code-border" v-show="showQCode">
+            <div :class="['q-code-border', {'m3plt-code-border': onM3plt || onM3pltGame}, {'m3plt-code-border': fromM3plt}]" v-show="showQCode">
 
                 <div class="q-code-flash"></div>
 
@@ -92,7 +92,7 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
                 hasQCode: null,
             }
         },
-        props: ['gameItem','gamesModal'],
+        props: ['gameItem', 'gamesModal', 'on-m3plt', 'from-m3plt', 'on-m3pltGame'],
         methods: {
             // 跳转详情页采用相对路径处理
             gotoDetail: function (item) {
@@ -107,8 +107,8 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
                     var dom = self.$refs.myCode;
                     var qcode = new QRCode(dom, {
-                        width: 75,
-                        height: 75
+                        width: 94,
+                        height: 92
                     });
 
                     var src = CheckOpenGame.createQCode(self.gameItem.id);

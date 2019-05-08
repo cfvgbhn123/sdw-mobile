@@ -12,7 +12,8 @@ var loadingView = require('../../components/mobile/loading/loading.vue');
 var longGameItem = require('../../components/mobile/long-game-item/long-game-item.vue');
 var WindowScroll = require('../../libs/WindowScroll');
 var recentGame = require('./recent-game/recent-game.vue');
-var ActivityConfig = require('./config');
+// var ActivityConfig = require('./config');
+var ActivityConfig = require('../libs/config');
 // 首页活动悬浮按钮
 if (ActivityConfig.state) {
     require('../game/tool-icon.scss');
@@ -78,7 +79,8 @@ function initToolIcon() {
 
             var links = ActivityConfig.activityPage+'?channel=' + SDW_WEB.channel;
             if(ActivityConfig.openState == 1){
-                dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
+                dialog.show('ok','敬请期待<br>'+ActivityConfig.activityName+'活动将于'+ActivityConfig.startTime[1]+'月'+ActivityConfig.startTime[2]+'号开启哦~！',1);
+                //dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
                 return ;
             }
 
@@ -114,6 +116,7 @@ function initToolIcon() {
 
 var indexData = {
     activity :ActivityConfig,
+    theme:SDW_WEB.URLS.queryUrl()['theme'] == 'bright'?'bright':'dark',
     allGameList: [],
     recentList:[],
     pageHasLoading: false,
@@ -147,7 +150,14 @@ var indexData = {
     ],
     currentNav: null,
 };
+var linkParams = SDW_WEB.URLS.queryUrl();
+if( linkParams && linkParams['initTab'] == 'freegame'){
+    var  temp = indexData.navList[0];
+    indexData.navList[0] = indexData.navList[1];
+    indexData.navList[1] = temp;
+    //var temp = indexData.navList[0];
 
+}
 
 function loadImg(arr, not) {
     for (var i = 0, len = arr.length; i < len; i++) {
@@ -248,7 +258,18 @@ var indexMethods = {
         document.querySelector('#bannercont').innerHTML = allInners;
         return banner;
     },
+    goMorePage:function () {
+        var targetUrl = SDW_PATH.MOBILE_ROOT + 'more/?channel=' + SDW_WEB.channel;
 
+        SDW_WEB.openNewWindow({
+            link: targetUrl,
+            isFullScreen: false,
+            showMoreBtn: false,
+            title: ''
+        });
+
+
+    },
     loadMainData: function () {
 
         var self = this;
@@ -263,7 +284,7 @@ var indexMethods = {
 
         SDW_WEB.getAjaxData(postUri, function (data) {
             if(data.recent){
-                self.recentList = data.recent.splice(0, 4);
+                self.recentList = data.recent.splice(0, 3);
             }
 
             self.bannerList = self.createBanner(data);
@@ -398,6 +419,7 @@ var _indexView = new Vue({
 SDW_WEB.getSdwUserData().then(function (userData) {
     _indexView.loadMainData();
     _indexView.switchNav(indexData.navList[0]);
+
 }, function (msg) {
     // 获取闪电玩用户数据失败
     SDW_WEB.USER_INFO = {};

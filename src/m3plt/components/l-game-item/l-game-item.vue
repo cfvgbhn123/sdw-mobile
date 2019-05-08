@@ -29,14 +29,17 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
         <div class="l-g-cover">
 
             <!--开始游戏-->
-            <a :href="gameUrl"
+            <!-- <a :href="gameUrl"
                @click.stop="checkOpenGame(gameItem)"
                target="_blank"
-               class="start-game-cover"></a>
-            <img :src="gameItem.bIcon" alt="">
+               class="start-game-cover"></a> -->
+             <div
+               @click.stop="authToGame(gameItem)"
 
+               class="start-game-cover"></div>
+            <img :src="gameItem.bIcon" :alt="gameItem.name">
 
-            <div class="q-code-border" v-show="showQCode">
+            <div :class="['q-code-border', {'m3plt-code-border': onM3plt || onM3pltGame}, {'m3plt-code-border':fromM3plt}]" v-show="showQCode">
                 <div class="q-code-flash"></div>
                 <div class="q-code-cont" ref="myCode"></div>
             </div>
@@ -45,10 +48,13 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
         <div class="l-g-info">
 
-            <a class="l-g-i-title"
+            <!-- <a class="l-g-i-title"
                :href="gameUrl"
                @click.stop="checkOpenGame(gameItem)"
                target="_blank">
+                {{gameItem.name}}
+            </a> -->
+             <a class="l-g-i-title" @click.stop="gotoDetail(gameItem)">
                 {{gameItem.name}}
             </a>
 
@@ -74,9 +80,10 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 </template>
 
 <script>
-
+    var $ = require('../../index/libs/jquery-3.1.0.min');
     var CheckOpenGame = require('../js/CheckOpenGame.js');
-
+    import Fn from '../../index/js/Fn';
+    import bus from '../../index/js/eventBus';
     export default {
         name: 'l-game-item',
         data: function () {
@@ -86,8 +93,12 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
                 hasQCode: null,
             }
         },
-        props: ['gameItem'],
+       props: ['gameItem','gamesModal', 'on-m3plt', 'from-m3plt', 'on-m3pltGame'],
         methods: {
+            // 跳转详情页采用相对路径处理
+            gotoDetail: function (item) {
+                this.$emit('go-detail', item.id);
+            },
             qCodeOver: function () {
 
                 var self = this;
@@ -97,12 +108,13 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
                     var dom = self.$refs.myCode;
                     var qcode = new QRCode(dom, {
-                        width: 75,
-                        height: 75
+                        width: 94,
+                        height: 92
                     });
 
                     // 梦平台二维码扫一扫，只能在口袋中打开
-                    var src = CheckOpenGame.createQCode(self.gameItem.gid);
+                    // var src = CheckOpenGame.createQCode(self.gameItem.gid);
+                    var src = CheckOpenGame.createQCode(self.gameItem.id);
                     qcode.makeCode(src);
                     self.hasQCode = true;
                 }
@@ -111,9 +123,10 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
             qCodeOut: function () {
                 this.showQCode = false;
             },
-            checkOpenGame: function (item) {
-                CheckOpenGame.checkOpenUrl(item);
-            }
+            checkOpenGame: Fn.checkOpenGame,
+            authToGame: Fn.authToGame,
+            getQuery: Fn.getQuery,
+            findGame: Fn.findGame
         },
         computed: {
             /**
@@ -164,6 +177,6 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
     @import "./game-item.scss";
 </style>

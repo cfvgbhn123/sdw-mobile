@@ -102,7 +102,7 @@
         document.write('<script src="js/initGame.min.js?m=' + (+new Date()) + '"><\/script>');
     </script>
 </head>
-<script src="http://www.shandw.com/m/libs/clipboard.min.js"></script>
+<!--<script src="http://www.shandw.com/m/libs/clipboard.min.js"></script>-->
 <script src='http://www.shandw.com/libs/js/vue.js'></script>
 <script src='http://www.shandw.com/libs/js/zepto.min.js'></script>
 <link rel="stylesheet" href="https://www.shandw.com/mobile/scss/swiper.min.css">
@@ -133,7 +133,10 @@
 
 <div class="loading-container">
     <!--此文案据说要配置定义-->
-    <div class="loading-text">闪电小子正在努力加载中...</div>
+    <!--<div class="loading-text">闪电小子正在努力加载中...</div>-->
+    <div class="loading-txt">
+        <div class="loader"><span></span><span></span><span></span><span></span></div>
+    </div>
 </div>
 
 <script>
@@ -144,17 +147,19 @@
         '11909':'tongcheng',
         '11927':'tongcheng',
         '11950':'tongcheng',
+        '12192':'tongcheng',
         '11906':'bus',
         '10890':'wyStar',
     };
     var loadingCtl = document.querySelector('.loading-container');
+    var loadingTtx = document.querySelector('.loading-txt');
     // 在手游环境下，不展示闪电玩的logo
     if (SDW_WEB.hasH5NativePay || SDW_WEB.readParam('sdw_ld')) {
         loadingCtl.style.display = 'none';
     }
     var ActivityConfig = {
-        startTime: [2019, 2, 2],
-        endTime: [2019, 2, 7],
+        startTime: [2019, 4, 4],
+        endTime: [2019, 4, 9],
         toolIconType:'newyear',
         checkActivityState:function () {
             // 活动屏蔽字段
@@ -195,8 +200,9 @@
     };
     var state = ActivityConfig.checkActivityState();
     ActivityConfig.state = state ? ActivityConfig.toolIconType+'-'+state : false;
+
     if(state == 1){
-        document.querySelector('.loading-text').style.display = 'none';
+        document.querySelector('.loading-txt').style.display = 'none';
         loadingCtl.classList.add('loading-'+ActivityConfig.state);
         var date = new Date(),m = date.getMonth() +1, day = date.getDate();
         var imgName = ''+date.getFullYear()+''+(m>9?m:0+''+m)+''+ (day>9?day:0+''+day);
@@ -205,19 +211,27 @@
         img.src = uri;
         loadingCtl.appendChild(img);
     }else if(state == 2){
+        document.querySelector('.loading-txt').style.display = 'none';
         loadingCtl.classList.add('loading-'+ActivityConfig.state);
-        document.querySelector('.loading-text').style.display = 'none';
         var img = new Image();
         img.src = 'http://dhurl.cn/z2UBRj';
         loadingCtl.appendChild(img);
     }else{
-
         var channel = SDW_WEB.queryParam['channel'];
+        //alert(JSON.stringify(SDW_WEB.USER_INFO));
         if(specialChannel[channel]){
             loadingCtl.classList.add('loading-'+specialChannel[channel]);
-            document.querySelector('.loading-text').style.display = 'none';
         }else{
-            loadingCtl.classList.add('loading-default');
+            var simple = SDW_WEB.readParam('sdw_simple');
+            if( simple == 2 || simple == 3 || simple == 4 ){
+                loadingTtx.classList.add('loading-txt-bright');
+                loadingCtl.classList.add('loading-bright');
+            }else{
+               // document.querySelector('.loading-text').style.display = 'block';
+                loadingTtx.classList.add('loading-txt-dark');
+                loadingCtl.classList.add('loading-default');
+            }
+
         }
     }
     if (SDW_WEB.width > SDW_WEB.height) {
@@ -237,8 +251,7 @@
             <div class="pay-model-bd">
                 <div class="pay-model-wayer">支付<a href="javascript:void(0);" class="closepaybtn">✕</a></div>
                 <div id="payWayerTit" class="pay-wayer-tit">长按二维码识别</div>
-                <div class="codecon" id="CodeContent"><img
-                        src="">
+                <div class="codecon" id="CodeContent"><img src="">
                 </div>
             </div>
         </section>
@@ -320,7 +333,6 @@
         <div class="activity-info">
             <div class="title">{{activity.title}}</div>
             <div class="activity-msg" v-html="activity.desc"></div>
-            <!--<div class="activity-tip">活动主入口位于闪电玩平台首页</div>-->
             <div class="btn-list">
                 <div class="sai-btn" data-type="cancel" @click.stop="gotoactivityPage()">继续游戏</div>
                 <div class="sai-btn" data-type="ok" @click.stop="gotoactivityPage(1)">立即前往</div>
@@ -541,15 +553,17 @@
                 <div id="my-top-cont">
 
                     <img :src="myAvatar" class="my-icon">
-
+                    <div class="identify-btn" @click="showIdContainer=true"  v-if="!hasIdInfo"></div>
                     <div class="my-nick" :style="{top:myNickTop + 'rem'}">{{myNick}}</div>
 
-                    <div class="my-golds" v-if="showMyGolds">
-                        {{transformQuantity(myGold)}}
-                        <img src="http://www.shandw.com/libs/fuchuang/images/jinbi-icon.png" class="jinbi-icon">
-                        <img src="http://www.shandw.com/libs/fuchuang/images/jinbi-line.png" class="jinbi-line">
+                    <!--<div class="my-golds" v-if="showMyGolds">-->
+                        <!--{{transformQuantity(myGold)}}-->
+                        <!--<img src="http://www.shandw.com/libs/fuchuang/images/jinbi-icon.png" class="jinbi-icon">-->
+                        <!--<img src="http://www.shandw.com/libs/fuchuang/images/jinbi-line.png" class="jinbi-line">-->
+                    <!--</div>-->
+                    <div class="my-id">
+                        {{myUid}}<button  data-clipboard-text="" class="clip-uid" >复制</button>
                     </div>
-
                     <div class="btn-container">
                         <!--直接跳转到链接-->
                         <div id="sc-cont" @click.self="showEwmFn(1)" v-if="showCollect">客服/收藏</div>
@@ -562,6 +576,31 @@
 
                 <div id="clip-codes" data-clipboard-text="code"></div>
 
+                <!--身份证号绑定-->
+                <div class="bg-identify" v-if="!hasIdInfo" v-show="showIdContainer">
+                <!--<div class="bg-identify"  v-show="showIdContainer">-->
+                   <div class="identify-container" >
+                            <div class="ico_close" @click = "showIdContainer = false"></div>
+                            <div class="title">实名认证</div>
+                            <div class="ipt-container">
+                                <input type="text" class="ipt ipt-id" placeholder="身份证号" v-model="id">
+                                <input type="text" class="ipt ipt-name" placeholder="真实姓名" v-model="name">
+                                <div class="tip-error" >
+                                    <p v-if="errorTip"><i></i>{{errorTip}}</p>
+                                </div>
+                                <div class="long-btn" @click="identify()">提交认证</div>
+                            </div>
+                            <div class="shuoming">
+                                <a href="http://inews.shandw.com/a8fef536369e4eabb3091af5b77e444a.html"><i></i>防沉迷系统说明</a>
+                            </div>
+                            <p class="txt-tip">
+                                *本平台承诺绝不对外公开、透露或编辑次信息。
+                            </p>
+                            <p class="txt-tip">
+                                *身份信息只能提交一次，不可修改，慎重填写；
+                            </p>
+                        </div>
+                </div>
 
                 <!--活动单页-->
                 <div class="nav-cont-page warp"
@@ -578,6 +617,10 @@
                     <!--<iframe src="" frameborder="0" id="activity-iframe" style="display: block;width: 100%"></iframe>-->
                 </div>
 
+                <!--<div class="identify-page" v-if="showIdentify">-->
+                    <!--&lt;!&ndash;<identify-container></identify-container>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<identify-container></identify-container>&ndash;&gt;-->
+                <!--</div>-->
                 <!--签到内嵌页面-->
                 <div class="nav-cont-page"
                      :style="{height:pagesHeight+'px'}"
@@ -588,10 +631,19 @@
                             <div class="tips-info" v-if="!myMoney">
                                 老铁，持续签到即可获得红包哦！
                             </div>
-                            <div class="tips-info" v-if="myMoney">
+                            <div class="tips-info" v-if="showMyGolds" >
+                                我的闪电币总额<span class="money">{{transformQuantity(myGold)}}</span>
+                            </div>
+                            <div class="tips-info" v-if="myMoney" style="margin-top:0.25rem ">
                                 我的红包金额<span class="money">{{myMoney}}元</span>
                                 <span class="tixian" v-tap="goCUrl()">提现</span>
                             </div>
+
+                            <!--<div class="my-golds" v-if="showMyGolds">-->
+                            <!--{{transformQuantity(myGold)}}-->
+                            <!--<img src="http://www.shandw.com/libs/fuchuang/images/jinbi-icon.png" class="jinbi-icon">-->
+                            <!--<img src="http://www.shandw.com/libs/fuchuang/images/jinbi-line.png" class="jinbi-line">-->
+                            <!--</div>-->
 
                             <!--签到奖励的列表-->
 
@@ -1143,4 +1195,3 @@
 
 
 </html>
-

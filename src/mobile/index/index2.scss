@@ -7,6 +7,10 @@
 @function topx($px) {
   @return $px / 32px * 16px;
 }
+$mainBackground: #2b323d;
+
+//$mainBackground: #2b323d;
+//$brightBackground:#fff;
 
 [v-cloak] {
   display: none;

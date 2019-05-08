@@ -39,6 +39,12 @@ var methods = {
             link: 'https://itunes.apple.com/app/shan-dian-wan/id1177288706'
         })
     },
+    identify:function () {
+        location.href = 'http://www.shandw.com/m/myset/identify.html';
+    },
+    bindPhone:function () {
+        location.href = 'http://www.shandw.com/m/myset/setPhone.html';
+    },
     clearAppCache: function () {
         if (SDW_WEB.onShandw) {
             SDW_WEB.sdw.clearAPPCache();

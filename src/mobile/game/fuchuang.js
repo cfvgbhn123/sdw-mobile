@@ -42,11 +42,12 @@
 
 // var ChatRoom = require('./ChatRoom');
 // var Barrage = require('./Barrage-canvas');
-var ActivityConfig = require('../index/config.js');
+// var ActivityConfig = require('../index/config.js');
+var ActivityConfig = require('../libs/config');
 var DragTouch = require('./DragTouch');
 var TransServerDate = require('./libs/TransServerDate');
-
-
+//var identifyContainer = require('../../components/identify/identify.vue');
+//console.log(identifyContainer);
 var toolWindow = {};
 require('../../components/mobile/login/login.scss');
 window.touch = null;
@@ -55,17 +56,25 @@ window.NOW_TIME = +new Date();
 window.SERVER_TIME = null;
 var refreshTime = 0;
 
-var clipboard, clipboard2, $giftBgContainer = document.querySelector('.gift-bg-container'),
-    $gameCode = document.querySelector('.game-code');
-$gotoGameBtn = document.querySelector('.goto-game-btn');
+var $giftBgContainer = document.querySelector('.gift-bg-container'),
+    $gameCode = document.querySelector('.game-code'),
+    $gotoGameBtn = document.querySelector('.goto-game-btn');
 
+var Clipboard = require('./libs/clipboard.min');
 
 // 初始化点击的
 function initBtnCode() {
     // 初始化
+    var clipboard, clipboard2,clipboard2;
+
     clipboard = new Clipboard('.game-code');
     clipboard2 = new Clipboard('.goto-game-btn');
-
+    clipboard3 = new Clipboard('.clip-uid');
+   var test = document.querySelector('.clip-uid');
+   test.dataset.clipboardText = SDW_WEB.USER_INFO.uid;
+   //  test.onclick =function () {
+   //      dialog.show('ok', '请长按用户id进行复制', 1);
+   //  }
     clipboard.on('success', function (e) {
         dialog.show('ok', '礼包码已经复制到剪切板，快去玩游戏吧', 1);
     });
@@ -83,7 +92,14 @@ function initBtnCode() {
 
     });
 
+    clipboard3.on('success', function (e) {
+        dialog.show('ok', '复制成功', 1);
+    });
 
+    clipboard3.on('error', function (e) {
+        dialog.show('error', '请长按用户id进行复制', 1);
+
+    });
     // 隐藏主界面
     $giftBgContainer.onclick = function (e) {
         var target = e.target;
@@ -93,7 +109,7 @@ function initBtnCode() {
     }
 }
 
-initBtnCode();
+
 
 function setCopyBtnText(text) {
     $gameCode.dataset.clipboardText = text;
@@ -104,6 +120,8 @@ function setCopyBtnText(text) {
 function setGiftContainerView(show) {
     $giftBgContainer.style.display = show;
 }
+
+
 
 // var serverGameItem = require('../../components/mobile/server-game-item/server-game-item.vue');
 // var microBingPhone = require('../../components/mobile/micro-bind-phone/micro-bind-phone.vue');
@@ -139,6 +157,7 @@ var SliderNavManager = {
         for (var i = 0; i < this.sliderNavList.length; i++) {
             this.sliderNavList[i].classList.add(this.aniClassName);
         }
+        initBtnCode();
     },
 
     sliderTo: function (x, y) {
@@ -302,6 +321,7 @@ var SliderNavManager = {
         SDW_WEB.USER_INFO = SDW_WEB.USER_INFO || {};
         var nick = SDW_WEB.USER_INFO.nick || SDW_WEB.USER_INFO.uid;
         indexData.myNick = nick;
+        indexData.myUid = SDW_WEB.USER_INFO.uid
         return nick;
     }
 
@@ -319,6 +339,11 @@ var SliderNavManager = {
 
 
     var indexData = {
+        id:null,
+        name:null,
+        errorTip:null,
+        hasIdInfo:true,
+        showIdContainer:false,
         onBwt:SDW_WEB.channel == '11915',
         activity : ActivityConfig,
         myNickTop: 0.75,
@@ -404,6 +429,7 @@ var SliderNavManager = {
         // chatHeight: chatH,
         myAvatar: '',
         myNick: '',
+        myUid:'',
         browserTips: checkBrowserTips(),
         myGold: 0,
         showEwm: 0,
@@ -499,7 +525,7 @@ var SliderNavManager = {
         indexData.showMyGolds = !isSimple; // 简易版不显示闪电币
         indexData.showGotoIndex = true; // 显示返回首页
         indexData.showDownload = false; // 关闭下载按钮
-        indexData.myNickTop = 1.45;   // 昵称的高度
+        //indexData.myNickTop = 1.45;   // 昵称的高度
     }
 
     // if (ActivityConfig.toolIconType) {
@@ -573,6 +599,76 @@ var SliderNavManager = {
     window.pageSwiper = null;
     var unloadBannerList = [];
     var methods = {
+
+        getIdInfo:function () {
+            var self = this,
+                getUrl = SDW_WEB.URLS.addParam({
+                    uid: SDW_WEB.USER_INFO.uid,
+                }, false, HTTP_STATIC + 'queryAccessRealName');
+
+            SDW_WEB.getAjaxData(getUrl, function (data) {
+                console.log(data);
+                if (data.result === 1) {
+                    self.hasIdInfo = false ;
+
+                }else if(data.result === 2 ){
+                    self.hasIdInfo = true ;
+                    self.name = data.data.name ;
+                    self.id = data.data.idcard.replace(/^(.{4})(?:\d+)(.{4})$/,"$1******$2")
+                }
+                else{
+                    dialog.show('error',data.msg,1);
+                }
+            })
+        },
+        identify:function () {
+            var self = this;
+            var checkIdResult = this.cidInfo(String(this.id)) ;
+            if(checkIdResult){
+                this.errorTip = checkIdResult;
+                return ;
+            }
+            if(!this.name){
+                this.errorTip = '请填写真实姓名';
+                return ;
+            }
+            this.errorTip = null;
+            dialog.show('loading', '正在认证...');
+            var postUri = SDW_WEB.URLS.addParam({
+                userid:SDW_WEB.USER_INFO.uid,
+                name:this.name,
+                idcard:this.id,
+               // regip:returnCitySN.cip,
+            },false,'https://platform.shandw.com/accessRealName');
+            SDW_WEB.getAjaxData(postUri,function (data) {
+                dialog.hidden();
+                if (data.result === 1) {
+                    self.hasIdInfo = true ;
+                    dialog.show('ok','认证成功',1);
+                }else{
+                    dialog.show('error',data.msg,1);
+                }
+            });
+        },
+        cidInfo:function(sId){
+            var aCity={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外"}
+            var iSum=0
+            var info=""
+            if(!/^\d{17}(\d|x)$/i.test(sId))return '身份证号格式有误';
+            console.log(sId);
+            sId=sId.replace(/x$/i,"a");
+            if(aCity[parseInt(sId.substr(0,2))]==null) return "非法地区";
+            sBirthday=sId.substr(6,4)+"-"+Number(sId.substr(10,2))+"-"+Number(sId.substr(12,2));
+            var d=new Date(sBirthday.replace(/-/g,"/"));
+
+            if(sBirthday!=(d.getFullYear()+"-"+ (d.getMonth()+1) + "-" + d.getDate())) return "非法生日";
+
+            for(var i = 17;i>=0;i --) iSum += (Math.pow(2,i) % 11) * parseInt(sId.charAt(17 - i),11)
+            if(iSum%11!=1) return "非法证号";
+            //if(!this.IsAdult(d)) return "未成年不支持认证";
+            return false ;
+            // return aCity[parseInt(sId.substr(0,2))]+","+sBirthday+","+(sId.substr(16,1)%2?"男":"女")
+        },
 
         goCUrl: function () {
 
@@ -875,6 +971,16 @@ var SliderNavManager = {
             setCopyBtnText(text);
         },
 
+        setCopyUid: function () {
+
+            if (SDW_WEB.onShandw) {
+                SDW_WEB.sdw.setClipboard();
+                dialog.show('ok', '复制成功', 1);
+            } else {
+                dialog.hidden();
+            }
+            setCopyBtnText(text);
+        },
         transServerDate: function (time, isPrv) {
             return TransServerDate(time, window.SERVER_TIME, isPrv);
         },
@@ -958,11 +1064,28 @@ var SliderNavManager = {
                 SDW_WEB.sdw.switchTab('index');
             } else {
                 var url = this.APP_ROOT_PAGE;
-                if (isSimple == 1) {
-                    url = 'http://www.shandw.com/mi/indexTemp/?channel=' + SDW_WEB.channel;
-                }else if(isSimple == 2){
-                    url = 'http://www.shandw.com/mi/indexTemp/bannerindex.html?channel=' + SDW_WEB.channel;
+                switch(Number(isSimple)){
+                    // 1简化版黑主题
+                    case 1:
+                        url = "http://www.shandw.com/m/indexTemp/?channel=" + SDW_WEB.channel;
+                        break;
+                    // 2简化版白主题
+                    case 2:
+                        url = "http://www.shandw.com/m/indexTemp/?theme=bright&channel=" + SDW_WEB.channel;
+                        break;
+                    // 3简化版大图标
+                    case 3:
+                        url = "http://www.shandw.com/m/indexTemp/brightindex.html?channel=" + SDW_WEB.channel;
+                        break;
+                    // 4京东版大图标
+                    case 4:
+                        url = "http://www.shandw.com/m/indexTemp/jdcenter.html?channel=" + SDW_WEB.channel;
+                        break;
+                    default:
+                        url = "http://www.shandw.com/m/index/?channel=" + SDW_WEB.channel;
+                        break;
                 }
+                //console.log(isSimple);
                 if (location.replace) {
                     location.replace(url);
                 } else {
@@ -1148,6 +1271,7 @@ var SliderNavManager = {
                             SDW_WEB.USER_INFO = v2UserData;
 
                             self.myNick = data.nick || data.id;
+                            self.myUid = data.id;
                             self.myAvatar = v2UserData.avatar || 'https://www.shandw.com/pc/images/mandef.png';
 
                             toolWindow.setVisitorMode(false);
@@ -1236,7 +1360,6 @@ var SliderNavManager = {
         // 隐藏输入框
         cancelInput: function () {
             document.querySelector('#user-input').blur();
-
             var self = this;
             setTimeout(function () {
                 self.userInputWindow = 0;
@@ -1858,7 +1981,7 @@ var SliderNavManager = {
         },
         activityCtl:function () {
             if(this.activity.openState ==  1 ){
-                dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
+                dialog.show('ok','敬请期待<br>'+this.activity.activityName+'活动将于'+this.activity.startTime[1]+'月'+this.activity.startTime[2]+'号开启哦~！',1);
             }else{
                 this.showactivity = 1 ;
             }
@@ -1908,7 +2031,11 @@ var SliderNavManager = {
                 el: '#app',
                 data: indexData,
                 methods: methods,
+                mounted:function () {
+
+                },
                 components: {
+                   // identifyContainer:identifyContainer,
                     // serverGameItem: serverGameItem,
                     // microBingPhone: microBingPhone,
                 }
@@ -2241,6 +2368,7 @@ var SliderNavManager = {
             window.touch.firstTap = true;
             indexData.navsTap[navConfigs[0]] = 1;
             toolWindow.initLoadData();
+            _myFuchuang.getIdInfo();
         }
 
         setTimeout(function () {

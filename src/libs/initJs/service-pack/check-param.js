@@ -19,19 +19,19 @@ module.exports = (function () {
 
     var _key = 'sdw_sb_param';
     var _map = {};
-
-    // 读取参数上的字段
-    for (var i in SDW_WEB.queryParam) {
-        _map[i] = true;
-    }
-
     // 合并原先的字段
     var cacheParams = SDW_WEB.Store.get(_key);
     if (cacheParams) {
         for (var j in cacheParams) {
-            _map[j] = true;
+            _map[j] = cacheParams[j];
         }
     }
+    // 读取参数上的字段
+    for (var i in SDW_WEB.queryParam) {
+       // _map[i] = true;
+        _map[i] = SDW_WEB.queryParam[i];
+    }
+
 
     SDW_WEB.Store.set(_key, _map); // 缓存参数值，用于会话缓存，更新
 
@@ -43,7 +43,6 @@ module.exports = (function () {
             SDW_WEB.Store.set(_key, _map); // 缓存参数值，用于会话缓存，更新
             return value;
         }
-
         return _map[type];
     }
 

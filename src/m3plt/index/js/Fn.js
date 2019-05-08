@@ -1,6 +1,12 @@
 var $ = require('../libs/jquery-3.1.0.min');
 var CheckOpenGame = require('../../components/js/CheckOpenGame');
 import bus from './eventBus';
+import { setTimeout } from 'timers';
+
+var firstAuthed = 0;     //防止authToGame无限执行
+var m3pltGame = [1296320599, 1247433539];   //梦三游戏内默认打开游戏
+var onM3pltGame = SDW_WEB.onM3pltGame;
+
 export default {
     GUID: function () {
         var S4 = function () {
@@ -38,6 +44,16 @@ export default {
     authToGame: function (gameItem) {
         var self = this;
         var gid = gameItem.id || gameItem.gid;
+        //处理轮播广告链接
+        if(!(/^[0-9]*$/.test(gid))&&gameItem.url) {
+            window.open(gameItem.url);
+            return false;
+        }
+        //处理梦平台游戏打开
+        if(SDW_WEB.onM3plt) {
+            SDW_WEB.m3pltOpenGame(gid);
+            return false;
+        }
         if (!SDW_WEB.USER_INFO.uid && !SDW_WEB.USER_INFO.id) { //未登录状态
             //登录
             this.$emit("login-dialog", "", "");
@@ -47,9 +63,7 @@ export default {
             };
             return;
         }
-        var _t = this;
         if (/^[0-9]*$/.test(gid)) {
-
             var HTTP_CHECK = HTTP_USER_STATIC + 'authgame';
             var postUri = SDW_WEB.URLS.addParam({
                 channel: SDW_WEB.channel,
@@ -60,12 +74,11 @@ export default {
             }, false, HTTP_USER_STATIC + 'authgame');
             // 进行授权
             SDW_WEB.getAjaxData(postUri, function (data) {
-
                 if (data.result == 1) {
-
+    
                     if (sessionStorage['HTTP_MAIN#0']) {
                         var CACHE = JSON.parse(sessionStorage['HTTP_MAIN#0']);
-
+    
                         if (!CACHE.recent) {
                             CACHE.recent = [];
                         }
@@ -77,7 +90,7 @@ export default {
                                 break;
                             }
                         }
-
+    
                         // 将目前玩的游戏追加到最前面
                         CACHE.recent.unshift({
                             "id": _gamesRoot.gid,
@@ -85,26 +98,26 @@ export default {
                             "name": data.name,
                             "time": +new Date()
                         });
-
+    
                         sessionStorage['HTTP_MAIN#0'] = JSON.stringify(CACHE);
                     }
-
+    
                     if (data.param) {
-                        var param = _t.getQuery();
+                        var param = self.getQuery();
                         var gameUrl;
                         // 请求使用测试地址
                         if (param['sdw_test'] == 'true') {
-
+    
                             if (data.testUrl) {
                                 gameUrl = data.testUrl;
                             } else {
                                 gameUrl = data.url;
                             }
-
+    
                         } else {
                             gameUrl = data.url;
                         }
-
+    
                         var gameLink = SDW_PATH.MOBILE_ROOT+"game/"+gid+".html"+"/?channel="+SDW_WEB.channel;
                         var urlExa = "";
                         for (var urlK in param) {
@@ -125,8 +138,10 @@ export default {
                         }
                         gameUrl += '&cburl=' + encodeURIComponent(gameLink);
                         gameUrl += '&reurl=' + encodeURIComponent(gameLink);
+                        //传递fl
+                        gameUrl += '&fl=' + SDW_WEB.USER_INFO.fl;
                         var currentProtocol = location.protocol;
-
+    
                         // 非https游戏，跳转到http的用户授权
                         if (!/https:\/\//.test(gameUrl) && currentProtocol != 'http:') {
                             var nUrl = 'http://www.shandw.com/libs/addUserInfo.html?channel=' + channel + '&userInfo=' + encodeURIComponent(localStorage['H5_DATA15' + channel]) + '&gid=' + _gamesRoot.gid;
@@ -147,20 +162,21 @@ export default {
                             success: function (data) {
                                 var dataT = (typeof data === "object") ? data : JSON.parse(data);
                                 gameItem.giftNum = dataT.gift.length;
-                                _t.checkOpenGame(gameItem);
+                                self.checkOpenGame(gameItem);
                             }
                         })
                     } else {
                         location.href = APP_ROOT;
                     }
-
-
+    
+    
                 } else {
                     // dialog.show('error', data.msg, 2);
-                    dialog.show('error', '登录过期请重新登录', 2);
+                    // dialog.show('error', '登录过期请重新登录', 1);
                     //授权出错重新登录
                     localStorage.clear();
                     sessionStorage.clear();
+                    // dialog.show('error', '游戏授权错误', 1);
                     self.$emit("login-dialog", "", "");
                     bus.$emit("get-qrcode");
                     APP.loginCallback = function() {
@@ -168,10 +184,25 @@ export default {
                     };
                     return;
                 }
-
             });
         }
-
+        //梦三游戏内默认加载的游戏
+        if(onM3pltGame) {
+            if(!firstAuthed) {
+                setTimeout(function () {
+                    m3pltGame.forEach(function (v, index) {
+                        var gameItem = {
+                            "gid": v,
+                            "defGame": true
+                        }
+                        setTimeout(function () {
+                            self.authToGame(gameItem);
+                        }, 100*index);
+                    })
+                }, 100);
+            }
+            firstAuthed = 1;
+        }
     },
     //url->obj
     getQuery: function (uri) {
@@ -195,23 +226,52 @@ export default {
             sOn: item.sOn
         }
         this.gamesModal.isPlaying = true;
+    
+        //判断是否全屏 默认游戏初次打开要过滤掉
+        if(data.screen ==2 || data.screen == 3) {
+            this.gamesModal.isFull = true;
+        }else if(!item.defGame){
+            this.gamesModal.isFull = false;
+        }
+        // if(data.screen !=2 && !item.defGame) {
+        //     this.gamesModal.isFull = false;
+        // }
+
         /*对列表中已存在的游戏不进行操作*/
         var index = this.findGame(data.id, this.gamesModal.gamePlayList);
         if (!index) { //列表中无该游戏
             if (this.gamesModal.gamePlayList.length < 3) {
-                this.gamesModal.gamePlayList.unshift(data);
+                if(item.defGame) {  //针对默认游戏排版
+                    data.playing = false;
+                    this.gamesModal.gamePlayList.push(data);
+                }else {
+                    this.gamesModal.gamePlayList.unshift(data);
+                }
             } else {
                 this.gamesModal.gamePlayList.pop();// 移除最後一元素*/
                 this.gamesModal.gamePlayList.unshift(data);
             }
         } else {//列表中已存在该游戏
             this.gamesModal.gamePlayList[index - 1].playing = true;
+            if(this.gamesModal.gamePlayList[0].screen !=2 && this.gamesModal.gamePlayList[0].screen !=3) {
+                //点击了全屏,全屏游戏已存在但非第一个游戏,显示非全屏游戏
+                this.gamesModal.isFull = false;
+            }else {
+                //点击了非全屏游戏 全屏游戏已存在第一个游戏,显示全屏游戏
+                this.gamesModal.isFull = true;
+            }
         }
         //打开所有游戏
         if (sessionStorage) {
-            this.gamesModal.gamePlayList.forEach(function (v) {
-                v.playing = true;
+            this.gamesModal.gamePlayList.forEach(function (v, index) {
+                if(onM3pltGame) {
+                    //兼容梦三游戏情况，只打开第一个游戏
+                    v.playing = index==0 ? true : false;
+                } else {
+                    v.playing = true;
+                }
             });
+            //处理左侧侧换的情况
             //跳转页面打开游戏，根据条件显示所有游戏
             if(this.gamesModal.gamePlayList[0].screen) {
                 this.gamesModal.gamePlayList.forEach(function (v, index) {

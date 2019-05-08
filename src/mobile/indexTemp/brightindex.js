@@ -4,7 +4,7 @@
  * 闪电玩首页
  *
  */
-
+// var ScrollDom = require('./ScrollDom');
 require('./index2.scss');
 require('../../components/initcss.scss');
 var loadingView = require('../../components/mobile/loading/loading.vue');
@@ -12,7 +12,8 @@ var loadingView = require('../../components/mobile/loading/loading.vue');
 var longGameItem = require('../../components/mobile/long-game-item/long-game-item.vue');
 var WindowScroll = require('../../libs/WindowScroll');
 var recentGame = require('./recent-game/recent-game.vue');
-var ActivityConfig = require('./config');
+// var ActivityConfig = require('./config');
+var ActivityConfig = require('../libs/config');
 // 首页活动悬浮按钮
 if (ActivityConfig.state) {
     require('../game/tool-icon.scss');
@@ -78,7 +79,8 @@ function initToolIcon() {
 
             var links = ActivityConfig.activityPage+'?channel=' + SDW_WEB.channel;
             if(ActivityConfig.openState == 1){
-                dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
+                dialog.show('ok','敬请期待<br>'+ActivityConfig.activityName+'活动将于'+ActivityConfig.startTime[1]+'月'+ActivityConfig.startTime[2]+'号开启哦~！',1);
+               // dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
                 return ;
             }
 
@@ -113,54 +115,20 @@ function initToolIcon() {
 
 
 var indexData = {
+    onJD:SDW_WEB.onJDJR,
     activity :ActivityConfig,
     allGameList: [],
     recentList:[],
     pageHasLoading: false,
-    navList: [
-        {
-            title: "全部",
-            page: 0,
-            loaded: false,
-            loading: false,
-            current: 0,
-            list: [],
-            type: 0,
-        },
-        {
-            title: "角色扮演",
-            page: 0,
-            loaded: false,
-            loading: false,
-            current: 0,
-            list: [],
-            type: 1,
-        },
-        {
-            title: "传奇类",
-            page: 0,
-            loaded: false,
-            loading: false,
-            current: 0,
-            list: [],
-        },
-        {
-            title: "回合制",
-            page: 0,
-            loaded: false,
-            loading: false,
-            current: 0,
-            list: [],
-        },
-        {
-            title: "策略",
-            page: 0,
-            loaded: false,
-            loading: false,
-            current: 0,
-            list: [],
-        }
-    ],
+    navList: [{
+        title: "全部",
+        page: 0,
+        loaded: false,
+        loading: false,
+        current: 0,
+        list: [],
+        // type: null,
+    }],
     currentNav: null,
 };
 
@@ -208,11 +176,7 @@ var indexMethods = {
                 _item.current = 1;
                 // 首次加载数据
                 if (_item.page === 0) {
-                    if (typeof _item.type !== 'undefined') {
-                        this.loadTypeGame(_item);
-                    } else {
-                        this.loadAllGameList(_item);
-                    }
+                    this.loadTypeGame(_item);
                 }
             } else {
                 _item.current = 0;
@@ -242,7 +206,18 @@ var indexMethods = {
             SDW_WEB.openNewWindow(openObj);
         }
     },
+    goMorePage:function () {
+        var targetUrl = SDW_PATH.MOBILE_ROOT + 'more/?channel=' + SDW_WEB.channel;
 
+        SDW_WEB.openNewWindow({
+            link: targetUrl,
+            isFullScreen: false,
+            showMoreBtn: false,
+            title: ''
+        });
+
+
+    },
     createBanner: function (data) {
 
         var banner = data.ad || [];
@@ -325,7 +300,7 @@ var indexMethods = {
     },
 
     // 加载数据
-    loadListData: function (postUri, item) {
+    loadListData: function (postUri, item)  {
         SDW_WEB.getAjaxData(postUri, function (data) {
             if (data.result === 1) {
                 if (data.list && data.list.length) {
@@ -340,27 +315,32 @@ var indexMethods = {
         });
     },
 
-    loadAllGameList: function (item) {
-
-        if (item.loading) return;
-        item.loading = true;
-
-        var postUri = SDW_WEB.URLS.addParam({
-            page: item.page,
-        }, false, HTTP_STATIC + 'search');
-
-        this.loadListData(postUri, item);
-
+    // loadAllGameList: function (item) {
+    //
+    //     if (item.loading) return;
+    //     item.loading = true;
+    //
+    //     var postUri = SDW_WEB.URLS.addParam({
+    //         page: item.page,
+    //     }, false, HTTP_STATIC + 'search');
+    //
+    //     this.loadListData(postUri, item);
+    //
+    // },
+    gotoTopFn: function () {
+        // 1表示滚动到顶部后，收起导航栏
+        document.documentElement.scrollTop = document.body.scrollTop = 0;
+        //scrollDom && scrollDom.scrollToPos(0, '1');
     },
-
     loadTypeGame: function (item) {
         if (item.loading) return;
         item.loading = true;
-
-        var postUri = SDW_WEB.URLS.addParam({
+        var data = {
             page: item.page,
-            type: item.type || 0, // 0 网游  1 小游戏
-        }, false, HTTP_STATIC + 'simpleGameList');
+            pagesize:12
+        };
+        item.type ? data.type = item.type: '' ;
+        var postUri = SDW_WEB.URLS.addParam(data, false, HTTP_STATIC + 'search');
 
         this.loadListData(postUri, item);
     },
@@ -391,19 +371,34 @@ var indexMethods = {
     loadMore: function () {
         var item = this.currentNav;
         if (item.loaded) return;
+        this.loadTypeGame(item);
+    },
+    moreNav:function () {
+        var navCtx = this.$refs.navCtx ;
+        console.log(navCtx.scrollWidth,navCtx.scrollLeft+navCtx.scrollWidth/3);
+        navCtx.scrollLeft = Math.min(navCtx.scrollWidth,navCtx.scrollLeft+navCtx.scrollWidth/4);
 
-        if (typeof item.type !== 'undefined') {
-            this.loadTypeGame(item);
-        } else {
-            this.loadAllGameList(item);
-        }
-    }
+    },
 };
 
 var _indexView = new Vue({
     el: '#app',
     data: indexData,
     methods: indexMethods,
+    mounted:function () {
+        var navlist = ['传奇类','回合制','古装仙侠','休闲小游戏','角色扮演','策略','放置挂机','模拟经营','卡牌','女生'];
+        navlist.forEach( (i) =>{
+            this.navList.push({
+                title: i,
+                page: 0,
+                loaded: false,
+                loading: false,
+                current: 0,
+                list: [],
+                type: i,
+            })
+        })
+    },
     components: {
         loadingView: loadingView,
         longGameItem: longGameItem,
@@ -428,7 +423,89 @@ var allGameScroll = new WindowScroll(function () {
 }, true, 100, 30);
 // allGameScroll.enable = false;
 
+var _sliderTimerInterval = 50;
+
+function addScrollFn() {
+
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+    document.documentElement.scrollTop = document.body.scrollTop = 0;
+
+    var sliderNavLists, sliderTop, sliderNavDom, goBackBtn = document.querySelector('#goBackBtn');
+    var nowIdx = null;
+    var sliderNavDomHasFixed = false;
+    var goBackBtnHasHidden = false;
 
 
+    // 需要继续优化滚动函数！！！
+    var sliderFn = function () {
+
+        setTimeout(function () {
+            window.requestAnimationFrame(sliderFn);
+        }, _sliderTimerInterval);
+
+
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+        // 实时显示导航栏的位置，防止多次的变更DOM
+        if (scrollTop > sliderTop) {
+            if (!sliderNavDomHasFixed) {
+                sliderNavDomHasFixed = true;
+                sliderNavDom.className = 'nav-view slider-nav-fixed';
+            }
+        } else {
+            if (sliderNavDomHasFixed) {
+                sliderNavDomHasFixed = false;
+                sliderNavDom.className = 'nav-view';
+            }
+        }
+
+        // 快抵达到顶部，收起【返回顶部】
+        if (scrollTop <= 10) {
+            if (!goBackBtnHasHidden) {
+                goBackBtnHasHidden = true;
+                goBackBtn.style.display = 'none';
+            }
+        } else {
+            if (goBackBtnHasHidden) {
+                goBackBtnHasHidden = false;
+                goBackBtn.style.display = 'block';
+            }
+        }
+
+        // 需要实时判断定位导航栏的位置 ，点击tap的时候，就不要计算了
+        // if (_dom && !userTap) {
+        //
+        //     var offset = _dom.offsetHeight;
+        //
+        //     for (var i = view.sliderNavList.length - 1; i >= 0; i--) {
+        //         var item = view.sliderNavList[i];
+        //
+        //         var differTop = scrollDom.scrollListPos[item.id] - offset <= scrollTop;
+        //
+        //         if (scrollTop && scrollDom.scrollListPos[item.id] && differTop) {
+        //
+        //             // 只是在发生需要变更的时候进行更新
+        //             if (nowIdx !== item.id) {
+        //                 nowIdx = item.id;
+        //                 view.showNavItem(nowIdx);
+        //             }
+        //             break;
+        //         }
+        //     }
+        // }
+    };
+
+
+    setTimeout(function () {
+        sliderNavLists = document.querySelector('.nav-view');
+        sliderTop = sliderNavLists.getBoundingClientRect().top || sliderNavLists.offsetTop;
+        sliderNavDom = document.querySelector('.nav-view');
+        window.requestAnimationFrame(sliderFn);
+    }, 20);
+
+}
+
+addScrollFn();
 
 

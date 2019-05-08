@@ -117,7 +117,7 @@
         <!--不做特殊处理了，让游戏都做首充双倍。-->
         <!--付费游戏不做首充双倍，是没有灵魂的-->
 
-        <div class="tip-title">游戏礼包兑换<span style="color: #f94f4d"> -- 首次兑换双倍</span></div>
+        <div class="tip-title">游戏礼包兑换<span style="color: #f94f4d"  > -- <span v-if="showZS">钻石</span>首次兑换双倍</span></div>
 
         <div class="game-item-list" v-if="gameList.length">
             <div class="game-item"
@@ -125,9 +125,10 @@
                 <div class="game-item-info">
                     <div class="game-item-title ellipsis">{{item.productName}}</div>
                     <div class="game-item-price ellipsis">{{item.productDesc || ' '}}</div>
-                    <div class="game-item-price">¥ {{item.priceStr}}</div>
+                    <div class="game-item-price" v-if="!item.payType">¥ {{item.priceStr}}</div>
                 </div>
-                <div class="get-btn" @click="startBuyItem(item)">兑 换</div>
+                <div class="get-btn free-btn" @click="startBuyItem(item)" v-if="item.payType">免费领取</div>
+                <div class="get-btn" @click="startBuyItem(item)" v-else>兑 换</div>
             </div>
         </div>
 

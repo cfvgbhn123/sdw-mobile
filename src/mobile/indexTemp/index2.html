@@ -53,9 +53,9 @@
 
 <script>
     (function () {
-        // if (SDW_WEB.onPC) {
-        //     location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
-        // }
+        if (SDW_WEB.onPC) {
+            location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
+        }
         // 判断烟草的地址的合法性
         if (SDW_WEB.channel === '10041') {
             location.href = SDW_WEB.MOBILE_ROOT + 'cigarette/?channel=10041';
@@ -66,9 +66,13 @@
         // 通用的外部获取方法
         SDW_WEB.checkUserInfo(true);
 
-
+        if(SDW_WEB.queryParam['theme'] == 'bright'){
+            SDW_WEB.readParam('sdw_simple', '2');
+        }else{
+            SDW_WEB.readParam('sdw_simple', '1');
+        }
         // 默认加上简易版的字段
-        SDW_WEB.readParam('sdw_simple', '1');
+
     })();
 </script>
 
@@ -85,9 +89,19 @@
             </div>
         </div>
     </div>
+    <!--推荐资源位 或者 我最近玩过的-->
+
     <!--返回顶部-->
     <!--<div class="go-top" @click.stop.self="gotoTopFn()" style="display: none" id="goBackBtn"></div>-->
-
+    <div class="recent-game" v-if="recentList.length && theme == 'bright'">
+        <div class="recent-left">
+            <b>最近在玩</b>
+            <p class="all-txt" @click="goMorePage">查看全部 <i class="ico-more"></i></p>
+        </div>
+        <div class="recent-right" v-if="recentList.length">
+            <img class="item" v-for="item in recentList" :src="item.icon"  @click="checkGameSate('play',item.id)"/>
+        </div>
+    </div>
     <!--轮播底部的模糊图片-->
     <img id="topBanner" style="visibility: hidden">
 
@@ -96,7 +110,7 @@
         <div class="swiper-wrapper" id="bannercont"></div>
         <div class="swiper-pagination"></div>
     </div>
-    <div class="recent-container" v-if="recentList.length">
+    <div class="recent-view" v-if="recentList.length && theme == 'dark'">
         <recent-game :recommend-list="recentList"></recent-game>
     </div>
     <!--列表导航-->
@@ -121,6 +135,10 @@
 </div>
 
 </body>
-
+<script>
+    if(SDW_WEB.URLS.queryUrl()['theme']  == 'bright'){
+        document.body.className = 'bright-theme' ;
+    }
+</script>
 
 </html>

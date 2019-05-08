@@ -1,0 +1,123 @@
+body {
+  font-family: arial, helvetica, "Microsoft YaHei";
+}
+
+#third-authorize-page {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  z-index: 99999999999;
+  background: #fff;
+  overflow: hidden;
+}
+
+#closeAuthPage {
+  position: fixed !important;
+  top: 55px;
+  right: 5px;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 3px;
+  border-radius: 3px;
+  background: rgba(0, 170, 238, 0.5);
+  cursor: pointer;
+  z-index: 1000000000000;
+}
+
+.contact-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(10, 14, 18, 0.6);
+  display: none;
+  z-index: 1000;
+}
+
+.top-info {
+  position: fixed;
+  margin-left: -30px;
+  width: 1040px;
+  z-index: 40;
+}
+
+.right-container {
+  position: fixed;
+  top: 100px;
+  height: 957px;
+  overflow: auto;
+}
+
+.right-container .gift-game-list-cls {
+  width: 100%;
+  font-size: 0;
+  margin-top: 96px;
+  height: 700px;
+  overflow: auto;
+}
+
+.right-container .gift-game-list-cls .cls-g-item {
+  display: inline-block;
+  padding: 0 20px;
+  height: 30px;
+  line-height: 30px;
+  color: #fff;
+  background: #2f3948;
+  margin-right: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.right-container .gift-game-list-cls .cls-g-item-click {
+  background: #2fd8a1;
+  background: linear-gradient(90deg, #22cab5, #3fe28f);
+}
+
+.m3plt-r-container {
+  top: 20px !important;
+}
+
+.gift-search {
+  position: fixed;
+}
+
+.gift-position {
+  position: fixed;
+  margin-top: 45px;
+  width: 300px;
+}
+
+.games-server-l {
+  margin-top: 20px;
+}
+
+.clearFix:after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  overflow: hidden;
+}
+
+.more-server {
+  height: 45px;
+  line-height: 45px;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: center;
+  background: #242d3a;
+  color: #cfd4db;
+  margin: 20px auto 30px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.12);
+}
+
+.addSpace {
+  margin-right: 20px;
+}

@@ -53,8 +53,9 @@
     position: absolute;
     top: 50%;
     right: 0;
+    z-index: 22;
     left: initial !important;
-    transform: translate3d(0, -50%, 0);
+    transform: translate(0, -50%);
   }
 
   .show-more-btn {
@@ -88,6 +89,7 @@
   opacity: 0;
   transition: .32s;
   background: url("../../images/start-game.png") 0 0/100% 100% no-repeat;
+  cursor: pointer;
 }
 
 .start-game-cover:hover {
@@ -120,6 +122,7 @@
     position: absolute;
     right: 20px;
     bottom: 25px;
+    cursor: pointer;
   }
 
   .gift-game-info {

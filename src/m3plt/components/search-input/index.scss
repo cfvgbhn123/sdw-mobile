@@ -35,8 +35,12 @@
     color: #5b6370;
     position: absolute;
     top: 5px;
-    left: 0;
-    text-indent: 20px;
+    left: 20px;
+    /* -o-text-indent: 20px;
+    -webkit-text-indent: 20px;
+    -moz-text-indent: 20px;
+    -ms-text-indent: 20px;
+    text-indent: 20px; */
   }
 
   .search-btn {
@@ -47,6 +51,7 @@
     right: 0;
     cursor: pointer;
     border-radius: 0 25px 25px 0;
+    background: #2fd8a1;
     background: linear-gradient(90deg, #22cab5, #3fe28f);
   }
 
@@ -54,7 +59,9 @@
     content: '';
     width: 50px;
     height: 34px;
-    background: url("imgs/ic_search.png") center /18px no-repeat;
+    background: url("imgs/ic_search.png") no-repeat;
+    background-size: 18px;
+    background-position: center;
     position: absolute;
     top: 0;
     left: 0;
@@ -65,7 +72,9 @@
     height: 34px;
     cursor: pointer;
     //background: #00aeff;
-    background: url("imgs/ic_close.png") center/10px no-repeat;
+    background: url("imgs/ic_close.png") no-repeat;
+    background-size: 10px;
+    background-position: center;
     position: absolute;
     top: 0;
     right: 60px;

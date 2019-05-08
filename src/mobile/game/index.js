@@ -8,15 +8,11 @@ require('./index.scss');
 
 require('./tool-icon.scss');
 require('./pay.css');
-
-// require('./test.css');
-
 window.toolWindow = require('./fuchuang.js');
 require('./libs/swiper');
 SDW_WEB.playGameTimer = require('./playTime');
 SDW_WEB.setLoadText = require('./libs/setLoadText.js');
 SDW_WEB.setLoadText.setText('default');
-
 
 
 

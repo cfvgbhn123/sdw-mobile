@@ -25,25 +25,22 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 <template>
 
     <div class="l-game-cont">
-
+        
         <div class="l-g-cover">
 
             <!--开始游戏-->
-            <a :href="gameUrl" target="_blank" class="start-game-cover"></a>
+            <a @click.stop="authToGame(gameItem)" class="start-game-cover"></a>
             <img :src="gameItem.bIcon" alt="">
 
-            <div class="q-code-border" v-show="showQCode">
+            <div :class="['q-code-border', {'m3plt-q-code-border': onM3plt || onM3pltGame}, {'m3plt-q-code-border': fromM3plt}]" v-show="showQCode">
                 <div class="q-code-flash"></div>
                 <div class="q-code-cont" ref="myCode"></div>
             </div>
 
         </div>
-
         <div class="l-g-info">
 
-            <a class="l-g-i-title"
-               :href="gameUrl"
-               target="_blank">
+            <a class="l-g-i-title" @click.stop="gotoDetail(gameItem)">
                 {{gameItem.name}}
             </a>
 
@@ -72,9 +69,9 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 </template>
 
 <script>
-
+    import CheckOpenGame from '../../../components/js/CheckOpenGame';
     var TransDate = require('../../../components/js/TransDate.js');
-
+    import Fn from '../../../index/js/Fn';
     export default {
         name: 'l-game-item',
         data: function () {
@@ -84,9 +81,12 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
                 hasQCode: null,
             }
         },
-
-        props: ['gameItem', 'iType'],
+        props: ['gameItem', 'iType', 'games-modal', 'on-m3plt', 'from-m3plt', 'on-m3pltGame'],
         methods: {
+            // 跳转详情页采用相对路径处理
+            gotoDetail: function (item) {
+                this.$emit('go-detail', item.id)
+            },
             transDate: function (time) {
                 return TransDate(time);
             },
@@ -99,12 +99,13 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
                     var dom = self.$refs.myCode;
                     var qcode = new QRCode(dom, {
-                        width: 75,
-                        height: 75
+                        width: 94,
+                        height: 92
                     });
 
                     // 梦平台二维码扫一扫，只能在口袋中打开
-                    var src = 'http://www.shandw.com/m/game/?gid=' + self.gameItem.id + '&channel=' + SDW_WEB.channel + '&from_plt=m3plt';
+                    // var src = 'http://www.shandw.com/m/game/?gid=' + self.gameItem.id + '&channel=' + SDW_WEB.channel + '&from_plt=m3plt';
+                    var src = CheckOpenGame.createQCode(self.gameItem.id);
                     qcode.makeCode(src);
                     self.hasQCode = true;
                 }
@@ -112,7 +113,11 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
             },
             qCodeOut: function () {
                 this.showQCode = false;
-            }
+            },
+            checkOpenGame: Fn.checkOpenGame,
+            authToGame: Fn.authToGame,
+            getQuery: Fn.getQuery,
+            findGame: Fn.findGame
         },
         computed: {
             /**
@@ -162,6 +167,6 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
     @import "./game-item.scss";
 </style>

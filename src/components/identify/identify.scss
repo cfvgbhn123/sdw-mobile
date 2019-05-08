@@ -1,0 +1,114 @@
+@function torem($px) { //$px为需要转换的字号
+  @return $px / 32px*1rem;
+}
+
+@function topx($px) { //$px为需要转换的字号
+  @return $px / 2px * 1px;
+}
+
+
+/*身份认证*/
+.identify-container{
+  background: #fff;
+  padding: torem(22px) torem(24px);
+  overflow: hidden;
+  //position: absolute;
+  //z-index: 9999;
+  .ico_close{
+    float: right;
+    width:torem(28px) ;
+    height:torem(28px) ;
+    background: url("http://www.shandw.com/m/libs/icons/ico_close.png") center /100% 100%;
+    margin-right: torem(25px);
+  }
+  .title{
+    font-weight: bold;
+    font-size: torem(36px);
+    text-align: center;
+    line-height: torem(105px);
+    color: #333;
+  }
+  .ipt-container{
+    width: torem(505px);
+    margin: 0 auto;
+  }
+  .ipt{
+    width: 100%;
+    height: torem(75px);
+    border-radius: torem(30px);
+    border: 1px solid #dadada;
+    background-repeat: no-repeat;
+    color: #666666;
+    box-sizing: border-box;
+    padding-left: torem(80px);
+    margin: 0 auto;
+  }
+  .ipt-id{
+    margin-bottom: torem(30px);
+    background-image: url("http://www.shandw.com/m/libs/icons/ico_identify.png");
+    background-position: torem(25px) center;
+    background-size: torem(29px) auto;
+  }
+  .ipt-name{
+    background-image: url("http://www.shandw.com/m/libs/icons/ico_name.png");
+    background-position: torem(32px) center;
+    background-size: torem(24px) auto;
+  }
+  .ipt:hover{
+    border: 1px solid #8ae3d6;
+  }
+  .tip-error{
+    font-size: torem(20px);
+    margin: torem(18px) 0px torem(30px) torem(42px);
+    height: torem(24px);
+    line-height: torem(24px);
+    color: #ef4134;
+    i{
+      display: inline-block;
+      vertical-align: top;
+      width: torem(22px);
+      height: torem(23px);
+      background: url("http://www.shandw.com/m/libs/icons/ico_error.png") center /100% 100% no-repeat;
+      position: relative;
+      top: torem(2px);
+      left: torem(-10px);
+    }
+  }
+  .long-btn{
+    width: 100%;
+    height: torem(80px);
+    line-height:torem(80px);
+    color: #fff;
+    text-align: center;
+    font-size: torem(36px);
+    margin: torem(25px) auto;
+    border-radius: torem(40px);
+    background: linear-gradient(90deg,#22cab5,#3fe28f);
+  }
+  .shuoming{
+    color: #6ac5b6;
+    text-align: center;
+    margin: torem(10px) auto torem(60px);
+    font-size: torem(22px);
+    i{
+      display: inline-block;
+      vertical-align: top;
+      width: torem(28px);
+      height: torem(28px);
+      background: url("http://www.shandw.com/m/libs/icons/ico_tip.png") center /100% 100% no-repeat;
+      position: relative;
+      top: torem(3px);
+      left: torem(-10px);
+    }
+    a{
+      color: #6ac5b6;
+    }
+
+  }
+  .txt-tip{
+    color: #999;
+    text-align: center;
+    padding-bottom: torem(20px);
+    font-size: torem(20px);
+  }
+}

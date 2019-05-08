@@ -77,14 +77,14 @@ $iconWidth: 64px;
 }
 
 .sdw-icon-ani[data-state='newyear-1'] {
-  background-size: 500% auto;
+  background-size: 100% auto;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(images/newyear-0.png);
-  animation: newyear  steps(1) infinite 1s;
+  //animation: newyear  steps(1) infinite 1s;
 }
 .sdw-icon-ani[data-state='newyear-2'] {
-  background-size: 600% auto;
+  background-size: 300% auto;
   background-repeat: no-repeat;
   background-position: center;
   background-image: url(images/newyear-1.png);
@@ -130,20 +130,23 @@ $iconWidth: 64px;
     background-position: 0 0;
   }
 
-  20% {
-    background-position: 20% 0;
+  50% {
+    background-position: 50% 0;
   }
-
-  40% {
-    background-position: 40% 0;
-  }
-
-  60% {
-    background-position: 60% 0;
-  }
-  80% {
-    background-position: 80% 0;
-  }
+  //20% {
+  //  background-position: 20% 0;
+  //}
+  //
+  //40% {
+  //  background-position: 40% 0;
+  //}
+  //
+  //60% {
+  //  background-position: 60% 0;
+  //}
+  //80% {
+  //  background-position: 80% 0;
+  //}
 
   100% {
     background-position: 100% 0;
@@ -180,25 +183,26 @@ $iconWidth: 64px;
   width: 100%;
   //height: torem(1087px);
   height: 100%;
-  background: url("images/activity-bg.png") center center/100% auto no-repeat #451a3b;
+  background: url("images/activity-bg.png") center center/100% auto no-repeat ;
+ // background-color: linear-gradient(90deg,#8b3dc9,#3584cb);
   position: relative;
   .activity-btn-1{
     height: torem(130px);
     position: absolute;
-    top: 66%;
+    top: 71%;
     left: 50%;
     transform: translateX(-50%);
     width: torem(333px);
-    background: url("images/state-1.png") center/auto 100% no-repeat;
+    //background: url("images/state-1.png") center/auto 100% no-repeat;
   }
   .activity-btn-2{
     height: torem(130px);
     position: absolute;
-    top: 66%;
+    top: 72%;
     left: 50%;
     transform: translateX(-50%);
-    width: torem(253px);
-    background: url("images/state-2.png") center/auto 100% no-repeat;
+    width: torem(320px);
+   // background: url("images/state-2.png") center/auto 100% no-repeat;
   }
 
 }

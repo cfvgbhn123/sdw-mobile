@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='description'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+    <style>
+        body,html,#app{
+            height: 100%;
+        }
+    </style>
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script src="http://pv.sohu.com/cityjson"></script>
+    <script>
+        SDW_WEB.checkUserInfo();
+    </script>
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+</head>
+<body>
+
+<!--
+我的更多
+-->
+<div id="app" >
+    <div class="page-identify">
+        <div v-if="!hasIdInfo">
+            <p class="txt-tip">
+                *本平台承诺绝不对外公开、透露或编辑次信息。<br>
+                *身份信息只能提交一次，不可修改，慎重填写；
+            </p>
+            <input type="text" class="ipt" placeholder="身份证号" v-model="id">
+            <input type="text" class="ipt" placeholder="真实姓名" v-model="name">
+            <div class="tip-error" >
+                <p v-if="errorTip"><i></i>{{errorTip}}</p>
+            </div>
+            <div class="long-btn" @click="identify()">提交认证</div>
+            <div class="bottom">
+                您的账号尚未进行实名认证。按照文化部《网络游戏管理暂行办
+                法》的相关要求，网络游戏用户需使用有效身份证件进行实名注
+                册才可登录游戏。
+            </div>
+        </div>
+        <div class="info-container list-container" v-else>
+            <div class="list-item">真实姓名：{{this.name}}</div>
+            <div class="list-item">身份证号：{{this.id}}</div>
+        </div>
+        <div class="shuoming">
+            <i></i><a href="http://inews.shandw.com/a8fef536369e4eabb3091af5b77e444a.html">防沉迷系统说明</a>
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+</body>
+
+
+</html>

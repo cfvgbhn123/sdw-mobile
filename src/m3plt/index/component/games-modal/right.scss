@@ -1,15 +1,40 @@
 .right-part{
+  position: fixed;
+  top: 0;
+  right:0px;
+  width: 93.5%;
+  z-index: 9999;
+  height: 100%;
+  background: rgba(0,0,0,.9);
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  flex-wrap: wrap;
   .do-box{
     height: 60px;
     width: 100%;
     position: relative;
-    .mix-btn,.close-btn,.refresh-btn, .cpy-btn {
+    .close-btn,.refresh-btn, .cpy-btn {
+      width: 55px;
+      height: 55px;
+      background: url(../../images/mix-ico.png) no-repeat center;
+      float: right;
+      border-left:1px solid #212933;
+      cursor: pointer;
+    }
+    .mix-btn {
       width: 60px;
       height: 60px;
       background: url(../../images/mix-ico.png) no-repeat center;
       float: right;
       border-left:1px solid #212933;
       cursor: pointer;
+    }
+    @media screen and (max-width: 1300px) {
+      .mix-btn,.close-btn,.refresh-btn, .cpy-btn {
+        height: 50px;
+        width: 45px;
+      }
     }
     .mix-btn:hover,
     .close-btn:hover,
@@ -28,18 +53,41 @@
     .cpy-btn:hover {
       background-color:  #22c9b5;
     }
+    @media screen and (max-width: 1600px) {
+      .close-btn,.refresh-btn, .cpy-btn {
+        height: 50px;
+        width: 50px;
+      }
+      .close-btn {
+        background-size: 14px 14px;
+      }
+      .refresh-btn {
+        background-size: 52px 52px;
+      }
+      .cpy-btn {
+        background-size: 14px 14px;
+      }
+    }
+  }
+  @media screen and (max-width: 1300px) {
+    .do-box {
+      height: 50px;
+    }
   }
   /*code*/
   .q-code-border {
     overflow: hidden;
     width: 116px;
-    height: 136px;
+    height: 142px;
     position: absolute;
-    top: -136px;
+    top: -142px;
     left: 42px;
-    background: url(../../images/q-code-border2.png) 0 0 /100% no-repeat;
+    background: url('../../images/q-code-border2.png') 0 0 /100% no-repeat;
   }
-
+  .m3plt-code-border {
+    background: url("../../images/m3plt-code-border2.png") 100% 100% no-repeat;
+    background-position:  0 0;
+  }
   .q-code {
     width: 25px;
     height: 32px;
@@ -54,14 +102,14 @@
   }
 
   .q-code-cont {
-    width: 75px;
-    height: 75px;
+    width: 94px;
+    height: 92px;
     border: 6px solid #fff;
     background: #fff;
     position: absolute;
     z-index: 2;
-    top: 9px;
-    left: 14px;
+    top: 1px;
+    left: 5px;
   }
 
   .q-code-flash {
@@ -84,18 +132,6 @@
       transform: translate3d(0, -41px, 0);
     }
   }
-
-  position: fixed;
-  top: 0;
-  right:0px;
-  width: 94%;
-  z-index: 9999;
-  height: 100%;
-  background: rgba(0,0,0,.9);
-  display: flex;
-  display: -webkit-flex;
-  display: -moz-flex;
-  flex-wrap: wrap;
   .do-box-1{
     border-bottom: solid  #212933 1px;
   }
@@ -103,9 +139,10 @@
     background-color:  #212933;
     padding-left: 20px;
     color: #fff;
-    font-size: 20px;
+    font-size: 16px;
     box-sizing: border-box;
-    line-height: 60px;
+    line-height: 55px;
+    height: 55px;
   }
   .games-container{
     width: 90%;
@@ -113,15 +150,18 @@
     display: flex;
     display: -webkit-flex;
     display: -moz-flex;
-    justify-content: space-around;
-    justify-content: space-evenly;
+    justify-content: center;
+    align-items: center;
     .game-box {
       margin: auto;
       transition: all 0.8s;
       -webkit-transition: all 0.8s;
     }
     .no-screen {
-      width: 475px;
+      width: 450px;
+    }
+    .m3pltGame-no-screen {
+      width: 383px;
     }
     .screen-box {
       /* position: absolute;
@@ -132,9 +172,11 @@
       -ms-transform: translate(-50%,-50%);
       -o-transform: translate(-50%,-50%);
       -webkit-transform: translate(-50%,-50%); */
-      margin-top: 110px;
       width: 924px;
-      height: 647px;
+    }
+    .full-screen-box {
+      width: 98%;
+      height: 100%;
     }
     .game-hidden {
       display: none;
@@ -145,44 +187,104 @@
     .game-container{
       width: 100%;
       height: 750px;
-      background: url("../../images/bg.jpg");
-      background-size:100% 100% ;
+      background: #00021b url("../../images/loading-bg.jpg") no-repeat;
+      background-size:100%;
       iframe{
         width: 100%;
         height: 100%;
         display: block;
       }
     }
+    .m3plt-game-container {
+      overflow: hidden;
+      height: 640px;
+    }
     .screen-container {
-      width: 924px;
-      height: 522px;
+      height: 525px;
+      background-size: 55%;
+      background-position: bottom
+    }
+    .m3plt-screen-container {
+        margin-top: 60px;
+        margin-left: -40px;
     }
     .code-container{
       position: relative;
       width: 100%;
-      line-height: 65px;
+      line-height: 55px;
       background-color: #212933;
       >span {
         margin-left: 50px;
         color: #fff;
-        font-size: 17px;
+        font-size: 15px;
       }
       .mycolor {
         color: #25cbb2;
       }
     }
+    @media screen and (max-width: 1300px) {
+      /* .no-screen {
+        width: 300px;
+      }
+      .game-container {
+        height: 425px;
+      }
+      .screen-box {
+        width: 700px;
+      }
+      .screen-container {
+        width: 700px;
+        height: 350px!important;
+      }
+      .code-container {
+        line-height: 50px;
+        >span {
+          font-size: 12px;
+        }
+      } */
+    }
+    .full-game-container {
+      width: 100%;
+      height: 88%;
+      iframe{
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+    .m3plt-full-game-container {
+      height: 80%;
+    }
+  }
+  @media screen and (max-width: 1600px ) {
+    .games-container {
+      height: 800px;
+      .no-screen {
+        width: 380px;
+      }
+      .screen-box {
+        width: 800px;
+      }
+      .game-container {
+        height: 633px;
+      }
+      .screen-container {
+        height: 480px;
+      }
+    }
+  }
+  .m3pltGame-games-container {
+    align-items: flex-start;
   }
   .menu-container{
     width:10%;
     padding-top: 55px;
-    .gift-box {
-      transition: all .8s ease-in .1s;
-    }
     .icon-box {
       height: 54px;
       margin-bottom: 30px;
       position: relative;
       overflow: hidden;
+      transition: all .6s ease-in .1s;
       img {
         position: absolute;
         right: 30px;
@@ -190,7 +292,7 @@
         width: 54px;
         height: 54px;
         cursor: pointer;
-        transition: all .8s ease-in .2s;
+        transition: all .6s ease-in .1s;
         z-index: 10000;
       }
       .img-hidden {
@@ -201,9 +303,9 @@
         height: 54px;
       }
       .con-moveover1 {
-        background: url('../../images/app-ico.png') 100%;
+        background: url('../../images/app-ico.png') 0 0/100% 100% no-repeat;
         transform: translateX(500px);
-        transition: all .8s ease-in .1s;
+        transition: all .6s ease-in .1s;
       }
       .con-moveover11 {
         transform: translateX(0);
@@ -213,16 +315,16 @@
         margin-bottom: 30px;
         width: 140px;
         height: 0;
-        background: url('../../images/app-code.png') 100%;
-        transition: all .8s ease-in .1s;
+        background: url('../../images/app-code.png') 0 0/100% 100% no-repeat;
+        transition: all .6s ease-in .1s;
       }
       .con-moveover22 {
         height: 190px;
       }
       .con-moveover3 {
-        background: url('../../images/gift-ico-p.png') 100%;
+        background: url('../../images/gift-ico-p.png') 0 0/100% 100% no-repeat;
         transform: translateX(500px);
-        transition: all .8s ease-in .1s;
+        transition: all .6s ease-in .1s;
       }
       .con-moveover31 {
         transform: translateX(0);
@@ -232,8 +334,9 @@
         margin-top: 10px;
         width: 140px;
         height: 179px;
-        background: url('../../images/gift.png') 100%;
+        background: url('../../images/gift.png') 0 0/100% 100% no-repeat;
         color: #000;
+        transition: all .6s ease-in .1s;
         .game-i {
           margin-top: 16px;
           left: 50%;
@@ -269,23 +372,64 @@
         }
       }
       .con-moveover5 {
-        background: url('../../images/contact-ico-over.png') 100%;
+        background: url('../../images/contact-ico-over.png') 0 0/100% 100% no-repeat;
         transform: translateX(500px);
-        transition: all .8s ease-in .1s;
+        transition: all .6s ease-in .1s;
       }
       .con-moveover51 {
         transform: translateX(0);
-        transition: all .8s ease-in .1s;
       }
       .con-moveover6 {
         margin-top: 15px;
         width: 140px;
         height: 0;
-        transition: all .8s ease-in .1s;
-        background: url('../../images/contact-p.png') 100%;
+        transition: all .6s ease-in .1s;
+        background: url('../../images/contact-p.png') 0 0/100% 100% no-repeat;
       }
       .con-moveover61 {
         height: 315px;
+      }
+      @media screen and (max-width: 1300px) {
+        .con-moveover1, .con-moveover2, .con-moveover3,
+         .con-moveover5, .con-moveover6 {
+          background-size: 80% 80%;
+        }
+        .con-moveover4 {
+          width: 100px;
+          height: 125px;
+          img {
+            width: 40px;
+            height: 40px;
+          }
+          .game-n {
+            top: 60px;
+            font-size: 12px;
+          }
+          .gift-num {
+            top: 76px;
+            font-size: 12px;
+          }
+          .gift-btn {
+            height: 30px;
+          }
+        }
+      }
+      @media screen and (max-width: 1600px) {
+        .con-moveover4 {
+          width: 120px;
+          height: 165px;
+          img {
+            width: 40px;
+            height: 40px;
+          }
+          .game-n {
+            top: 81px;
+            font-size: 14px;
+          }
+          .gift-num {
+            top: 105px;
+          }
+        }
       }
     }
     .contact-box {
@@ -295,15 +439,42 @@
       background-size: 100% 100%;
     }
   }
+  @media screen and (max-width: 1300px) {
+    .menu-container {
+      padding-top: 0;
+    }
+    .do-box-2 {
+      font-size: 12px;
+      line-height: 50px!important;
+      height: 50px!important;
+    }
+  }
+  @media screen and (max-width: 1600px) {
+    .do-box-2 {
+      font-size: 13px;
+      line-height: 50px;
+      height: 50px
+    }
+  }
 }
-
-
+.m3pltGame-right-part {
+  justify-content: center;
+  width: 92%;
+}
 .right-part{
   transition: all 0.5s;
   transform: translateX(0px);
 }
-
+.m3pltGame-full-games-container {
+  margin-left: 80px;
+  margin-top: -50px;
+}
 
 .slide-in-right{
   transform: translateX(2000px);
+}
+.full-game-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
 }

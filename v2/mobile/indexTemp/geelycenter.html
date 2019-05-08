@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name='title' content='游戏中心'/>
+    <meta name='description' content='' class='sDesc'/>
+    <title>游戏中心</title>
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+    <!--<script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>-->
+    <script src="http://www.shandw.com/pc/js/libs/qrcode.js"></script>
+<link href="styles.css?0b83" rel="stylesheet"></head>
+
+
+<script>
+    (function () {
+        // 通用的外部获取方法
+        SDW_WEB.checkUserInfo(true);
+        // 默认加上简易版的字段
+        SDW_WEB.readParam('sdw_simple', '5');
+    })();
+</script>
+<style>
+    .geely-theme{
+        background: #000000;
+        text-align: center;
+        color: #fff;
+        padding-top: 90px;
+    }
+    h1{
+        font-size: 30px;
+        text-align: center;
+        line-height: 64px;
+        position: fixed;
+        top:10px;
+        width: 100%;
+    }
+    .game-container{
+        display: flex;
+        min-width: 100%;
+        flex-wrap: nowrap;
+        overflow: scroll;
+        /*width: 100%;*/
+        white-space: nowrap;
+    }
+    .game-item{
+        background: url("images/geely-item.png");
+        width: 200px;
+        height: 127px;
+        /*position: relative;*/
+        margin: 30px 15px ;
+        border-radius: 5px;
+        /*display: inline-block;*/
+    }
+    .game-item:nth-child(10n+1){
+        margin-left:0px ;
+    }
+    .game-item:nth-child(10n){
+        margin-right:0px ;
+    }
+    .game-icon{
+        width: 95px;
+        height: 95px;
+        border-radius: 26px;
+        display: block;
+        /*left: 50%;*/
+        margin: 0px auto;
+        margin-top: -30px;
+        background-color: #dddddd;
+    }
+    .game-name{
+        text-align: center;
+        font-size: 20px;
+        line-height: 54px;
+        width: 100%;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .login-container{
+        width: 100%;
+        height: 100%;
+        background: url("images/login-container.png") center /100% auto no-repeat rgba(0,0,0,0.9);
+        position: fixed;
+        top:0px;
+        left: 0px;
+    }
+    .login-container .login-code{
+        width: 200px;
+        height: 200px;
+        padding: 12px;
+        box-sizing:border-box ;
+        border-radius: 5px;
+        background: #fff;
+        position: absolute;
+        left: 50%;top:49.5%;
+        transform: translate3d(-50%,-50%,0);
+    }
+    .login-code img{
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+    }
+    .login-title{
+        width: 100%;
+        position: absolute;
+        text-align: center;
+        font-size: 30px;
+        color: #fff;
+        top:12%;
+    }
+    .txt-tip{
+        position: absolute;
+        text-align: center;
+        font-size: 24px;
+        color: #fff;
+        bottom:45px ;
+        width: 100%;
+    }
+    /*modal*/
+
+    .scale21-leave {
+        opacity: 0;
+    }
+
+    .scale21-leave-active {
+        opacity: 1;
+    }
+
+    .scale21-enter-active {
+        transition: transform .36s , opacity .36s; /*cubic-bezier(0.5, 1.65, .49, .63),*/
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+
+    .scale21-enter {
+        transform: scale(1.63, 1.23);
+        opacity: 0;
+    }
+</style>
+<body class="geely-theme">
+
+<div id="app" v-cloak style=" width: 96%;max-width: none;padding-bottom: 0px;overflow: scroll">
+    <h1 >游戏中心</h1>
+    <!--列表的内容-->
+    <div class="game-container"  >
+        <div class="game-item" v-for="item in gameListFirst" @click="checkGameSate('play',item)">
+            <img :src="item.icon" alt=" " class="game-icon">
+            <p class="game-name">{{item.name}}</p>
+        </div>
+    </div>
+
+    <div class="game-container"  >
+        <div class="game-item" v-for="item in gameListSecond" @click="checkGameSate('play',item)">
+            <img :src="item.icon" alt=" " class="game-icon">
+            <p class="game-name">{{item.name}}</p>
+        </div>
+    </div>
+    <!--微信扫码登录-->
+    <transition name="scale21" v-show="showLogin" >
+        <div class="login-container" v-show="showLogin" @click.self="showLogin=false" >
+            <h1 class="login-title">微信扫码登录</h1>
+            <div class="login-code" id="ewm">
+                <!--<div src="images/qcode-img.png" alt="" id="ewm">-->
+            </div>
+            <div class="txt-tip">小提示：在微信公众号“闪电玩”开玩游戏，数据互通</div>
+        </div>
+    </transition>
+</div>
+
+<script type="text/javascript" src="js/geelycenter.min.js?0b83"></script></body>
+
+
+</html>

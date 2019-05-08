@@ -52,18 +52,21 @@
     top: 15px;
     left: 15px;
     border-radius: 12px;
+    cursor: pointer;
   }
 
   font-size: 14px;
 
   .server-g-name {
-    width: 120px;
+    width: 140px;
     height: 20px;
     line-height: 20px;
     color: #fff;
     position: absolute;
     top: 15px;
     left: 95px;
+    overflow: hidden;
+    cursor: pointer;
   }
 
   .server-g-info {

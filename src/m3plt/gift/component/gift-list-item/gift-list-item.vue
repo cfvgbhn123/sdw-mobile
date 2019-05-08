@@ -5,10 +5,10 @@
 
         <div class="gift-top-info">
 
-            <a :href="gameUrl" target="_blank" class="start-game-cover"></a>
+            <div class="start-game-cover" @click.stop="authToGame(gameItem)"></div>
             <img :src="giftItem.myGameCover" class="gift-bg">
 
-            <div class="gift-game-name ellipsis">{{giftItem.myGameName}}</div>
+            <div class="gift-game-name ellipsis" @click.stop="gotoDetail(gameItem)">{{giftItem.myGameName}}</div>
             <div class="gift-game-info ellipsis">{{giftItem.myGameSub}}</div>
         </div>
 
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-
+    import Fn from '../../../index/js/Fn';
     export default {
         name: 'gift-list-item',
         data: function () {
@@ -45,15 +45,63 @@
                 msg: 'i am gift-list-item!',
                 more: true,
                 showLen: 2,
+                giftCode: ""
             }
         },
-        props: ['giftItem'],
+        props: ['giftItem','game-item', 'gamesModal'],
         methods: {
-
+            // 跳转详情页采用相对路径处理
+            gotoDetail: function (item) {
+                var id = item.id || item.gid;
+                this.$emit('go-detail', id)
+            },
             showMoreGift: function () {
                 this.more = false;
                 this.showLen = 9999;
-            }
+            },
+            checkGiftState: function (item) {
+                var self = this;
+               /*  if (this.giftCode) {
+
+                    alert(this.giftCode);
+
+                } else {
+                    alert('开始领取');
+                    this.giftCode = 11
+
+                } */
+                var sec = APP.guid;
+                var token = SDW_WEB.USER_INFO.otoken;
+                var uid = SDW_WEB.USER_INFO.uid || SDW_WEB.USER_INFO.id
+                var postUri = SDW_WEB.URLS.addParam({
+                    id: item.id,
+                    uid: uid,
+                    channel: SDW_WEB.channel,
+                    gid: item.gid,
+                    sec: sec,
+                    token: faultylabs.MD5(SDW_WEB.channel + uid + sec + token),
+                    }, false, HTTP_STATIC + 'getgift');
+                Fn.getAjaxData(postUri, function (data) {
+                    if(data.result === 1) {
+                        self.$emit("get-code", data.code, item.gid);
+                    }else if(data.result === 0) {
+                        dialog.show('error', '您已经领取过礼包！', 1);
+                    }else if(data.result === -3) {
+                        dialog.show('error', '亲，领取礼包要先登录哦！', 2);
+                    }
+                });
+                /* SDW_WEB.getAjaxData(postUri, function (data) {
+                    if(data.result === 1) {
+                        self.$emit("get-code", data.code);
+                    }if(data.result === 0) {
+                        self.$emit("got-code", '您已经领取过礼包！');
+                    }
+                }); */
+            },
+            checkOpenGame: Fn.checkOpenGame,
+            authToGame: Fn.authToGame,
+            getQuery: Fn.getQuery,
+            findGame: Fn.findGame,
         },
 
         computed: {

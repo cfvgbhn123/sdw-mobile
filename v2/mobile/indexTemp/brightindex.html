@@ -29,14 +29,14 @@
             }
         })()
     </script>
-<link href="styles.css?69ef" rel="stylesheet"></head>
+<link href="styles.css?0b83" rel="stylesheet"></head>
 
 
 <script>
     (function () {
-        // if (SDW_WEB.onPC) {
-        //     location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
-        // }
+        if (SDW_WEB.onPC) {
+            location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
+        }
         // 判断烟草的地址的合法性
         if (SDW_WEB.channel === '10041') {
             location.href = SDW_WEB.MOBILE_ROOT + 'cigarette/?channel=10041';
@@ -66,17 +66,17 @@
         </div>
     </div>
     <!--返回顶部-->
-    <!--<div class="go-top" @click.stop.self="gotoTopFn()" style="display: none" id="goBackBtn"></div>-->
+    <div class="go-top" @click.stop.self="gotoTopFn()" style="display:none" id="goBackBtn"></div>
 
     <!--轮播底部的模糊图片-->
     <img id="topBanner" style="visibility: hidden">
     <div class="recent-game" v-if="recentList.length" >
         <div class="recent-left">
-            <b>最近在玩</b> <br>
-            <p class="all-txt">查看全部 <i class="ico-more"></i></p>
+            <b>最近在玩</b>
+            <p class="all-txt" @click="goMorePage">查看全部 <i class="ico-more"></i></p>
         </div>
         <div class="recent-right" v-if="recentList.length">
-            <img class="item" v-for="item in recentList"  />
+            <img class="item" v-for="item in recentList" :src="item.icon"  @click="checkGameSate('play',item.id)"/>
         </div>
     </div>
     <!--轮播  广告 -->
@@ -86,28 +86,34 @@
     </div>
 
     <!--列表导航-->
-    <div class="nav-list-container">
-        <div
-             @click="switchNav(item)"
-             :class="item.current ? 'nav-item  nav-item-select' : 'nav-item '"
-             v-for="item in navList">{{item.title}}
+    <div class="nav-view" >
+        <div class="nav-list-container" ref="navCtx" data-type = "bright">
+            <div
+                    @click="switchNav(item)"
+                    :class="item.current ? 'nav-item  nav-item-select' : 'nav-item '"
+                    v-for="item in navList">{{item.title}}
+            </div>
         </div>
+        <div class="more-nav" @click="moreNav"></div>
     </div>
 
     <!--列表的内容-->
-    <div class="game-container" >
-        <div class="game-item">
-            <img src="" alt="">
-            <p class="game-name"></p>
+    <div class="game-container" v-for="items in navList" v-show="items.current" >
+        <!--<long-game-item :game-item="item"
+                        v-for="item in items.list"
+                        v-on:tap-game="checkGameSate"></long-game-item>-->
+        <div class="game-item" v-for="item in items.list" @click="checkGameSate('play',item.id)">
+            <img :src="item.icon" alt=" " class="game-icon">
+            <p class="game-name">{{item.name}}</p>
         </div>
     </div>
 
     <!--加载更多的提示-->
-    <!--<loading-view v-show="pageHasLoading"></loading-view>-->
+    <loading-view v-show="pageHasLoading"></loading-view>
 
 </div>
 
-<script type="text/javascript" src="js/brightindex.min.js?69ef"></script></body>
+<script type="text/javascript" src="js/brightindex.min.js?0b83"></script></body>
 
 
 </html>

@@ -10,7 +10,9 @@ require('../../components/initcss.scss');
 var loadingView = require('../../components/mobile/loading/loading.vue');
 var longGameItem = require('../../components/mobile/long-game-item/long-game-item.vue');
 var recentGame = require('./recent-game/recent-game.vue');
-var ActivityConfig = require('./config');
+// var ActivityConfig = require('./config');
+var ActivityConfig = require('../libs/config');
+
 // 首页活动悬浮按钮
 if (ActivityConfig.state) {
     require('../game/tool-icon.scss');
@@ -77,7 +79,8 @@ function initToolIcon() {
             var links = ActivityConfig.activityPage+'?channel=' + SDW_WEB.channel;
 
             if(ActivityConfig.openState == 1){
-                dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
+                dialog.show('ok','敬请期待<br>'+ActivityConfig.activityName+'活动将于'+ActivityConfig.startTime[1]+'月'+ActivityConfig.startTime[2]+'号开启哦~！',1);
+                //dialog.show('ok','敬请期待<br>新年活动将于2月2号开启哦~！',1);
                 return ;
             }
 

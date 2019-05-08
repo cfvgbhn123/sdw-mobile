@@ -48,7 +48,8 @@ if(sessionStorage && sessionStorage.collect) {
     }
 }
 if(OS.onMobile && /pc/.test(location.href)&&isPlaying) {
-    location.href = gameLink;
+    gameLink = gameLink.split('?')[0];
+    location.href = gameLink + spliceParam();
 }
 // 移动端打开了PC的页面
 if (OS.onMobile && /pc/.test(location.href)&&!isPlaying) {
@@ -86,4 +87,13 @@ function spliceParam() {
         return '?' + location.href.split('?')[1];
     }
     return '';
+}
+function getQuery(uri) {
+    var url = uri || window.location.href;
+    var reg = /([^\?\=\&]+)\=([^\?\=\&]*)/g;
+    var obj = {};
+    while (reg.exec(url)) {
+        obj[RegExp.$1] = RegExp.$2;
+    }
+    return obj;
 }

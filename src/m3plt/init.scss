@@ -12,7 +12,8 @@
     position: absolute;
     width: 40px;
     height: 40px;
-    background: url("./index/images/more-icon.png") right center/ 18px 18px no-repeat;
+    background: url("./index/images/more-icon.png") 18px 18px no-repeat;
+    background-position:  right center;
     top: 0;
     right: 0;
     cursor: pointer;
@@ -68,7 +69,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 4px;
   background-color: #1a2129;
 }
 
@@ -101,20 +102,32 @@ body {
   user-select: none;
   font-family: arial;
   //background: #262e37;
-  background: #212933;
+  background: #151c24;
 }
 
 .container {
   width: 980px;
+  min-height: 950px;
   margin: 0 auto;
   position: relative;
+  overflow: hidden;
+  padding: 0px 30px;
+  background-color: #212933;
 }
-
+.m3pltGame-container {
+  padding: 0px 16px;
+}
+.m3plt-container {
+  margin-left: 143px;
+}
 .left-container {
+  margin-top: 80px;
   width: 660px;
   float: left;
 }
-
+.m3plt-l-container {
+  margin-top: 0; 
+}
 .right-container {
   float: right;
   width: 300px;
@@ -166,7 +179,8 @@ body {
 
 .start-game-btn:hover {
   color: #fff !important;
-  background: linear-gradient(90deg, #22cab5, #3fe28f) !important;
+  background: #2fd8a1;
+  background: linear-gradient(90deg, #22cab5, #3fe28f);
   border: none !important;
 }
 
@@ -180,6 +194,7 @@ body {
     width: 60px;
     display: inline-block;
     margin-right: 20px;
+    cursor: pointer;
   }
 
   .my-game-item:nth-child(4n) {
@@ -213,14 +228,15 @@ body {
   height: 35px;
   line-height: 35px;
   font-size: 14px;
-  background: linear-gradient(90deg, #161c24, transparent);
+  /* background: linear-gradient(90deg, #161c24, transparent); */
   color: #6c7583;
 
   .back-btn {
     cursor: pointer;
     display: inline-block;
     padding-left: 23px;
-    background: url("components/images/nav-back.png") 0 8px/14px 15px no-repeat;
+    background: url("components/images/nav-back.png") 14px 15px no-repeat;
+    background-position:  0 8px;
     margin-right: 20px;
     position: relative;
   }
@@ -234,7 +250,8 @@ body {
   .nav-list-arr {
 
     padding-right: 10px;
-    background: url("components/images/more-nav-arr.png") right center/6px 11px no-repeat;
+    background: url("components/images/more-nav-arr.png") 6px 11px no-repeat;
+    background-position: right center;
   }
 
   .back-btn:before {
@@ -253,7 +270,7 @@ body {
   content: '';
   width: 1920px;
   height: 35px;
-  background: #161c24;
+  background: #212933;
   position: absolute;
   top: 0;
   left: -1920px;
@@ -336,4 +353,34 @@ body {
   line-height: 24px;
   text-align: center;
   color: #fff;
+}
+#myOwnTip {
+  position: fixed;
+  top: 200px;
+  left: 500px;
+  width: 100px;
+  height: 100px;
+  color: #fff;
+  background: rgba(0, 0, 0, .6);
+  overflow: auto;
+  user-select: text;
+  z-index: 9999999999999999999;
+}
+
+/* 底部样式 */
+.mft_black { background:rgba(20, 20, 20, .58); color:#f0f0f0; }
+.mft_wrap { font:12px/1.5 "\5FAE\8F6F\96C5\9ED1"; overflow:hidden; padding:36px 0; width:1000px; margin:0 auto; }
+.mft_black .mft_left { border-right:1px solid #404040; }
+.mft_left { padding-left:30px; width:244px; }
+.mft_left, .mft_right { float:left; box-sizing:content-box; }
+.mft_black .mft_dhLogo { background:url(https://static.m3guo.com/17m3/foot/img/dhLogo_black.jpg) no-repeat left top; }
+.mft_dhLogo { width:147px; }
+.mft_dhLogo,.mft_wenLogo { float:left; height:54px; }
+.mft_black .mft_wenLogo { background:url(https://static.m3guo.com/17m3/foot/img/wenLogo_black.jpg) no-repeat left top; }
+.mft_wenLogo { width:71px; }
+.mft_dhLogo,.mft_wenLogo { float:left; height:54px; }
+.mft_right { padding-left:40px; width:685px; }
+.mft_wrap p { margin:0; }
+.m3plt-footer-l {
+  margin-left: 143px;
 }

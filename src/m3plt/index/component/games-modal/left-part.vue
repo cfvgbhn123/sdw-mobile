@@ -1,11 +1,12 @@
 <template>
-    <div :class="info.isPlaying?'left-part':'left-part slide-in-left'">
+    <div :class="[info.isPlaying?'left-part':'left-part slide-in-left', {'m3pltGame-left-part': onM3pltGame}]">
         <div class="user" @click.stop = "unLogin">
-            <img :src=" usrInfo.avatar ||'imgs/avatar.png'" alt="">
+            <img v-if="usrInfo.avatar!='undefined'&&usrInfo.avatar" :src='usrInfo.avatar' alt="用户图像">
+            <img v-else src='http://www.shandw.com/pc/index/images/d-avatar.png' alt="用户图像">
             <p> 切换账号</p>
         </div>
         <div class="list-box">
-            <div class="game-list" >
+            <div class="game-list">
                 <!--class="game-item"-->
                 <div :class="info.isPlaying?'game-item':'game-item slide-in-left'"
                      v-for="(item,i) in info.gamePlayList"
@@ -13,7 +14,8 @@
                      @click="openAllGames(i)" :key="item.id">
                     <img :src ="item.icon" class="game-img">
                     <div class="game-name">{{item.name}}</div>
-                    <div class="screen-f" v-if="item.screen">横屏</div>
+                    <div class="screen-f" v-if="item.screen==1">横屏</div>
+                    <div class="screen-f" v-if="item.screen==2 || item.screen==3">全屏</div>
                 </div>
                 <div class="game-item addIcon" v-if="info.gamePlayList.length===1" v-for="i in [1,2]" @click="mixModal"></div>
                 <div class="game-item addIcon" v-if="info.gamePlayList.length===2" @click="mixModal"></div>
@@ -28,6 +30,8 @@ import bus from '../../js/eventBus';
         data: function () {
             return {
                 userInfo:SDW_WEB.USER_INFO,
+                //梦平台游戏内
+                onM3pltGame: SDW_WEB.onM3pltGame
             }
         },
         props: ['info', 'usrInfo'],
@@ -49,8 +53,10 @@ import bus from '../../js/eventBus';
             },
             /*打开全部游戏*/
             openAllGames:function (i) {
+                var self =this;
                 //点击横屏游戏只打开横屏
-                if(this.info.gamePlayList[i].screen) {
+                if(this.info.gamePlayList[i].screen==1) {
+                    this.info.isFull = false;
                     this.info.gamePlayList[i].sOn = true;
                     this.info.gamePlayList[i].playing = true;
                     for(var x = 0 ;x < this.info.gamePlayList.length ; x++){
@@ -59,14 +65,36 @@ import bus from '../../js/eventBus';
                             this.info.gamePlayList[x].playing = false;
                         } 
                     }
+                }else if(this.info.gamePlayList[i].screen==2 || this.info.gamePlayList[i].screen==3) {
+                    //打开全屏
+                    this.info.isFull = true;
+                    this.info.gamePlayList[i].sOn = true;
+                    this.info.gamePlayList[i].playing = true;
+                   /*  for(var x = 0 ;x < this.info.gamePlayList.length ; x++){
+                        if(x !== i) {
+                            this.info.gamePlayList[x].sOn = false ;
+                            this.info.gamePlayList[x].playing = false;
+                        } 
+                    } */
                 }else {
+                    this.info.isFull = false
                     for(var x = 0 ;x < this.info.gamePlayList.length ; x++){
                         if(this.info.gamePlayList[x].screen) {
                              this.info.gamePlayList[x].sOn = false ;
                              this.info.gamePlayList[x].playing = false;
                         } else {
-                            this.info.gamePlayList[x].sOn = true ;
-                            this.info.gamePlayList[x].playing = true;
+                            if(self.onM3pltGame) {
+                                //梦三游戏内，只打开当前点击游戏
+                                this.info.gamePlayList[i].sOn = true ;
+                                this.info.gamePlayList[i].playing = true;
+                                if(x !== i) {
+                                    this.info.gamePlayList[x].sOn = false ;
+                                    this.info.gamePlayList[x].playing = false;
+                                } 
+                            }else {
+                                this.info.gamePlayList[x].sOn = true ;
+                                this.info.gamePlayList[x].playing = true;
+                            }
                         }
                     }
                 }
@@ -96,10 +124,10 @@ import bus from '../../js/eventBus';
                 localStorage.clear();
                 sessionStorage.clear();
                 var self = this;
-                self.$emit("login-dialog", "", "unloginPlay");
+                self.$emit("login-dialog", "unloginPlay", "");
                 bus.$emit("get-qrcode");
                 //游戏页面切换账号不允许关闭登录框
-                bus.$emit("no-close");
+                // bus.$emit("no-close", "");
                 //玩游戏界面切换账号后刷新
                 APP.unLoginCallback = function () {
                     window.location.reload();

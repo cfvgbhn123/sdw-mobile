@@ -29,8 +29,18 @@ var CheckOpenGame = {
 
     },
     createQCode: function (gid) {
-
-        return 'http://www.shandw.com/m/game/?gid=' + gid + '&channel=' + SDW_WEB.channel + '&from_plt=m3plt';
+        var game_url=SDW_PATH.GAME_URL('play',  gid);
+        if(game_url.indexOf('?')>-1) {
+            if(SDW_WEB.onM3plt) {
+                return game_url+"&from=m3plt";
+            }
+            return game_url;
+        }else{
+            if(SDW_WEB.onM3plt) {
+                return game_url+"&from=m3plt";
+            }
+            return game_url;
+        }
     }
 };
 

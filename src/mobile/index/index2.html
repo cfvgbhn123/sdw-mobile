@@ -52,9 +52,9 @@
 
 <script>
     (function () {
-        if (SDW_WEB.onPC) {
-            location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
-        }
+        // if (SDW_WEB.onPC) {
+        //     location.href = SDW_PATH.PC_ROOT + 'index/?channel=' + SDW_WEB.channel + '&v=' + SDW_WEB.version;
+        // }
         // 判断烟草的地址的合法性
         if (SDW_WEB.channel === '10041') {
             location.href = SDW_WEB.MOBILE_ROOT + 'cigarette/?channel=10041';
@@ -72,7 +72,7 @@
 <div id="app" v-cloak
      :class="onShandw?'app-shandw' : ''"
      style="margin-top: 0">
-
+    <!--<identify-container></identify-container>-->
 
     <!--活动浮窗按钮-->
     <div id="my-menu"

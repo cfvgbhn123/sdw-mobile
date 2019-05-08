@@ -1,5 +1,5 @@
 .left-part{
-  width: 6%;
+  width: 6.5%;
   height: 100%;
   background-color: #212933;
   position: fixed;
@@ -24,6 +24,24 @@
       line-height: 2.5em;
       color: #717983;
     }
+    @media screen and (max-width: 1300px) {
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      p {
+        font-size: 12px;
+      }
+    }
+    @media screen and (max-width: 1600px) {
+      img {
+        width: 60px;
+        height: 60px;
+      }
+      p {
+        font-size: 13px;
+      }
+    }
   }
   .list-box{
     height: 600px;
@@ -32,7 +50,15 @@
       display: table-cell;
       vertical-align: middle;
     }
+    @media screen and (max-width: 1300px) {
+      .game-list {
+        vertical-align: top;
+      }
+    }
   }
+}
+.m3pltGame-left-part {
+  width: 8%;
 }
 .game-list{
   width: 112px;
@@ -68,13 +94,55 @@
       color: #000;
       background: url('./imgs/screen-f.png') 100% no-repeat;
     }
+    @media screen and (max-width: 1300px) {
+      .game-img {
+        width: 60px;
+      }
+      .game-name {
+        font-size: 12px;
+      }
+      .screen-f {
+        top: 36.5px;
+        right: 5px;
+        background-size: 80% 80%;
+        text-indent: 7px;
+      }
+    }
+    @media screen and (max-width: 1600px) {
+      .game-img {
+        width: 65px;
+      }
+      .game-name {
+        font-size: 12px;
+      }
+      .screen-f {
+        top: 39.5px;
+        right: 4px;
+        background-size: 80% 80%;
+        text-indent: 9px;
+      }
+    }
   }
   .addIcon {
-    background: url('./imgs/ic_tianjia.png')  100% 100%;
+    background: url('./imgs/ic_tianjia.png') no-repeat;
     width: 80px;
     height: 80px;
     margin: 0 auto 25px auto;
     cursor: pointer;
+  }
+  @media screen and (max-width: 1300px) {
+    .addIcon {
+      background-size: 100%;
+      width: 60px;
+      height: 60px;
+    }
+  }
+  @media screen and (max-width: 1600px) {
+    .addIcon {
+      background-size: 100%;
+      width: 65px;
+      height: 65px;
+    }
   }
 }
 

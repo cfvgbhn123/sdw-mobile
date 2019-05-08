@@ -5,6 +5,7 @@ require('../../components/initcss.scss');
 var WindowScroll = require('../../libs/WindowScroll');
 
 var indexData = {
+    showZS:false,
     userPayToken: '',
     defaultToken:null,
     currentPayItem: null,
@@ -148,7 +149,9 @@ var indexMethods = {
                 });
 
                 self.topText = res.appName + '礼包';
-
+                if(res.appName == '怼怼三国'){
+                    self.showZS = true ;
+                }
                 dialog.hidden();
             } else {
                 self.currentPage = 'index';
@@ -232,8 +235,12 @@ var indexMethods = {
 
             // 隐藏提示框
             dialog.hidden();
-
+            self.loading = false;
             if (res.result === 1) {
+                if(item.payType){
+                    dialog.show('ok', '领取成功', 1);
+                    return ;
+                }
                 if (res.data) {
                     // CP产出的支付数据
                     self.startPay(res.data);
@@ -249,7 +256,7 @@ var indexMethods = {
                 dialog.show('error', JSON.stringify(res), 1);
             }
 
-            self.loading = false;
+
         });
 
     },

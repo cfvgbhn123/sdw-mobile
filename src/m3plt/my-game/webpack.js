@@ -8,7 +8,7 @@ var BASE_CONFIG = require('../../webpack-base');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
-var BUILD_PATH = path.resolve(__dirname, '../../../v2/m3plt/my-game/');
+var BUILD_PATH = path.resolve(__dirname, '../../../../pc/my-game/');
 
 var bases = BASE_CONFIG({
     dirname: __dirname,

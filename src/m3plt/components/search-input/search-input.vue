@@ -17,7 +17,7 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
 @event tap-game(type,id)
 *********************************************************
-"play" ---  点击到【开玩】按钮
+"play" -  点击到【开玩】按钮
 *********************************************************
 
 -->
@@ -26,25 +26,32 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
 
     <!--搜索游戏-->
     <div class="search-input-container">
-        <input type="text" placeholder="搜索游戏名称" class="input-search" v-model="searchKey">
+        <input type="text" placeholder="搜索游戏名称" class="input-search" v-model="searchKey" @keyup.8.stop.self ="clearB">
 
         <!--清除搜索的icon-->
-        <div class="clear-search-btn" @click.stop.self="clearAllSearchList()" v-show="searchKey"></div>
+        <div class="clear-search-btn" @click.stop.self="clearAllSearchList()"  v-show="searchKey"></div>
 
         <!--开始查找游戏-->
         <div class="search-btn" @click.stop.self="searchGame()"></div>
+        <tips-dialog :mytips="mytips"></tips-dialog>
     </div>
 
 </template>
 
 <script>
-
+    import tipsDialog from '../tips-dialog/tip.vue';
     export default {
         name: 'search-input',
         data: function () {
             return {
                 msg: 'i am search-input.',
                 searchKey: '',
+                mytips: {
+                    ok: false,
+                    error: true,
+                    ct: "",
+                    isShow: false
+                },
             }
         },
         props: [],
@@ -54,10 +61,31 @@ time:         游戏的时间（showMore为false，显示我玩过的时间）
                 this.searchKey = '';
             },
             searchGame: function () {
+                if(!this.searchKey) {
+                    /* this.mytips = {
+                        ok: false,
+                        error: true,
+                        ct: "请输入需要搜索的内容",
+                        isShow: true,
+                        autoHidden: true
+                    } */
+                    dialog.show('error', '请输入需要搜索的内容', 1);
+                    return false;
+                }
                 this.$emit("search-btn-fn", this.searchKey);
+            },
+            clearB: function () {
+                if(SDW_WEB.onM3pltGame || SDW_WEB.onM3plt) {
+                    if(this.searchKey) {
+                        this.searchKey = this.searchKey.slice(0, this.searchKey.length-1);
+                    }
+                }
             }
         },
-        computed: {}
+        computed: {},
+        components: {
+            tipsDialog: tipsDialog
+        }
     }
 
 </script>

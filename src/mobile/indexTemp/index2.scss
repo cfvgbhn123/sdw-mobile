@@ -1211,10 +1211,14 @@ $toolColor: rgba(255, 255, 255, .8);
     }
   }
 }
-.recent-view{
+.recent-view-banner{
   position: absolute;
-  width: 100%;
   top:torem(310px);
+}
+.recent-view{
+
+  width: 100%;
+
   color: #fff;
 }
 .recent-container{
@@ -1228,40 +1232,117 @@ $toolColor: rgba(255, 255, 255, .8);
 
   }
 }
+.go-top {
+  width: torem(100px);
+  height: torem(100px);
+  background: url("images/backtop.png") 0 0/100% 100%;
+  position: fixed;
+  bottom: torem(130px);
+  right: torem(20px);
+  z-index: 999999999;
+}
+
 .bright-theme{
   background: #ffffff;
   .game-container{
     display: flex;
     flex-wrap: wrap;
-    width: torem(715px);
     margin: 0 auto;
     .game-item{
-      width: torem(224px);
-      height: torem(190px);
-      background-color: #ffffff;
-      box-shadow:torem(3px) torem(3px) torem(1px) torem(1px)rgba(0,0,0,0.1);
+      width: torem(250px);
+      height: torem(220px);
+      background: url("images/bg-gameItem.png") center /100% 100% no-repeat;
+      margin: torem(60px) 0px 0px 0px;
+      border-radius: torem(20px);
+      position: relative;
+      .game-icon{
+        width: torem(140px);
+        height: torem(140px);
+        border-radius: torem(26px);
+        //position: relative;
+        display: block;
+        left: 50%;
+        margin: 0px auto;
+        margin-top: torem(-30px);
+        background-color: #dddddd;
+      }
+      .game-name{
+        text-align: center;
+        font-size: torem(28px);
+        color: #000;
+        margin-top: torem(25px);
+        width: 100%;
+        white-space:nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
-  .nav-list-container{
+  .nav-view{
+    width: 100%;
+    display: flex;
+    background-color: #fff;
+    .more-nav{
+      height: torem(54px);
+      width: torem(25px);
+      background: url("images/more2.png") center /50% auto  no-repeat;// #ff974a ;
+      border-radius: torem(25px);
+      margin: auto;
+      //margin-left: 0px;
+      margin-right: torem(25px);
+    }
+  }
+
+  .nav-list-container[data-type = "bright" ]{
     height: auto;
-    margin: torem(20px) auto;
-    width: 95%;
+    margin: torem(20px);
+    width: 100%;
     line-height: 1.7em;
+    overflow: scroll;
+    flex-wrap: nowrap;
+    .nav-item{
+      color: #333333;
+      padding: 0px torem(20px);
+      flex-grow: initial;
+      white-space: nowrap;
+    }
+    .nav-item-select{
+      border-radius: torem(27px);
+      background-color: #ff974a;
+      color: #fff;
+    }
+    .nav-item-select:before{
+      content: none;
+    }
   }
-  .nav-item{
-    color: #333333;
-  }
+
   .nav-item-select{
-    border-radius: torem(27px);
-    background-color: #ff974a;
-    color: #fff;
+    color: #0ed5a0;
   }
-  .nav-item-select:before{
-    content: none;
+  .game-long-container  .g-l-name{
+    color: #000;
+  }
+  .game-long-container .g-l-1{
+    background: #ff773d;
+  }
+  .game-long-container .g-l-2{
+    background: #43a4ff;
+  }
+  .game-long-container .g-l-3{
+    background: #a788ff;
+  }
+  .game-long-container .g-l-4{
+    background: #ffc657;
+  }
+  .game-long-container .g-long-desc{
+    color: #8c9097;
+  }
+  .game-long-container:before, .game-long-container:first-child:after{
+    background: #eee;
   }
 }
 .recent-game{
-  padding-bottom: torem(50px);
+  padding-bottom: torem(35px);
   display: flex;
   width: torem(695px);
   margin: 0 auto;
@@ -1270,19 +1351,22 @@ $toolColor: rgba(255, 255, 255, .8);
     width: 50%;
     color: #000;
     font-size: torem(34px);
-    line-height: 1.7em;
-
+    line-height: 1.4em;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: torem(10px);
     .all-txt{
       color: #9da1a7;
       font-size: torem(24px);
     }
     .ico-more{
-      width: torem(9px);
-      height: torem(56px);
+      width: torem(10px);
+      height: torem(47px);
       display: inline-block;
       background:url("images/ic_more3.png") center  /100% auto no-repeat;
       position: absolute;
-      left: torem(140px);
+      left: torem(110px);
     }
   }
   .recent-right{

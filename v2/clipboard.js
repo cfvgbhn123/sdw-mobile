@@ -685,8 +685,9 @@ module.exports = E;
             key: 'listenClick',
             value: function listenClick(trigger) {
                 var _this2 = this;
-
+                console.log('4444');
                 this.listener = (0, _goodListener2.default)(trigger, 'click', function (e) {
+                    console.log('555');
                     return _this2.onClick(e);
                 });
             }

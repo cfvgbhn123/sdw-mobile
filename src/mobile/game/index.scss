@@ -300,24 +300,24 @@ $topTitleWidth: torem(80px);
 }
 
 .btn-container {
-  width: 100%;
+  //width: 100%;
   height: torem(56px);
   position: absolute;
   top: torem(32px);
   right: torem(15px);
   text-align: right;
-
+  z-index: 4;
 }
 
 #sc-cont, #sc-cont2, #sc-cont3, #sc-cont4, #sc-cont5, #sc-cont8 {
   display: inline-block;
-  height: torem(56px);
-  line-height: torem(60px);
+  height: torem(50px);
+  line-height: torem(54px);
   background: #fff;
   font-size: torem(24px);
   border-radius: torem(28px);
-  padding-left: torem(20px);
-  padding-right: torem(20px);
+  padding-left: torem(8px);
+  padding-right: torem(8px);
   margin-left: torem(10px);
 }
 
@@ -352,9 +352,32 @@ $topTitleWidth: torem(80px);
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
+  .my-id{
+    z-index: 5;
+    display: inline-block;
+    height: torem(30px);
+    line-height: torem(33px);
+    color: #fff;
+    font-size: torem(22px);
+    position: absolute;
+    bottom: torem(22px);
+    left: torem(120px);
+    button {
+      display: inline-block;
+      border: 1px solid #fff;
+      line-height: torem(30px);
+      padding: 0px torem(8px);
+      margin-left: torem(15px);
+      font-size: torem(18px);
+      background: none;
+      color: #fff;
+     // position: relative;
+      //top: torem(-2px);
+      border-radius: torem(8px);
+      font-style: normal;
+    }
+  }
   .my-golds {
-
     z-index: 5;
     display: inline-block;
     height: torem(30px);
@@ -1301,7 +1324,7 @@ input, textarea {
 }
 
 .dialogs {
-  padding: torem(45px) torem(65px);
+  padding: torem(45px) torem(30px);
   position: fixed;
   z-index: 9999;
   border-radius: 6px;
@@ -1359,6 +1382,24 @@ input, textarea {
   line-height: torem(35px);
   text-align: center;
   color: #fff;
+}
+.dialogs{
+  #d-title{
+    color: #fff;
+    font-size: torem(40px);
+    text-align: center;
+  }
+  #dia-btns{
+    font-size: torem(32px);
+    margin: 15px auto 0px;
+    background: #fff;
+    width: 65%;
+    text-align: center;
+    border-radius: torem(20px);
+    line-height: torem(70px);
+    background-image: linear-gradient(90deg, #1fc7b9, #40e38d);
+    color: #fff;
+  }
 }
 
 .isVisitor-top-container {
@@ -1654,7 +1695,30 @@ input:focus {
   }
 }
 .loading-default{
-  background-image: url('images/loading-bg.jpg');
+ // background-image: url('images/loading-bg.jpg');
+  background: url('images/bg_loading_dark.png') center  18%/ 77% auto no-repeat #2b323d ;
+}
+ //.loading-txt-bright{
+ //  display: none;
+ //}
+.loading-txt{
+  display: block;
+  position: absolute;
+  bottom: torem(50px);
+  width: 100%;
+  height:torem(142px) ;
+  background: url("images/txt_loading_bright.png") center / 67.5% auto no-repeat;
+}
+.loading-txt-dark{
+  background: url("images/txt_loading_dark.png") center / 67.5% auto no-repeat;
+}
+.loading-txt-bright{
+  background: url("images/txt_loading_bright.png") center / 67.5% auto no-repeat;
+}
+
+.loading-bright{
+  background: url('images/bg_loading_bright.png') center  18%/ 77% auto no-repeat #fff ;
+
 }
 .loading-tongcheng{
   background:url('images/loading-tongcheng.png') center top /100% auto no-repeat #fff;
@@ -1673,7 +1737,7 @@ input:focus {
   }
 }
 .loading-newyear-2{
-  background:url('images/loading-newyear.jpg') center top /100% auto no-repeat #c13b27;
+  background:url('images/loading-zhufu.jpg') center top /100% auto no-repeat #c13b27;
   img{
     width: torem(750px);
     display: block;
@@ -1688,6 +1752,64 @@ input:focus {
   visibility: hidden;
   opacity: 0;
   transform: scale(1.55);
+}
+.loader {
+  display: block;
+  width: 60px;
+  margin: torem(-90px) auto;
+  font-size: 0px;
+  padding: 0px;
+}
+.loader span {
+  vertical-align: middle;
+  border-radius: 100%;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 2px;
+  -webkit-animation: loader 0.8s linear infinite alternate;
+  animation: loader 0.8s linear infinite alternate;
+}
+.loader span:nth-child(1) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+  background: rgba(255, 152, 71,0.6);
+}
+.loader span:nth-child(2) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  background: rgba(255, 152, 71,0.8);
+}
+.loader span:nth-child(3) {
+  -webkit-animation-delay: -0.26666s;
+  animation-delay: -0.26666s;
+  background: rgba(255, 152, 71,1);
+}
+.loader span:nth-child(4) {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+  background: rgba(255, 152, 71,0.8);
+}
+.loader span:nth-child(5) {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+  background: rgba(255, 152, 71,0.4);
+}
+@keyframes loader {
+  from {
+    transform: scale(0, 0);
+  }
+  to {
+    transform: scale(1, 1);
+  }
+}
+@-webkit-keyframes loader {
+  from {
+    -webkit-transform: scale(0, 0);
+  }
+  to {
+    -webkit-transform: scale(1, 1);
+  }
 }
 
 .ios-desktop-container {
@@ -2277,5 +2399,135 @@ input:focus {
   overflow-scrolling: touch;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+/*身份认证*/
+.identify-btn{
+  position: absolute;
+  width: torem(125px);
+  height:torem(44px) ;
+  background: url("images/identity_btn.png") center /100% 100% no-repeat;
+  bottom: torem(-18px);
+  left: torem(18px);
+  z-index: 100;
+}
+.bg-identify{
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  position: absolute;
+  z-index: 99;
+  .identify-container{
+    width: 86%;
+    position:absolute ;
+    //height: torem(710px);
+    left: 50%;
+    top:40%;
+    transform: translate3d(-50%,-50%,0);
+    border-radius: torem(20px);
+    background: #fff;
+  }
+}
+.identify-container{
+  background: #fff;
+  padding: torem(22px) torem(24px);
+  overflow: hidden;
+  //position: absolute;
+  //z-index: 9999;
+  .ico_close{
+    float: right;
+    width:torem(28px) ;
+    height:torem(28px) ;
+    background: url("http://www.shandw.com/m/libs/icons/ico_close.png") center /100% 100%;
+    margin-right: torem(25px);
+  }
+  .title{
+    font-weight: bold;
+    font-size: torem(36px);
+    text-align: center;
+    line-height: torem(105px);
+    color: #333;
+  }
+  .ipt-container{
+    width: torem(505px);
+    margin: 0 auto;
+  }
+  .ipt{
+    width: 100%;
+    height: torem(75px);
+    border-radius: torem(30px);
+    border: 1px solid #dadada;
+    background-repeat: no-repeat;
+    color: #666666;
+    box-sizing: border-box;
+    padding-left: torem(80px);
+    margin: 0 auto;
+  }
+  .ipt-id{
+    margin-bottom: torem(30px);
+    background-image: url("http://www.shandw.com/m/libs/icons/ico_identify.png");
+    background-position: torem(25px) center;
+    background-size: torem(29px) auto;
+  }
+  .ipt-name{
+    background-image: url("http://www.shandw.com/m/libs/icons/ico_name.png");
+    background-position: torem(32px) center;
+    background-size: torem(24px) auto;
+  }
+  .ipt:hover{
+    border: 1px solid #8ae3d6;
+  }
+  .tip-error{
+    font-size: torem(20px);
+    margin: torem(18px) 0px torem(30px) torem(42px);
+    height: torem(24px);
+    line-height: torem(24px);
+    color: #ef4134;
+    i{
+      display: inline-block;
+      vertical-align: top;
+      width: torem(22px);
+      height: torem(23px);
+      background: url("http://www.shandw.com/m/libs/icons/ico_error.png") center /100% 100% no-repeat;
+      position: relative;
+      top: torem(2px);
+      left: torem(-10px);
+    }
+  }
+  .long-btn{
+    width: 100%;
+    height: torem(80px);
+    line-height:torem(80px);
+    color: #fff;
+    text-align: center;
+    font-size: torem(36px);
+    margin: torem(25px) auto;
+    border-radius: torem(40px);
+    background: linear-gradient(90deg,#22cab5,#3fe28f);
+  }
+  .shuoming{
+    color: #6ac5b6;
+    text-align: center;
+    margin: torem(10px) auto torem(60px);
+    font-size: torem(22px);
+    i{
+      display: inline-block;
+      vertical-align: top;
+      width: torem(28px);
+      height: torem(28px);
+      background: url("http://www.shandw.com/m/libs/icons/ico_tip.png") center /100% 100% no-repeat;
+      position: relative;
+      top: torem(3px);
+      left: torem(-10px);
+    }
+    a{
+      color: #6ac5b6;
+    }
 
+  }
+  .txt-tip{
+    color: #999;
+    text-align: center;
+    padding-bottom: torem(20px);
+    font-size: torem(20px);
+  }
 }

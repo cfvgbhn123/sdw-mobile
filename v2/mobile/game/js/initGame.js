@@ -23,6 +23,55 @@
 
 var HTTP_AUTH = HTTP_USER_STATIC + 'authgame';
 var _protocol_ = location.protocol;
+var meiweiTimer = null ;
+var tipClock = false ;
+function meiWeiGetQueue(thirdSign,shouldTip) {
+    if(tipClock) {
+        clearInterval(meiweiTimer);
+        return ;
+    }
+    var postUri = SDW_WEB.URLS.addParam({
+        channel: SDW_WEB.channel,
+        wxCode:SDW_WEB.URLS.queryUrl()['wxCode'],
+        thirdSign:thirdSign,
+        // }, false, HTTP_USER_STATIC + 'meiWeiGetQueue');
+    }, false, 'http://meiwei.shandw.com/meiWeiGetQueue');
+    // 等待服务端的验证；
+    SDW_WEB.getAjaxData(postUri, function(data) {
+        if(data.result === 1) {
+            if(data.data){
+                var content = 	data.data ;
+                if(content.state == 4){
+                   // dialog.show('ok', '【'+content.shopName+'】提醒您：您的排队号'+content.num+'可以用餐了', 1);
+                    shouldTip && dialog.show('ok','【'+content.shopName+'】提醒您：您的排队号'+content.num+'可以用餐了',false,{title:'叫号提醒',btn:'知道了'});
+                    clearInterval(meiweiTimer);
+                    tipClock = true ;
+                    return ;
+                }
+
+                if(content.state == 6){
+                    shouldTip && dialog.show('ok','【'+content.shopName+'】提醒您：您的排队号'+content.num+'已过号',false,{title:'过号提醒',btn:'知道了'});
+                    clearInterval(meiweiTimer);
+                    tipClock = true ;
+                    return ;
+                }
+                if(content.state == 2 || content.state == 3){
+                    if (shouldTip)  return ;
+                    meiweiTimer = setInterval(function () {
+                        meiWeiGetQueue(thirdSign,true);
+                    },10000);
+                }else{
+                    clearInterval(meiweiTimer);
+                }
+
+            }
+
+
+        }else{
+            clearInterval(meiweiTimer);
+        }
+    })
+}
 
 (function () {
 
@@ -174,10 +223,14 @@ var _protocol_ = location.protocol;
                 var postUri = SDW_WEB.URLS.addParam(postParam, false, HTTP_USER_STATIC + 'divauth');
 
             } else {
+                if(SDW_WEB.wxLoginPay){
+                    alert('请先登陆');
+                    return ;
+                }
 
-                var postUri = SDW_WEB.URLS.addParam(postParam, false, HTTP_USER_STATIC + 'vstgame');
+               var postUri = SDW_WEB.URLS.addParam(postParam, false, HTTP_USER_STATIC + 'vstgame');
             }
-
+            console.log('postUri',postUri);
             SDW_WEB.getAjaxData(postUri, function (data) {
 
                 if (data.result == 1) {
@@ -915,7 +968,7 @@ var _protocol_ = location.protocol;
             params.token = isM3guo ? query['token'] : userInfo['token'];
             params.sec = isM3guo ? query['sec'] : userInfo['secheme'];
             params.channel = isM3guo ? query['channel'] : SDW_WEB.channel;
-
+            query['wxCode']?params.thirdOpenId = query['wxCode']:'';
             // 添加赛事id
             if (query['gmUnitId']) {
                 params.mthid = query['gmUnitId'];
@@ -955,7 +1008,7 @@ var _protocol_ = location.protocol;
 
                     SDW_WEB.setLoadText.setText('auth');
                     SDW_WEB.gameName = data.name;
-
+                    (data.thirdSign && SDW_WEB.channel == '12240') ? meiWeiGetQueue(data.thirdSign):'';
                     // 如果存在分享配置项，随机读取里面的内容.
                     if (typeof _gameShareData_ != 'undefined') {
                         var shareRandomInfo = readShareInfo_Random();
@@ -989,6 +1042,7 @@ var _protocol_ = location.protocol;
 
                     // 设置服务器的时间
                     checkGameUrl(data);
+
 
                 } else if (data.result == -3) {
                     // 重新授权

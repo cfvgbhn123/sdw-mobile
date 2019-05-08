@@ -370,11 +370,14 @@ body {
       text-align: center;
       color: #fff;
     }
-
+    .free-btn{
+        background:linear-gradient(90deg,#22cab5,#3fe28f) ;
+        box-shadow: 0 torem(8px) torem(10px) rgba(37, 204, 178, 0.15);
+    }
     .game-item-info {
       padding: 0 torem(30px);
       box-sizing: border-box;
-
+      min-height: torem(144px);
       margin-top: torem(40px);
     }
 
