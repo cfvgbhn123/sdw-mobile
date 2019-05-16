@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='apple-mobile-web-app-title' content='index'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta name='title' content='<%=htmlWebpackPlugin.options.title%>'/>
+    <meta name='description' content='' class='sDesc'/>
+    <title><%=htmlWebpackPlugin.options.title%></title>
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script src="http://www.shandw.com/libs/vue.js"></script>
+    <!--<script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>-->
+    <script src="http://www.shandw.com/pc/js/libs/qrcode.js"></script>
+</head>
+
+
+<script>
+    (function () {
+        // 通用的外部获取方法
+        SDW_WEB.checkUserInfo(true);
+        // 默认加上简易版的字段
+        SDW_WEB.readParam('sdw_simple', '6');
+    })();
+</script>
+
+<body >
+
+<div id="app" v-cloak style=" width: 96%;max-width: none;padding-bottom: 0px;overflow: scroll">
+
+</div>
+
+</body>
+
+
+</html>

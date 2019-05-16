@@ -14,6 +14,10 @@
     <link rel='bookmark' class='sIcon'/>
     <meta name='description' content='' class="sDesc"/>
     <title></title>
+    <script src="https://www.shandw.com/libs/js/vconsole.min.js"></script>
+    <script>
+        var log = new VConsole();
+    </script>
     <style>
         #app {
             width: 100%;
@@ -148,6 +152,7 @@
         '11927':'tongcheng',
         '11950':'tongcheng',
         '12192':'tongcheng',
+        '12296':'tongcheng',
         '11906':'bus',
         '10890':'wyStar',
     };
@@ -221,6 +226,7 @@
         //alert(JSON.stringify(SDW_WEB.USER_INFO));
         if(specialChannel[channel]){
             loadingCtl.classList.add('loading-'+specialChannel[channel]);
+            loadingTtx.style.display = 'none'
         }else{
             var simple = SDW_WEB.readParam('sdw_simple');
             if( simple == 2 || simple == 3 || simple == 4 ){

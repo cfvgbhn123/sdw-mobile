@@ -11,8 +11,7 @@ var sdw;
 window.NativeBridge;
 
 var SHA = require('./initJs/sha1');
-var wyShare = require('./share');
-
+var  wyShare = require('./share');
 // 闪电玩分享
 window.sdwShareState = {
     jsApiTicket: '',
@@ -1060,7 +1059,6 @@ var sdw = {
             success:null,
             cancel:null,
         };
-        console.log(res);
         // 清除预设的分享
         if (SDW_WEB && SDW_WEB.mySetTimer) {
             clearTimeout(SDW_WEB.mySetTimer);
@@ -1089,7 +1087,7 @@ var sdw = {
 
         // var postMsgObj = {
         //     postSdwData: true,
-        //     operate: 'setSDWShareInfo'
+        //     operate: 'setSDWshareInfo'
         // };
 
         // postMsgObj.shareInfo = option;
@@ -1109,6 +1107,24 @@ var sdw = {
 
         option.newLink = convertTimeLineUrl(option.link);
 
+
+        /*第三方APP与闪电玩协商的分享*/
+        window.shandwshare.success = option.success;
+        window.shandwshare.cancel = option.cancel ;
+        var shareInfo = {
+            title: option.title,
+            desc: option.desc,
+            link: option.link,
+            imgUrl: option.imgUrl,
+            shareflag:option.share?true:false,
+        };
+        if( window.sdwMsg && window.sdwMsg.share ){
+            window.sdwMsg.share(JSON.stringify(shareInfo));
+            return ;
+        }
+
+
+
         // ******************************************************************************
         // 微信中的分享设置
         // ******************************************************************************
@@ -1118,9 +1134,7 @@ var sdw = {
             // postMsgObj.source = 'weixin';
 
             if ((typeof option.target == 'undefined') || option.target == '') {
-
                 option.target = wxShare;
-
             } else {
 
                 var sdkTarget = option.target;
@@ -1178,7 +1192,7 @@ var sdw = {
         // 网易星球中的分享设置
         // ******************************************************************************
         else if (SDW_WEB.wyxq) {
-            wyShare.setShareInfo({
+            wyShare &&  wyShare.setShareInfo({
                 title: option.title,
                 content: option.desc,
                 url: option.link,
@@ -1222,8 +1236,8 @@ var sdw = {
         // 牛哄哄的分享设置（文案设置）
         // ******************************************************************************
         else if (/nhhapp/.test(navigator.userAgent)) {
-            window.bitgm && (typeof window.bitgm.setShareInfo === 'function')
-            && window.bitgm.setShareInfo({
+            window.bitgm && (typeof window.bitgm.setshareInfo === 'function')
+            && window.bitgm.setshareInfo({
                 title: option.title,
                 content: option.desc,
                 url: option.link,
@@ -1241,14 +1255,14 @@ var sdw = {
         else if(SDW_WEB.onQujianpan){
             window.shandwshare.success = option.success;
             window.shandwshare.cancel = option.cancel ;
-            var shareInfo = {
-                title: option.title,
-                desc: option.desc,
-                link: option.link,
-                imgUrl: option.imgUrl,
-                shareflag:option.share?true:false,
-            };
-            //alert(JSON.stringify(shareInfo));
+            // var shareInfo = {
+            //     title: option.title,
+            //     desc: option.desc,
+            //     link: option.link,
+            //     imgUrl: option.imgUrl,
+            //     shareflag:option.share?true:false,
+            // };
+
             if(SDW_WEB.onIOS){
                 window.webkit.messageHandlers.shandwShare.postMessage(JSON.stringify(shareInfo));
             }else if(SDW_WEB.onAndriod){

@@ -42,7 +42,6 @@
 
 // var ChatRoom = require('./ChatRoom');
 // var Barrage = require('./Barrage-canvas');
-// var ActivityConfig = require('../index/config.js');
 var ActivityConfig = require('../libs/config');
 var DragTouch = require('./DragTouch');
 var TransServerDate = require('./libs/TransServerDate');
@@ -1060,9 +1059,16 @@ var SliderNavManager = {
 
         // 返回闪电玩首页
         gotoIndexPage: function () {
+            // dialog.show('error',SDW_WEB.TLCJ);
+            // return ;
             if (SDW_WEB.onShandw) {
                 SDW_WEB.sdw.switchTab('index');
-            } else {
+            } else if(SDW_WEB.TLCJ){
+                setTimeout(function () {
+                    window.history.back(-1) ;
+                },20);
+                return ;
+            }else {
                 var url = this.APP_ROOT_PAGE;
                 switch(Number(isSimple)){
                     // 1简化版黑主题

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no'/>
+    <!--<meta name='apple-mobile-web-app-capable' content='yes'>-->
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='title' class='sTitle' content=''/>
+    <meta name='apple-mobile-web-app-title' content='' class='sTitle'>
+    <meta content='telephone=no' name='format-detection'/>
+    <meta content='email=no' name='format-detection'/>
+    <link rel="apple-touch-icon" class='sIcon'/>
+    <link rel='bookmark' class='sIcon'/>
+    <meta name='description' content='' class="sDesc"/>
+    <title>正在支付</title>
+    <script src="https://sandboxpay.17m3.com/api/dhpay.js"></script>
+    <script>
+        document.write('<script src="http://www.shandw.com/libs/path.min.js?m=' + (+new Date()) + '"><\/script>');
+        document.write('<script src="http://www.shandw.com/libs/js/minit.min.js?m=' + (+new Date()) + '"><\/script>');
+    </script>
+    <script src="https://www.shandw.com/libs/js/vconsole.min.js"></script>
+    <script>
+        var log = new VConsole();
+       // if(SDW_WEB.onJDJR){
+            document.write('<script src="https://sandboxpay.17m3.com/api/dhpay.js?m=' + (+new Date()) + '"><\/script>');
+            //document.write('<script src="https://m.jr.jd.com/crayfish/zui/jrap/1.0.0/jrap.js?m=' + (+new Date()) + '"><\/script>');
+       // }
+    </script>
+
+    <style>
+        .btn{
+            background-color: #1fc7b9;
+            width: 100px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 10px;
+            border: none;
+            color: #fff;
+            font-weight: 700;
+            text-align: center;
+        }
+        html,body{
+            height: 100%;
+        }
+    </style>
+</head>
+<!--<script src='http://www.shandw.com/libs/js/zepto.min.js'></script>-->
+
+
+<body>
+    <div style="z-index: 9999999;"  class="btn" onclick="jdpay()">
+        正在支付，请稍后
+    </div>
+<!--游戏的容器-->
+<div id="g-container" class="warp"
+     style="position: fixed;width: 100%;height: 100%;">
+    <!--<iframe src="http://www.shandw.com/games/ellojump2.html?uid=1820046540&nick=%E6%9C%B1%E5%AE%B62%E5%B0%8F%E5%A7%90&avatar=http%3A%2F%2Fthirdqq.qlogo.cn%2Fg%3Fb%3Doidb%26k%3DhjIldcRg25o3muaaewqia5Q%26s%3D100&sex=2&channel=10250&time=1557827570&sign=e0188053c1571c7c907a819099495e22&gid=1247104336&appid=1247104336&plt=null&cburl=http%3A%2F%2Fwww.shandw.com%2Fmi%2Fgame%2F1247104336.html%3Fchannel%3D10250&reurl=http%3A%2F%2Fwww.shandw.com%2Fmi%2Fgame%2F1247104336.html%3Fchannel%3D10250&fl=3" frameborder="0" width="100%" height="100%"></iframe>-->
+    <!--<iframe src="http://www.shandw.com" frameborder="0" width="100%" height="100%"></iframe>-->
+</div>
+
+<script type="text/javascript">
+    if(localStorage.JDPAY_PARAM){
+        var option = JSON.parse(localStorage.JDPAY_PARAM);
+        console.log(option);
+        var filterData = function (option) {
+            console.log(option);
+            var postObj = {
+                postjson: {},
+                config: {alipay: true, weixin: true},
+                resultpost: true
+            };
+
+            for (var i in option) {
+                if (i != 'success' && i != 'fail' && i != 'cancel' && i != 'complete' && i != 'paychannel') {
+                    option[i] && (postObj.postjson[i] = option[i]);
+                }
+                if (i == 'complete' && typeof option.complete === 'function') {
+                    var resData = sdw.createPayData(option);
+                    postObj.closecallback = function () {
+                        option.complete(resData);
+                    };
+                }
+            }
+
+            // 对回调函数做兼容处理
+            if (!postObj.closecallback) {
+                postObj.closecallback = function () {
+                }
+            }
+
+            return postObj;
+        };
+        var postObj = filterData(option);
+        console.log(postObj);
+        // dhpayObj.closecallback = function () {
+        //     console.log('取消支付');
+        // }
+       // dhpayObj && dhpayObj.payfor(postObj);
+
+    }else{
+       // dialog.show('error','支付参数有误')
+    }
+
+    // function jdpay() {
+    //     console.log('父页面按钮支付');
+    //     var defer = jsBridgeV3.onReady();
+    //     defer.then(function(res) {
+    //         res.jrPayMerchantSpe(function(d) {
+    //             var dara = typeof d=="string"?JSON.parse(d):d;
+    //             alert(dara)
+    //             //			 		if(JSON.parse(d).payStatus=="DP_PAY_SUCCESS"){}
+    //             //			 		好的，前端返回是 “JDP_PAY_SUCCESS”成功，”JDP_PAY_CANCEL”取 消，”JDP_PAY_FAIL”失败，”JDP_PAY_NOTHING”无操作。 你验证一下。
+    //         }, {
+    //             merchant: "111414708002",
+    //             orderId: "1003155774643601502787",
+    //             signData: "7fa8ba1d61f633c1207627c004300c9d",
+    //         })
+    //     })
+    // }
+</script>
+</body>
+
+</html>

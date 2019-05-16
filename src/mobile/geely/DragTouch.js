@@ -226,7 +226,7 @@ DragTouch.prototype.clearTimer = function () {
 // 收起状态
 DragTouch.prototype.hiddenState = function () {
 
-    this.target.style.opacity = '0.5';
+    this.target.style.opacity = '1';
 
     if (this.notRotate) {
         var left = this.left;

@@ -12,7 +12,7 @@ var loadingView = require('../../components/mobile/loading/loading.vue');
 var longGameItem = require('../../components/mobile/long-game-item/long-game-item.vue');
 var WindowScroll = require('../../libs/WindowScroll');
 var recentGame = require('./recent-game/recent-game.vue');
-var ActivityConfig = require('./config');
+var ActivityConfig = require('../libs/config');
 // 首页活动悬浮按钮
 if (ActivityConfig.state) {
     require('../game/tool-icon.scss');

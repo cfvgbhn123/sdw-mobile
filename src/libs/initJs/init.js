@@ -14,7 +14,10 @@ var _protocol_ = location.protocol;
 SDW_WEB.sender_sdw_id = '_sender_sdw_rfid_';
 SDW_WEB.verReg = /v=/;
 SDW_WEB.version = '315';
-
+if(SDW_WEB.onJDJR){
+    document.write('<script src="https://sandboxpay.17m3.com/api/dhpay.js?m=' + (+new Date()) + '"><\/script>');
+    //document.write('<script src="https://m.jr.jd.com/crayfish/zui/jrap/1.0.0/jrap.js?m=' + (+new Date()) + '"><\/script>');
+}
 
 SDW_WEB.addJSFile = function (url, callback) {
     var oHead = document.getElementsByTagName('HEAD').item(0);
@@ -1209,7 +1212,7 @@ SDW_WEB.getBroadCastData = function () {
 // 接收子页面的消息传递
 window.addEventListener('message', function (e) {
     // alert(JSON.stringify(e.data));
-    // console.log(e.origin);
+    console.log(e.data);
 
     // if (e.origin !== 'http://www.shandw.com') return;
 
@@ -1412,7 +1415,56 @@ var _MESSAGE_FUNCTION_ = {
         openObj = SDW_WEB._checkWebViewObject(openObj);
         SDW_WEB.openNewWindow(openObj);
     },
+    
+    'jdPay':function (e,dataObj) {
+        console.log('*************京东支付参数********************');
+        var option = dataObj.data ;
+        console.log(option);
+        console.log(e.origin);
+        if( e.origin.indexOf('shandw.com') >-1){
+            var filterData = function (option) {
+                console.log(option);
+                var postObj = {
+                    postjson: {},
+                    config: {alipay: true, weixin: true},
+                    resultpost: true
+                };
 
+                for (var i in option) {
+                    if (i != 'success' && i != 'fail' && i != 'cancel' && i != 'complete' && i != 'paychannel') {
+                        option[i] && (postObj.postjson[i] = option[i]);
+                    }
+                    if (i == 'complete' && typeof option.complete === 'function') {
+                        var resData = sdw.createPayData(option);
+                        postObj.closecallback = function () {
+                            option.complete(resData);
+                        };
+                    }
+                }
+
+                // 对回调函数做兼容处理
+                if (!postObj.closecallback) {
+                    postObj.closecallback = function () {
+                    }
+                }
+
+                return postObj;
+            };
+            var postObj = filterData(option);
+            dhpayObj && dhpayObj.payfor(postObj);
+        }else{
+            localStorage.JDPAY_PARAM = JSON.stringify(option);
+            location.href = SDW_WEB.URLS.addParam({
+                t:new Date().getTime(),
+                channel:SDW_WEB.channel,
+            },false,SDW_PATH.MOBILE_ROOT+'/game/test.html');
+        }
+
+
+
+
+
+    }
 };
 // *****************************************************************************************
 // *****************************************************************************************
