@@ -1121,6 +1121,9 @@ var sdw = {
         if( window.sdwMsg && window.sdwMsg.share ){
             window.sdwMsg.share(JSON.stringify(shareInfo));
             return ;
+        }else if(SDW_WEB.onIOS && window.webkit &&  window.webkit.messageHandlers && window.webkit.messageHandlers.sdwShareMsg){
+            window.webkit.messageHandlers.sdwShareMsg.postMessage(JSON.stringify(shareInfo));
+            return ;
         }
 
 
@@ -1255,14 +1258,6 @@ var sdw = {
         else if(SDW_WEB.onQujianpan){
             window.shandwshare.success = option.success;
             window.shandwshare.cancel = option.cancel ;
-            // var shareInfo = {
-            //     title: option.title,
-            //     desc: option.desc,
-            //     link: option.link,
-            //     imgUrl: option.imgUrl,
-            //     shareflag:option.share?true:false,
-            // };
-
             if(SDW_WEB.onIOS){
                 window.webkit.messageHandlers.shandwShare.postMessage(JSON.stringify(shareInfo));
             }else if(SDW_WEB.onAndriod){
