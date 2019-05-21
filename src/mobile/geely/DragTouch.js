@@ -28,16 +28,15 @@ DragTouch.prototype.init = function (option) {
     this.offX = 0;
     this.offY = 0;
 
-    this.width = option.width || this.target.offsetWidth;
-    this.height = option.height || this.target.offsetHeight;
-   // console.log(this.WIDTH+'-------------'+this.width) ;
-  //  console.log(this.HEIGHT+'-------------'+this.HEIGHT) ;
+    this.width = option.width || this.target.offsetWidth || 64;
+    this.height = option.height || this.target.offsetHeight || 64;
+   console.log(this.target.offsetWidth) ;
+  // console.log(this.HEIGHT+'-------------'+this.height) ;
     if (option.width) {
         this.target.style.width = option.width + 'px';
     }
 
     if (option.height) {
-        
         this.target.style.height = option.height + 'px';
     }
 
@@ -85,7 +84,7 @@ DragTouch.prototype.update = function () {
     var _transTimer = 'cubic-bezier(0.5,1.95,.49,.73)  ' + this.duration + 's';
     this.target.style.webkitTransition = this.target.style.transition = _transTimer;
 
-    var _transStr = 'translate3d(' + left + 'px,' + top + 'px,0)';
+    var _transStr = 'translate3d(' + 0 + 'px,' + top + 'px,0)';
     this.target.style.webkitTransform = this.target.style.transform = _transStr;
 
 };
@@ -100,7 +99,8 @@ DragTouch.prototype.setPositionY = function (y, update) {
     top = Math.min(this.HEIGHT - this.height, top);
 
     this.top = top;
-    var _transStr = 'translate3d(' + this.left + 'px,' + top + 'px,0)';
+    //var _transStr = 'translate3d(' + this.left + 'px,' + top + 'px,0)';
+    var _transStr = 'translate3d(' + 0 + 'px,' + top + 'px,0)';
     this.target.style.webkitTransform = this.target.style.transform = _transStr;
     if (!update) {
         this.hiddenState();
@@ -161,7 +161,7 @@ DragTouch.prototype.touchMove = function (e) {
     left = Math.max(0, left);
     left = Math.min(this.WIDTH - this.width, left);
 
-    var str = 'translate3d(' + left + 'px,' + top + 'px,0)';
+    var str = 'translate3d(' + 0 + 'px,' + top + 'px,0)';
     this.target.style.transform = this.target.style.webkitTransform = str;
 
 };
@@ -200,8 +200,8 @@ DragTouch.prototype.touchUp = function (e) {
     this.target.style.webkitTransition = 'cubic-bezier(0.5,1.95,.49,.73)  ' + this.duration + 's';
     this.target.style.transition = 'cubic-bezier(0.5,1.95,.49,.73)  ' + this.duration + 's';
 
-    this.target.style.webkitTransform = 'translate3d(' + left + 'px,' + top + 'px,0)';
-    this.target.style.transform = 'translate3d(' + left + 'px,' + top + 'px,0)';
+    this.target.style.webkitTransform = 'translate3d(' + 0 + 'px,' + top + 'px,0)';
+    this.target.style.transform = 'translate3d(' + 0 + 'px,' + top + 'px,0)';
 
     this.timer = setTimeout((function () {
         this.hiddenState();
@@ -230,11 +230,11 @@ DragTouch.prototype.hiddenState = function () {
 
     if (this.notRotate) {
         var left = this.left;
-        var str = 'translate3d(' + left + 'px,' + this.top + 'px,0)';
+        var str = 'translate3d(' + 0 + 'px,' + this.top + 'px,0)';
 
     } else {
         var left = this.left + this.width / 2;
-        var str = 'translate3d(' + left + 'px,' + this.top + 'px,0) rotate(-45deg)';
+        var str = 'translate3d(' + 0 + 'px,' + this.top + 'px,0) rotate(-45deg)';
     }
 
     this.target.style.webkitTransform = this.target.style.transform = str;

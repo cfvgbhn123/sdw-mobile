@@ -37,8 +37,8 @@ var methods = {
         window.touch = new DragTouch({
             id: '#my-menu',
             position: '0.97,0.2',
-            width:64,
-            height:64,
+            // width:'8%',
+            // height:'18%',
         });
         var self = this ;
         $('#menu-btn').tap(function (e) {

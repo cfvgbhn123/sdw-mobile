@@ -19,12 +19,13 @@ $iconWidth: 64px;
 
 #my-menu {
   position: fixed;
-  width: $iconWidth;
-  height: $iconWidth;
+  width: 7%;
+  height: 16%;
   //background-repeat: no-repeat;
  // background: url("images/wyqq-icon.png") center/100% no-repeat;
   top: 0;
-  left: 0;
+ // left: 0;
+  right: 0px;
   color: #fff;
   z-index: 99999;
   visibility: hidden;
