@@ -55,6 +55,8 @@
         overflow: scroll;
         /*width: 100%;*/
         white-space: nowrap;
+        display: flex;
+        margin-top: 30px;
     }
     .game-item{
         background: url("images/geely-item.png");
@@ -62,7 +64,7 @@
         width: 16%;
         /* height: 127px; */
         /*position: relative;*/
-        margin: 30px 15px ;
+        margin: 30px auto;
         border-radius: 5px;
         /*display: inline-block;*/
     }
@@ -170,6 +172,11 @@
             <img :src="item.icon" alt=" " class="game-icon">
             <p class="game-name">{{item.name}}</p>
         </div>
+    </div>
+    <div class="game-container" v-if="gameListFirst.length<8">
+        <p class="game-name">
+            更多游戏请微信关注“闪电玩”公众号，海量游戏，等你来玩哟~！
+        </p>
     </div>
     <!--微信扫码登录-->
     <transition name="scale21" v-show="showLogin" >

@@ -1259,7 +1259,7 @@ var sdw = {
             window.shandwshare.success = option.success;
             window.shandwshare.cancel = option.cancel ;
             if(SDW_WEB.onIOS){
-                window.webkit.messageHandlers.shandwShare.postMessage(JSON.stringify(shareInfo));
+                window.webkit&& window.webkit.messageHandlers&&window.webkit.messageHandlers.shandwShare.postMessage(JSON.stringify(shareInfo));
             }else if(SDW_WEB.onAndriod){
                 window.androidMethodThor.shandwShare(JSON.stringify(shareInfo));
             }

@@ -234,7 +234,7 @@ var indexMethods = {
         var self = this;
         var sec = new Date().getTime();
 
-       var gameid = '1954719945_1145326931_2005182669_2022025417_1482185299_1937942730_2021828808_1262770764_2022353097_2005379277_2022222024_1938204874'
+       var gameid = '1954719945_2021828808_1145326931_2022222024_1482185299' ;
         var postUri = SDW_WEB.URLS.addParam({
             sec:sec,
             sign:SDW_WEB.MD5(''+gameid+sec+'df84bdadbbf846a899e3237c0deb056b'),
@@ -249,22 +249,27 @@ var indexMethods = {
        // console.log(''+gameid+SDW_WEB.USER_INFO.secheme+'df84bdadbbf846a899e3237c0deb056b');
         SDW_WEB.getAjaxData(postUri, function (data) {
             if(data.result == 1) {
-                var middle = Math.ceil(data.list.length/2);
-                data.list.forEach(function (item,i) {
-                    if( i < middle ){
-                        self.gameListFirst.push(item) ;
-                    }else{
-                        self.gameListSecond.push(item) ;
-                    }
-                });
-                self.$nextTick(function () {
-                    var lists = document.querySelectorAll('.game-container') ;
-                    var width = middle-6 >=0 ? (112+(18*(middle-6)))+'%' :100+'%' ;
-                    for(var i=0 ;i<lists.length;i++){
-                        lists[i].style.width = width ;
-                    }
-                    //lists.style.width = 100+'%' ;
-                })
+                if(data.list.length>=8){
+                    var middle = Math.ceil(data.list.length/2);
+                    data.list.forEach(function (item,i) {
+                        if( i < middle ){
+                            self.gameListFirst.push(item) ;
+                        }else{
+                            self.gameListSecond.push(item) ;
+                        }
+                    });
+                    self.$nextTick(function () {
+                        var lists = document.querySelectorAll('.game-container') ;
+                        var width = middle-6 >=0 ? (112+(18*(middle-6)))+'%' :100+'%' ;
+                        for(var i=0 ;i<lists.length;i++){
+                            lists[i].style.width = width ;
+                        }
+                        //lists.style.width = 100+'%' ;
+                    })
+                }else{
+                    self.gameListFirst = data.list;
+                }
+
             }
         });
     },

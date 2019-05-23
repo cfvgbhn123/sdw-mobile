@@ -46,6 +46,7 @@
     "ymr-h5": "webpack --config src/mobile/ymr-h5/webpack.js -p --watch",
     "ymr-h5-gift": "webpack --config src/mobile/ymr-h5-gift/webpack.js -p --watch",
     "initjs": "webpack --config src/libs/initJs/webpack.js -p --watch",
+    "cpsdk": "webpack --config src/sdk/webpack.js -p --watch",
     "wyqq-game": "webpack --config src/mobile/wyqq-game/webpack.js -p --watch",
     "geely": "webpack --config src/mobile/geely/webpack.js -p --watch",
     "m-game": "webpack --config src/mobile/game/webpack.js -p --watch",

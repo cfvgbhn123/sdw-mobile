@@ -22,7 +22,7 @@
     <script src="http://www.shandw.com/libs/vue.js"></script>
     <!--<script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>-->
     <script src="http://www.shandw.com/pc/js/libs/qrcode.js"></script>
-<link href="styles.css?649e" rel="stylesheet"></head>
+<link href="styles.css?b63f" rel="stylesheet"></head>
 
 
 <script>
@@ -38,10 +38,10 @@
         background: #000000;
         text-align: center;
         color: #fff;
-        padding-top: 90px;
+        padding-top: 6%;
     }
     h1{
-        font-size: 30px;
+        font-size: 28px;
         text-align: center;
         line-height: 64px;
         position: fixed;
@@ -55,13 +55,16 @@
         overflow: scroll;
         /*width: 100%;*/
         white-space: nowrap;
+        display: flex;
+        margin-top: 30px;
     }
     .game-item{
         background: url("images/geely-item.png");
-        width: 200px;
-        height: 127px;
+        background-size: cover;
+        width: 16%;
+        /* height: 127px; */
         /*position: relative;*/
-        margin: 30px 15px ;
+        margin: 30px auto;
         border-radius: 5px;
         /*display: inline-block;*/
     }
@@ -72,9 +75,9 @@
         margin-right:0px ;
     }
     .game-icon{
-        width: 95px;
-        height: 95px;
-        border-radius: 26px;
+        width: 50%;
+        /* height: 95px; */
+        border-radius: 24%;
         display: block;
         /*left: 50%;*/
         margin: 0px auto;
@@ -170,6 +173,11 @@
             <p class="game-name">{{item.name}}</p>
         </div>
     </div>
+    <div class="game-container" v-if="gameListFirst.length<8">
+        <p class="game-name">
+            更多游戏请微信关注“闪电玩”公众号，海量游戏，等你来玩哟~！
+        </p>
+    </div>
     <!--微信扫码登录-->
     <transition name="scale21" v-show="showLogin" >
         <div class="login-container" v-show="showLogin" @click.self="showLogin=false" >
@@ -182,7 +190,7 @@
     </transition>
 </div>
 
-<script type="text/javascript" src="js/geelycenter.min.js?649e"></script></body>
+<script type="text/javascript" src="js/geelycenter.min.js?b63f"></script></body>
 
 
 </html>
