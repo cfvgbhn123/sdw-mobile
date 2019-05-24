@@ -1419,8 +1419,8 @@ var _MESSAGE_FUNCTION_ = {
     'jdPay':function (e,dataObj) {
         console.log('*************京东支付参数********************');
         var option = dataObj.data ;
-        console.log(option);
-        console.log(e.origin);
+        //console.log(option);
+       // console.log(e.origin);
         if( e.origin.indexOf('shandw.com') >-1){
             var filterData = function (option) {
                 console.log(option);
@@ -1464,6 +1464,10 @@ var _MESSAGE_FUNCTION_ = {
 
 
 
+    },
+    'setSDWShareInfo':function (e,dataObj) {
+        var shareInfo = dataObj.shareInfo || {};
+        SDW_WEB.sdw.onSetShareOperate(shareInfo);
     }
 };
 // *****************************************************************************************

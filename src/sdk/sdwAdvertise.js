@@ -2,7 +2,7 @@ var adManage = {
     bannerSetting:null,
     initAd:function(options){
         sdw.dialogManage&&sdw.dialogManage.init();
-        adManage.bannerSetting = options;
+        adManage.bannerSetting = options || {};
         if( sdw.params.channel == '12319' || options.channel == '12319'){
             sdw.dynamicLoadCss('https://www.shandw.com/libs/css/styles.css');
             var mask = document.createElement('div');
@@ -74,6 +74,12 @@ var adManage = {
 
     },
     playRewardVideo:function (options) {
+        //sdw.dialogMessage({type:'loading',msg:'视频加载中',fn:'show'}) ;
+        sdw.dialogManage.show({
+            msg:'视频加载中',
+            icon:'loading',
+        });
+        //return ;
         if(adManage.adInfo && adManage.adInfo.vedioUrl){
             adManage.initVideo(options);
             adManage.adInfo.vedioUrl = null ;
@@ -83,6 +89,7 @@ var adManage = {
             if(state  == 1){
                 adManage.initVideo(options);
             }else{
+                sdw.dialogMessage({fn:'hidden'}) ;
                 options&&options.playFail&&options.playFail('超出广告播放次数') ;
             }
         }) ;
@@ -92,27 +99,32 @@ var adManage = {
         img.src = adManage.adInfo.feedbackVedioUrl ;
         adManage.video = document.createElement('video') ;
         adManage.video.className =  'ad-container';
-        var oldNode =document.querySelector('.ad-container') ;
+        var oldNode = document.querySelector('.ad-container') ;
         if(oldNode) adManage.videoView.removeChild(oldNode);
         adManage.videoView.appendChild(adManage.video);
-        sdw.dialogMessage({type:'loading',msg:'视频加载中',fn:'show'}) ;
         adManage.video.src = adManage.adInfo.vedioUrl ;
         adManage.video.style.width = adManage.adInfo.vedioWidth+'px' ;
         adManage.video.style.height = adManage.adInfo.vedioHeight+'px';
         adManage.video.autoplay = 'autoplay';
+        adManage.video.controls = 'controls';
         adManage.videoView.style.display = 'block' ;
-        adManage.video.oncanplay =function () {
-            sdw.dialogMessage({fn:'hidden'}) ;
+        adManage.video.oncanplay = function () {
+            sdw.dialogManage.hidden();
+            adManage.video.play() ;
         }
-        adManage.video.onstalled =function () {
-            options&&options.playFail&&options.playFail('视频播放碰到了点问题呀') ;
-        }
+        // adManage.video.onstalled =function () {
+        //     options&&options.playFail&&options.playFail('视频播放碰到了点问题呀') ;
+        // }
         adManage.video.onended = function () {
             adManage.videoView.style.display = 'none' ;
+            adManage.videoView.removeChild(adManage.video) ;
             options&&options.playComplete&&options.playComplete() ;
         };
         adManage.video.onerror = function () {
-            options&&options.playFail&&options.playFail('视频加载出错') ;
+            sdw.dialogManage.hidden();
+            adManage.videoView.style.display = 'none' ;
+            adManage.videoView.removeChild(adManage.video) ;
+            options&&options.playFail&&options.playFail('视频播放碰到了点问题') ;
         };
         document.getElementsByTagName('body')[0].appendChild(adManage.videoView);
 

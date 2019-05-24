@@ -44,8 +44,20 @@
      text-align: center;
      color: #fff;
      transition: .34s;
-      visibility:hidden;
-    opacity: 0;
+     visibility:hidden;
+      opacity: 0;
+    .dialog-icon{
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 10px;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      display: none;
+    }
+    .icon-loading{
+      background: url("https://www.shandw.com/activities/libs/imgs/loading.gif") center /80% auto no-repeat ;
+      display: block;
+    }
      .dialog-title{
        font-size: 18px;
        line-height: 1.7em;

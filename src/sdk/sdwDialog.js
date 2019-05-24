@@ -7,15 +7,18 @@ var toastManage ={
         var toast = document.createElement('div');
         toast.className = 'toast-container';
         toast.innerHTML =
+            '<div class="dialog-icon"></div>'+
             '<div class="dialog-title"></div>' +
             '<div class="dialog-msg"></div>' +
             '<div class="btn-container">' +
             '</div>' ;
         /*+'<div class="dialog-btn btn-cancel">取消</div><div class="dialog-btn">确定</div>'*/
         if (document.body) {
+            toast.style.display = 'none';
             document.body.appendChild(toast);
             toastManage.container = document.querySelector('.toast-container');
             toastManage.msg = document.querySelector('.dialog-msg');
+            toastManage.icon = document.querySelector('.dialog-icon');
             toastManage.title = document.querySelector('.dialog-title');
             toastManage.btnCtl = document.querySelector('.btn-container');
         }
@@ -32,6 +35,14 @@ var toastManage ={
         if(!options) return ;
         toastManage.title.innerHTML = options.title || '';
         toastManage.msg.innerHTML = options.msg || '';
+        toastManage.icon.className = 'dialog-icon '+'icon-'+options.icon ;
+        if(options.icon){
+           // toastManage.icon.className = 'dialog-icon '+'icon-'+options.icon ;
+            toastManage.btnCtl.style.display = 'none';
+        }else{
+            //toastManage.icon.style.display = 'none' ;
+            toastManage.btnCtl.style.display = 'flex';
+        }
         if(options.autoHide){
             setTimeout(toastManage.hidden,options.autoHide);
         }
@@ -51,6 +62,7 @@ var toastManage ={
             cancelbtn.onclick = toastManage.hidden ;
             toastManage.btnCtl.appendChild(cancelbtn);
         }
+        toastManage.container.style.display = 'block';
         toastManage.container.style.visibility = 'visible';
         toastManage.container.style.opacity = '1';
         toastManage.container.style.height = 'auto';
