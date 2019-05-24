@@ -4,7 +4,6 @@
  */
 require('./style.scss');
 /*var sdw ;*/
-
 var OS = {}, u = navigator.userAgent;
 OS.onIOS = !!u.match(/\(i[^;]+;(U;)? CPU.+Mac OS X/);
 OS.onMobile = !!u.match(/AppleWebKit.*Mobile.*/);
@@ -61,12 +60,30 @@ OS.getNow = function () {
     return +new Date();
 };
 
-var APP = OS;
+window.APP = OS;
 
 if (APP.onKD && APP.onAndriod) {
     APP.and_KdVer = parseInt((kdjs.getKDVersion()).replace(/\D/g, ''));
 }
+var setHTMLFontSize = function () {
 
+
+    // 页面初始化字体，用于简单的页面适配
+    if (App.onUC) {
+        var WIDTH = doc.documentElement.clientWidth || doc.body.clientWidth;
+        var HEIGHT = doc.documentElement.clientHeight || doc.body.clientHeight;
+        WIDTH = Math.min(WIDTH, HEIGHT);
+        var fontSize = WIDTH / 375 * 16;
+        fontSize = Math.min(fontSize, 19);
+        fontSize = fontSize.toFixed(2);
+        document.documentElement.style.fontSize = fontSize +'px';
+    } else {
+        console.log("do nothing");
+    }
+
+    doc.documentElement.style.fontSize = SDW_WEB.fontSize + 'px';
+
+};
 window.NativeBridge = {
 
     myData: 'sdw',
@@ -434,7 +451,7 @@ window.sdw = {
                 option:{
                     fn:'show',
                     type:'error' ,
-                    msg:'ios充值暂时关闭，敬请期待',
+                    msg:'ios正在升级，将于10日内更换为苹果支付（iap），敬请期待',
                     hidden:2,
                 }
             }), '*');
@@ -1774,9 +1791,7 @@ if (APP.ky) {
         }
     }, false);
 }
-
 window.sdw._MD5 = function (q) {
-
     function to_zerofilled_hex(n) {
         var a = (n >>> 0).toString(16);
         return "00000000".substr(0, 8 - a.length) + a
