@@ -46,8 +46,13 @@
     <script>
          // 老地址的跳转
         if (/v2\/mobile\/game/.test(location.href)) {
+            //console.log(SDW_PATH.GAME_URL('play', SDW_WEB.MOBILE_GAME_GID));
             location.href = SDW_PATH.GAME_URL('play', SDW_WEB.MOBILE_GAME_GID);
         }
+        /*吉利车机地址跳转*/
+         if (SDW_WEB.channel == '12212' || SDW_WEB.channel == '12327'  ) {
+             location.href = 'http://www.shandw.com/geely/game/'+SDW_WEB.MOBILE_GAME_GID+'.html?channel='+SDW_WEB.channel;
+         }
         if (SDW_WEB.queryParam['from'] === 'm3plt' && !SDW_WEB.onKD) {
             // 进行跳转
             location.href = 'http://www.shandw.com/app/kd-app-1122/'

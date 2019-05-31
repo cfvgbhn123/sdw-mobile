@@ -14,7 +14,7 @@ var bases = BASE_CONFIG({
     dirname: __dirname,
     buildPath: BUILD_PATH,
     entry: {
-        'sdwJs': './sdwJs.js',
+        'sdwJs': './cpsdw.js',
     }
 });
 

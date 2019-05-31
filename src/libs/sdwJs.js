@@ -1055,7 +1055,7 @@ var sdw = {
      */
 
     onSetShareOperate: function (res, otherParams) {
-       // dialog.show('error',JSON.stringify(res),2);
+        //dialog.show('error',JSON.stringify(res),2);
         window.shandwshare = {
             success:null,
             cancel:null,

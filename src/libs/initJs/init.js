@@ -15,7 +15,9 @@ SDW_WEB.sender_sdw_id = '_sender_sdw_rfid_';
 SDW_WEB.verReg = /v=/;
 SDW_WEB.version = '315';
 if(SDW_WEB.onJDJR){
-    document.write('<script src="https://sandboxpay.17m3.com/api/dhpay.js?m=' + (+new Date()) + '"><\/script>');
+    //http://pay.17m3.com/gamepay/dhpay.min.js
+    document.write('<script src="http://pay.17m3.com/gamepay/dhpay.min.js?m=' + (+new Date()) + '"><\/script>');
+   // document.write('<script src="https://sandboxpay.17m3.com/api/dhpay.js?m=' + (+new Date()) + '"><\/script>');
     //document.write('<script src="https://m.jr.jd.com/crayfish/zui/jrap/1.0.0/jrap.js?m=' + (+new Date()) + '"><\/script>');
 }
 
@@ -1212,11 +1214,11 @@ SDW_WEB.getBroadCastData = function () {
 // 接收子页面的消息传递
 window.addEventListener('message', function (e) {
     // alert(JSON.stringify(e.data));
-    console.log(e.data);
+   // console.log(e.data);
 
     // if (e.origin !== 'http://www.shandw.com') return;
 
-    if (typeof e.data === 'string') {
+    if ( e.data && typeof e.data === 'string') {
         try {
             var dataObj = JSON.parse(e.data);
             // 闪电玩的全局消息
@@ -1465,10 +1467,10 @@ var _MESSAGE_FUNCTION_ = {
 
 
     },
-    'setSDWShareInfo':function (e,dataObj) {
-        var shareInfo = dataObj.shareInfo || {};
-        SDW_WEB.sdw.onSetShareOperate(shareInfo);
-    }
+    // 'setSDWShareInfo':function (e,dataObj) {
+    //     var shareInfo = dataObj.shareInfo || {};
+    //     SDW_WEB.sdw.onSetShareOperate(shareInfo);
+    // }
 };
 // *****************************************************************************************
 // *****************************************************************************************

@@ -837,7 +837,7 @@ function meiWeiGetQueue(thirdSign,shouldTip) {
 
             // 赛事游戏的跳转地址
             var link = postData.link;
-            location.href = link + '&v=' + SDW_WEB.version;
+            location.href = link ;
 
         },
 
@@ -887,9 +887,7 @@ function meiWeiGetQueue(thirdSign,shouldTip) {
 
         // 通过sdw.js游戏调用
         setSDWShareInfo: function (e, postData) {
-
             var postShareData = postData.shareInfo;
-
             postShareData.title = postShareData.title || SDW_WEB._sTitle || '闪电玩游戏平台';
             postShareData.desc = postShareData.desc || SDW_WEB._sDes || '无需下载，1秒开战，一起撸怪，我等你！';
             postShareData.imgUrl = postShareData.imgUrl || SDW_WEB._sIcon || 'https://www.shandw.com/app/tabicon/sdw.png';

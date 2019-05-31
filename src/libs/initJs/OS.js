@@ -3,8 +3,8 @@
  */
 
 var OS = {}, u = navigator.userAgent;
-OS.onIOS = !!u.match(/\(i[^;]+;(U;)? CPU.+Mac OS X/);
-OS.onMobile = !!u.match(/AppleWebKit.*Mobile.*/);
+OS.onIOS = !!u.match(/\(i[^;]+;(U;)? CPU.+Mac OS X/)  ;
+OS.onMobile = !!u.match(/AppleWebKit.*Mobile.*/) || !!u.match(/iOS38*/);
 OS.onIPhone = u.indexOf("iPhone") > -1;
 OS.onIPad = u.indexOf("iPad") > -1;
 OS.onAndriod = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1;

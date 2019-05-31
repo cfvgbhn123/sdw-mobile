@@ -53,6 +53,7 @@ window.touch = null;
 window.loadPageTime = +new Date();
 window.NOW_TIME = +new Date();
 window.SERVER_TIME = null;
+
 var refreshTime = 0;
 
 var $giftBgContainer = document.querySelector('.gift-bg-container'),

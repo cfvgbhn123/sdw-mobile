@@ -22,7 +22,7 @@
     <script src="http://www.shandw.com/libs/vue.js"></script>
     <!--<script src='https://www.shandw.com/mobile/js/swiper.min.js'></script>-->
     <script src="http://www.shandw.com/pc/js/libs/qrcode.js"></script>
-<link href="styles.css?b63f" rel="stylesheet"></head>
+<link href="styles.css?9e0f" rel="stylesheet"></head>
 
 
 <script>
@@ -52,7 +52,8 @@
         display: flex;
         min-width: 100%;
         flex-wrap: nowrap;
-        overflow: scroll;
+        overflow: hidden;
+        /*overflow: scroll;*/
         /*width: 100%;*/
         white-space: nowrap;
         display: flex;
@@ -69,10 +70,10 @@
         /*display: inline-block;*/
     }
     .game-item:nth-child(10n+1){
-        margin-left:0px ;
+        /*margin-left:0px ;*/
     }
     .game-item:nth-child(10n){
-        margin-right:0px ;
+        /*margin-right:0px ;*/
     }
     .game-icon{
         width: 50%;
@@ -157,7 +158,7 @@
 </style>
 <body class="geely-theme">
 
-<div id="app" v-cloak style=" width: 96%;max-width: none;padding-bottom: 0px;overflow: scroll">
+<div id="app" v-cloak style=" width: 96%;max-width: none;padding-bottom: 0px;overflow: hidden">
     <h1 >游戏中心</h1>
     <!--列表的内容-->
     <div class="game-container"  >
@@ -190,7 +191,7 @@
     </transition>
 </div>
 
-<script type="text/javascript" src="js/geelycenter.min.js?b63f"></script></body>
+<script type="text/javascript" src="js/geelycenter.min.js?9e0f"></script></body>
 
 
 </html>

@@ -1353,7 +1353,7 @@ input, textarea {
 
 .icon-loading {
   transform-origin: 50% 50%;
-  animation: swiper-preloader-spin 1s steps(12, end) infinite
+  animation: swiper-preloader-spin 1s steps(12, end) infinite;
 }
 
 .icon-loading:after {
