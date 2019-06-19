@@ -117,7 +117,43 @@ function initToolIcon() {
 var indexData = {
     activity:ActivityConfig,
     allGameList: [],
-    bannerList:[],
+    bannerList:[
+        {
+            id:"2038737096",
+            adImg:"http://img.m3guo.com/group3/M00/00/DE/wKgMHFyYN_2ASSzDAAS-8ksxYqo722.gif",
+            sub:"有你在，与世界为敌又"
+        },
+        {
+            id:"2022222027",
+            adImg:"http://img.m3guo.com/group2/M00/00/C7/wKgMHFteqhSALitXAAD8O76i-kw840.jpg",
+            sub:"沙城野战 野外PK"
+        },
+        {
+            id:"1955244232",
+            adImg:"http://img.m3guo.com/group4/M00/00/31/wKgMHFylnMqAP4RyAAFc71NAUS8227.jpg",
+            sub:"大哥也喜欢玩的传奇"
+        },
+        {
+            id:"1247433539",
+            adImg:"https://open.shandw.com/uploads/7e9ff8af50a497178a571fac32eb8a25.png",
+            sub:"十年兄弟，再战沙城！"
+        },
+        {
+            id:"1650572205",
+            adImg:"https://www.shandw.com/h5/h5gameimg/WYDSF211.gif",
+            sub:"轻松圆你首富梦！"
+        },
+        {
+            id:"2055448777",
+            adImg:"http://img.m3guo.com/group3/M00/00/D9/wKgMHFwbE1iAGHeSAAUN4-6ceks686.gif",
+            sub:"神将降临，集结启程！"
+        },
+        {
+            id:"1938270411",
+            adImg:"http://img.m3guo.com/group2/M00/00/CD/wKgMHFuXV8OABcpkAAD4rWABF7E238.jpg",
+            sub:"属于你的浪漫修仙之旅"
+        }
+    ],
     recentList:[],
 };
 
@@ -126,17 +162,20 @@ var indexData = {
 var indexMethods = {
 
     getTopicList:function (type) {
-        var t = this ;
-        var postUri = SDW_WEB.URLS.addParam({
-            uid:SDW_WEB.USER_INFO.uid,
-            sec:SDW_WEB.USER_INFO.secheme,
-            token:SDW_WEB.USER_INFO.token,
-            channel:SDW_WEB.channel,
-            type:0,
-        }, false, 'https://platform.shandw.com/topiclist');
-        SDW_WEB.getAjaxData(postUri,function (res) {
-            if( res.result == 1 ){
-                t.bannerList = res.adList ;
+        var self = this;
+        var sec = new Date().getTime();
+        var data = {};
+        if(!SDW_WEB.USER_INFO.secheme) {
+            SDW_WEB.USER_INFO.secheme = sec;
+            data.sec = sec;
+        }
+        var gameid= '2038737096_2022222027_1955244232_1247433539_1650572205_2055448777_1938270411';
+        data.sign = SDW_WEB.MD5(''+gameid+SDW_WEB.USER_INFO.secheme+'df84bdadbbf846a899e3237c0deb056b') ;
+        data.gameId = gameid ;
+        var postUri = SDW_WEB.URLS.addParam(data, false, HTTP_STATIC + 'getGameInfoList');
+        SDW_WEB.getAjaxData(postUri, function (data) {
+            if(data.result == 1) {
+                self.bannerList = data.list;
             }else{
                 dialog.show('error','服务器开小差了~',1);
             }
@@ -161,8 +200,8 @@ var indexMethods = {
             }
         });
     },
-    checkGameSate: function (type, url, item) {
-        id = url.split('.htm')[0].replace(/[^0-9]/ig,"");
+    checkGameSate: function (type, id, item) {
+       // id = url.split('.htm')[0].replace(/[^0-9]/ig,"");
         // 获取游戏地址
         if (SDW_WEB.channel == '10911') {
             var targetUrl = 'http://www.shandw.com/maopao/game/index.html?gid=' + id + '&channel=10911'
@@ -205,7 +244,7 @@ var _indexView = new Vue({
 });
 
 SDW_WEB.getSdwUserData().then(function (userData) {
-    _indexView.getTopicList() ;
+    // _indexView.getTopicList() ;
     _indexView.getRecentList() ;
     initToolIcon();
    // _indexView.loadMainData();
@@ -213,7 +252,7 @@ SDW_WEB.getSdwUserData().then(function (userData) {
 }, function (msg) {
     // 获取闪电玩用户数据失败
     SDW_WEB.USER_INFO = {};
-    _indexView.getTopicList() ;
+    // _indexView.getTopicList() ;
     _indexView.getRecentList() ;
     initToolIcon();
     //_indexView.loadMainData();

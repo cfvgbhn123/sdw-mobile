@@ -78,8 +78,8 @@
 
 
     <div class="banner-warpper">
-        <div class="banner-item" v-for="item in bannerList" @click="checkGameSate('play',item.content)">
-            <img :src="item.adImg" :alt="item.title">
+        <div class="banner-item" v-for="item in bannerList" @click="checkGameSate('play',item.id)">
+            <img :src="item.adImg" :alt="item.sub">
         </div>
         <div class="banner-item"  @click="openMore()" >
             <img src="images/banner.png" alt="" >

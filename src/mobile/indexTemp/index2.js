@@ -122,6 +122,15 @@ var indexData = {
     pageHasLoading: false,
     navList: [
         {
+            title: "热门",
+            page: 0,
+            loaded: false,
+            loading: false,
+            current: 0,
+            list: [],
+            type: 2,
+        },
+        {
             title: "网游",
             page: 0,
             loaded: false,
@@ -138,14 +147,6 @@ var indexData = {
             current: 0,
             list: [],
             type: 1,
-        },
-        {
-            title: "全部",
-            page: 0,
-            loaded: false,
-            loading: false,
-            current: 0,
-            list: [],
         }
     ],
     currentNav: null,
@@ -433,8 +434,25 @@ var allGameScroll = new WindowScroll(function () {
     _indexView.loadMore();
 }, true, 100, 30);
 // allGameScroll.enable = false;
+function setShareInfo() {
+    var link =  location.href;
+    var shareInfo = {
+        title: '最好玩的手机游戏中心',
+        desc:'无需下载，点击即玩',
+        link: link,
+        imgUrl:'https://www.shandw.com/app/tabicon/sdw.png',
+        success: function () {
+            dialog.show('ok','分享成功！');
+            dialog.hidden(1000);
+        },
+        cancel: function () {
+            dialog.show('error','取消分享！');
+            dialog.hidden(1000);
+        },
+        shareFlag:false // true->设置分享信息外，立即唤起底部菜单栏  false->只设置分享相关文案图片链接等信息，由用户主动唤起菜单栏分享
+    };
+    SDW_WEB.sdw.onSetShareOperate(shareInfo);
+}
 
-
-
-
+setShareInfo();
 

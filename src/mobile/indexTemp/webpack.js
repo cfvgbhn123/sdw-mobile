@@ -17,6 +17,7 @@ var bases = BASE_CONFIG({
         index: './index2.js',
         bannerindex:'./bannerindex.js',
         brightindex:'./brightindex',
+        jfindex:'./jfindex',
         jdcenter:'./jdcenter',
         geelycenter:'./geelycenter',
         test:'./test',
@@ -40,6 +41,14 @@ bases.plugins.push(new HtmlWebpackPlugin({
         template: path.resolve(__dirname, 'brightindex.html'), // 源模板文件
         filename: 'brightindex.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
         chunks: ["brightindex"]
+    })
+);
+
+bases.plugins.push(new HtmlWebpackPlugin({
+        title: '游戏中心',
+        template: path.resolve(__dirname, 'jfindex.html'), // 源模板文件
+        filename: 'jfindex.html', // 输出文件【注意：这里的根路径是module.exports.output.path】
+        chunks: ["jfindex"]
     })
 );
 
